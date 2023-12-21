@@ -11,7 +11,9 @@
       page='profilePage'
     />
   </button>
-  <input class='chat-list-header__input text-style text-style_color_gray' type='text' placeholder='Поиск'/>
+  {{#> Form}}
+    <input class='chat-list-header__input text-style text-style_color_gray' type='text' placeholder='Поиск'/>
+  {{/Form}}
     <img
       src={{magnifierIcon}}
       alt='Поиск'
