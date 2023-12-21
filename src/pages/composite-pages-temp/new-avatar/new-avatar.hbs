@@ -1,0 +1,21 @@
+<main class='profile horizontal-centered'>
+  {{#> Popup caption='Загрузите файл' btnCaption='Поменять' page='profilePage'}}
+    {{> ButtonString caption='Выбрать файл на компьютере' page='page500' }}
+  {{/Popup}}
+  {{> SideButton page='chatPage'}}
+  <div class='profile__wrapper user-entitys-wrapper'>
+    {{> UserAvatar name='Иван'}}
+    {{> UserInfo}}
+    <div class='profile__buttons'>
+      <div class='profile__button'>
+        {{> ButtonString caption='Изменить данные' page='changeUserDataPage'}}
+      </div>
+      <div class='profile__button'>
+        {{> ButtonString caption='Изменить пароль' page='changePasswordPage'}}
+      </div>
+      <div class='profile__button'>
+        {{> ButtonString caption='Выйти' isRed=true page='loginPage'}}
+      </div>
+    </div>
+  </div>
+</main>

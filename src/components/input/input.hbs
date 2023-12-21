@@ -1,0 +1,18 @@
+<label for='input' class='input-label text-style_color_gray'>{{label}}</label>
+{{#if isError}}
+  <input
+    id='input'
+    type={{type}}
+    class='input text-style text-style_color_red'
+    value={{value}}
+  />
+{{else}}
+  <input id='input' type={{type}} class='input text-style' value={{value}} />
+{{/if}}
+
+{{#if errorMsg}}
+  <label
+    for='input'
+    class='input-label input-label_error text-style_color_red'
+  >{{errorMsg}}</label>
+{{/if}}

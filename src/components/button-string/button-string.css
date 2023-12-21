@@ -1,0 +1,17 @@
+.button-string {
+  border: none;
+  background: unset;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  color: #3369f3;
+  transition: all 0.3s ease;
+}
+
+.button-string:hover {
+  opacity: 0.6;
+}
+
+.button-string_color_red {
+  color: #ff0000;
+}

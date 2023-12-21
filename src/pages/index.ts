@@ -1,0 +1,8 @@
+export { ChatPage } from './chat'
+export { ProfilePage } from './profile'
+export { ChangeUserDataPage } from './change-user-data'
+export { ChangePasswordPage } from './change-password'
+export { LoginPage } from './login'
+export { SignInPage } from './sign-in/'
+export { Page500 } from './page-500'
+export { Page404 } from './page-404'

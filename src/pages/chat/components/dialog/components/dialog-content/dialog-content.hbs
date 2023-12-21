@@ -1,0 +1,7 @@
+<section class='dialog-content'>
+  {{> DialogDate date='19 июня'}}
+
+  {{#each (messages)}}
+    {{> MessageItem msgReceivedIcon=msgReceivedIcon}}
+  {{/each}}
+</section>

@@ -1,0 +1,8 @@
+<section class='chat-list'>
+  {{> ChatListHeader}}
+  <div class='chat-list__list'>
+    {{#each (chatList)}}
+      {{> ChatListItem}}
+    {{/each}}
+  </div>
+</section>

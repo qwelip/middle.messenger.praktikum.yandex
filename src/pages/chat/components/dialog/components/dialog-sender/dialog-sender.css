@@ -1,0 +1,16 @@
+.dialog-sender {
+  display: flex;
+  margin: 0 20px;
+  padding: 10px 0;
+  border-top: solid 1px #eaeaea;
+}
+.dialog-sender__input {
+  flex-grow: 1;
+  background-color: #efefef;
+  border-radius: 20px;
+  padding: 0 20px;
+  margin: 0 10px;
+}
+.dialog-sender__pin-btn {
+  position: relative;
+}

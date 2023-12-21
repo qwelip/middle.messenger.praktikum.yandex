@@ -1,0 +1,18 @@
+<main class='profile horizontal-centered'>
+  {{> SideButton page='chatPage'}}
+  <div class='profile__wrapper user-entitys-wrapper'>
+    {{> UserAvatar name='Иван'}}
+    {{> UserInfo}}
+    <div class='profile__buttons'>
+      <div class='profile__button'>
+        {{> ButtonString caption='Изменить данные' page='changeUserDataPage'}}
+      </div>
+      <div class='profile__button'>
+        {{> ButtonString caption='Изменить пароль' page='changePasswordPage'}}
+      </div>
+      <div class='profile__button'>
+        {{> ButtonString caption='Выйти' isRed=true page='loginPage'}}
+      </div>
+    </div>
+  </div>
+</main>

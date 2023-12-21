@@ -1,0 +1,19 @@
+.popup-dialog-sender {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  border: solid 1px #eaeaea;
+  width: 175px;
+  height: 128px;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.popup-dialog-sender_hidden {
+  visibility: hidden;
+}

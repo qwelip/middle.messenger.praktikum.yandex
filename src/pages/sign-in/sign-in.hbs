@@ -1,0 +1,28 @@
+<main class='sign-in horizontal-centered'>
+  <div class='sign-in__container'>
+    <h2 class='sign-in__title'>Регистрация</h2>
+
+    <div class='sign-in__input-wrapper'>
+      {{#each (registrationUserInfo)}}
+      <div class='sign-in__input'>
+        {{> Input label=dataType type='text' value=data}}
+      </div>
+    {{/each}}
+      <div class='sign-in__input'>
+        {{> Input label='Пароль' type='password' value='123123' isError=true}}
+      </div>
+      <div class='sign-in__input'>
+        {{> Input label='Пароль (ещё раз)' type='password' value='123' isError=true errorMsg='Пароли не совпадают'}}
+      </div>
+    </div>
+
+    <div class='sign-in__btn-wrapper'>
+      <div class='sign-in__btn'>
+        {{> Button caption='Зарегистрироваться' page='chatPage'}}
+      </div>
+      <div class='sign-in__btn'>
+        {{> ButtonString caption='Войти' page='loginPage'}}
+      </div>
+    </div>
+  </div>
+</main>

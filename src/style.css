@@ -1,0 +1,38 @@
+/* common */
+@import './vendor/normalize.css';
+@import './vendor/fonts/fonts.css';
+@import './common/common-styles.css';
+
+/* pages */
+@import './pages/chat/chat.css';
+@import './pages/profile/profile.css';
+@import './pages/change-user-data/change-user-data.css';
+@import './pages/change-password/change-password.css';
+@import './pages/login/login.css';
+@import './pages/sign-in/sign-in.css';
+@import './pages/page-500/page-500.css';
+@import './pages/page-404/page-404.css';
+
+/* chat components */
+@import './pages/chat/components/chat-list/chat-list.css';
+@import './pages/chat/components/dialog/dialog.css';
+@import './pages/chat/components/chat-list-header/chat-list-header.css';
+@import './pages/chat/components/chat-list-item/chat-list-item.css';
+@import './pages/chat/components/dialog/components/dialog-content/dialog-content.css';
+@import './pages/chat/components/dialog/components/dialog-header/dialog-header.css';
+@import './pages/chat/components/dialog/components/dialog-sender/dialog-sender.css';
+@import './pages/chat/components/dialog/components/message-item/message-item.css';
+@import './pages/chat/components/dialog/components/dialog-date/dialog-date.css';
+@import './pages/chat/components/dialog/components/popup-dialog-header/popup-dialog-header.css';
+@import './pages/chat/components/dialog/components/popup-dialog-sender/popup-dialog-sender.css';
+@import './pages/chat/components/dialog/components/common-styles.css';
+
+/* common components */
+@import './components/user-avatar/user-avatar.css';
+@import './components/button-string/button-string.css';
+@import './components/side-button/side-button.css';
+@import './components/user-info/user-info.css';
+@import './components/button/button.css';
+@import './components/popup/popup.css';
+@import './components/input/input.css';
+@import './components/input-no-border/input-no-border.css';

@@ -1,0 +1,27 @@
+.message-item {
+  margin-bottom: 10px;
+}
+.message-item__body {
+  width: fit-content;
+  max-width: 50%;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  flex-basis: fit-content;
+}
+.message-item__body_type_mine {
+  background-color: #e4edfd;
+  margin-left: auto;
+}
+.message-item__info {
+  display: flex;
+  margin-top: 5px;
+  justify-content: end;
+}
+.message-item__icon {
+  object-fit: contain;
+  padding-right: 4px;
+}
+.message-item__data_type_mine {
+  color: #3369f3;
+}
