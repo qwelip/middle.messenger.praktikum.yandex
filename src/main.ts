@@ -38,11 +38,17 @@ function navigate(page: keyof typeof pages) {
 
 document.addEventListener('DOMContentLoaded', () => {
   navigate('chatPage')
-  addOpenPopupHandle('dialog-sender__pin-img', 'popup-dialog-sender', 'pin')
+  addOpenPopupHandle(
+    'dialog-sender__pin-img',
+    'popup-dialog-sender',
+    images.pinIcon,
+    images.pinIconActive
+  )
   addOpenPopupHandle(
     'dialog-header__btn-img',
     'popup-dialog-header',
-    'context-menu'
+    images.contextMenuIcon,
+    images.contextMenuIconActive
   )
 })
 
