@@ -24,6 +24,7 @@
 
 .chat-list-header__text {
   padding-right: 8px;
+  margin-left: auto;
 }
 
 .chat-list-header__img {

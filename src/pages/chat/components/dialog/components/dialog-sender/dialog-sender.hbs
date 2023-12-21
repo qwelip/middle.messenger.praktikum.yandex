@@ -1,8 +1,8 @@
 <div class='dialog-sender'>
-  <button class='dialog-sender__pin-btn cancel-btn-styles'>
+  <a class='dialog-sender__pin-btn btn-styles'>
     {{> PopupDialogSender}}
     <img class='dialog-sender__pin-img' src={{pinIcon}} alt='Прикрепить' />
-  </button>
+  </a>
   <div class="dialog-sender__input-wrapper">
     {{#> Form}}
       <input
@@ -13,7 +13,7 @@
       />
     {{/Form}}
   </div>
-  <button class='dialog-sender__send-btn cancel-btn-styles'>
+  <a class='dialog-sender__send-btn btn-styles'>
     <img class='dialog-sender__send-img' src={{sendIcon}} alt='Отправить' />
-  </button>
+  </a>
 </div>
