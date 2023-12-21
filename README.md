@@ -11,4 +11,4 @@
 - Vite
 
 ### Проект расположен по адресу
-https://qwelip.github.io/mesto/](https://willowy-gumdrop-71b6fa.netlify.app/)https://willowy-gumdrop-71b6fa.netlify.app
+https://willowy-gumdrop-71b6fa.netlify.app/
