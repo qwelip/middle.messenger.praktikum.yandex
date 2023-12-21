@@ -10,5 +10,7 @@
 - Handlebars
 - Vite
 
+Для сборки проекта используется команда npm run start
+
 ### Проект расположен по адресу
 https://willowy-gumdrop-71b6fa.netlify.app/
