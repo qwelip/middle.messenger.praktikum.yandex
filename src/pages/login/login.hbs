@@ -3,13 +3,15 @@
     <h2 class='login__title'>Вход</h2>
 
     <div class='login__input-wrapper'>
-      <div class='login__input'>
-        {{> Input label='Логин' type='text' value='ivanivanov' name='login'}}
-      </div>
+      {{#> Form}}
+        <div class='login__input'>
+          {{> Input label='Логин' type='text' value='ivanivanov' name='login'}}
+        </div>
 
-      <div class='login__input'>
-        {{> Input label='Пароль' type='password' value='123123' name='password'}}
-      </div>
+        <div class='login__input'>
+          {{> Input label='Пароль' type='password' value='123123' name='password'}}
+        </div>
+      {{/Form}}
     </div>
 
     <div class='login__btn-wrapper'>

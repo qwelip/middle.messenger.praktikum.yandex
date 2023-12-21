@@ -3,10 +3,6 @@ main {
   font-family: 'Inter', 'Arial', sans-serif;
 }
 
-button {
-  cursor: pointer;
-}
-
 input {
   outline: unset;
   border: unset;
@@ -41,10 +37,12 @@ input {
   font-size: 12px;
 }
 
-.cancel-btn-styles {
+.btn-styles {
   border: none;
   background-color: unset;
   padding: 0;
+  margin: auto 0;
+  cursor: pointer;
 }
 
 .list {

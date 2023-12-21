@@ -4,8 +4,6 @@ export const addOpenPopupHandle = (
   img: string,
   imgActive: string
 ): void => {
-  // const imgSrc = `/src/assets/${imgName}.png`
-  // const imgSrcActive = `/src/assets/${imgName}-active.png`
   const hideClass = `${popupClass}_hidden`
   const btn = document.querySelector(`.${btnClass}`)
   const popup = document.querySelector(`.${popupClass}`)
