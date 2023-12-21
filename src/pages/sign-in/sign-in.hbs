@@ -5,14 +5,14 @@
     <div class='sign-in__input-wrapper'>
       {{#each (registrationUserInfo)}}
       <div class='sign-in__input'>
-        {{> Input label=dataType type='text' value=data}}
+        {{> Input name=inputName label=dataType type='text' value=data}}
       </div>
     {{/each}}
       <div class='sign-in__input'>
-        {{> Input label='Пароль' type='password' value='123123' isError=true}}
+        {{> Input name='password' label='Пароль' type='password' value='123123' isError=true}}
       </div>
       <div class='sign-in__input'>
-        {{> Input label='Пароль (ещё раз)' type='password' value='123' isError=true errorMsg='Пароли не совпадают'}}
+        {{> Input name='password' label='Пароль (ещё раз)' type='password' value='123' isError=true errorMsg='Пароли не совпадают'}}
       </div>
     </div>
 

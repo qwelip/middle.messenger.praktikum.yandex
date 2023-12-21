@@ -18,4 +18,5 @@ export interface IMessage {
 export interface IUserInfo {
   dataType: string
   data: string
+  inputName: string
 }

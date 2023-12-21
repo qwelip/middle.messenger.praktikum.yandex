@@ -4,17 +4,17 @@
 
     <div class='login__input-wrapper'>
       <div class='login__input'>
-        {{> Input label='Логин' type='text' value='ivanivanov'}}
+        {{> Input label='Логин' type='text' value='ivanivanov' name='login'}}
       </div>
 
       <div class='login__input'>
-        {{> Input label='Пароль' type='password' value='123123'}}
+        {{> Input label='Пароль' type='password' value='123123' name='password'}}
       </div>
     </div>
 
     <div class='login__btn-wrapper'>
       <div class='login__btn'>
-        {{> Button caption='Авторизоваться' page='chatPage'}}
+        {{> Button caption='Вход' page='chatPage'}}
       </div>
       <div class='login__btn'>
         {{> ButtonString caption='Нет аккаунта?' page='signInPage'}}
