@@ -19,7 +19,6 @@
 - Для отображения страницы 500 - необходимо кликнуть по кнопке Фото/видео из выпадающего списка.
 
 ### Проект расположен по адресу
-
 https://willowy-gumdrop-71b6fa.netlify.app/
 
 [Ссылка на макет](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design&node-id=0-1&mode=design&t=bqmOvh6z2uFet4f8-0)
