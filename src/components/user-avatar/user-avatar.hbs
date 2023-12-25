@@ -1,0 +1,14 @@
+<div class='user-avatar'>
+  <div class='user-avatar__img-wrapper centered-content' page='newAvatarPage'>
+    <img
+      class='user-avatar__img'
+      src={{avatarPlaceholder}}
+      alt='Иконка аватара'
+      page='newAvatarPage'
+    />
+    <p class='user-avatar__change-avatar' page='newAvatarPage'>Поменять аватар</p>
+  </div>
+  {{#if name}}
+    <h2 class='user-avatar__name'>{{name}}</h2>
+  {{/if}}
+</div>

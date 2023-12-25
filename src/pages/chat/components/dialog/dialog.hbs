@@ -1,0 +1,11 @@
+<section class='dialog'>
+  {{#if isEmpty}}
+    <p
+      class='dialog__empty-cation text-style text-style_color_gray text-style_size_12'
+    >Выберите чат чтобы отправить сообщение</p>
+  {{else}}
+    {{> DialogHeder}}
+    {{> DialogContent}}
+    {{> DialogSender}}
+  {{/if}}
+</section>

@@ -1,0 +1,23 @@
+<div class='chat-list-header'>
+  <a class='chat-list-header__profile-btn btn-styles'>
+    <p
+      page='profilePage'
+      class='chat-list-header__text text-style text-style_color_gray'
+    >Профиль</p>
+    <img
+      src={{arrowIcon}}
+      alt='Профиль'
+      class='chat-list-header__img'
+      page='profilePage'
+    />
+  </a>
+  {{#> Form}}
+    <input class='chat-list-header__input text-style text-style_color_gray' type='text' placeholder='Поиск'/>
+  {{/Form}}
+    <img
+      src={{magnifierIcon}}
+      alt='Поиск'
+      class='chat-list-header__placeholder-icon'
+    />
+  </div>
+</div>

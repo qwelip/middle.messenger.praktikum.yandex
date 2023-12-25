@@ -1,0 +1,42 @@
+.chat-list-header {
+  padding: 20px 0 15px;
+  border-bottom: solid 1px #eaeaea;
+  margin: 0 10px;
+  position: relative;
+}
+
+.chat-list-header__placeholder-icon {
+  padding-right: 4px;
+  bottom: 23px;
+  left: 6px;
+  position: absolute;
+}
+
+.chat-list-header__profile-btn {
+  display: flex;
+  margin-left: auto;
+  padding: 0;
+}
+
+.chat-list-header__profile-btn:hover {
+  opacity: 0.6s;
+}
+
+.chat-list-header__text {
+  padding-right: 8px;
+  margin-left: auto;
+}
+
+.chat-list-header__img {
+  align-self: center;
+}
+
+.chat-list-header__input {
+  margin-top: 23px;
+  background-color: #efefef;
+  padding: 10px 12px;
+  width: 100%;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding-left: 28px;
+}

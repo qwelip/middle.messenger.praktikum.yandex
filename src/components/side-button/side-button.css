@@ -1,0 +1,22 @@
+.side-button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  background-color: #fbfbfb;
+  border-right: solid 1px #cdcdcd;
+  border-top: unset;
+  border-left: unset;
+  border-bottom: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0 18px;
+}
+
+.side-button:hover {
+  opacity: 0.6;
+}

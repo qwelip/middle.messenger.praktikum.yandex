@@ -1,0 +1,12 @@
+<div class='user-info-change'>
+    {{#> Form}}
+      <ul class='user-info-change__list list'>
+        {{#each (userInfo)}}
+          <li class='user-info-change__list-item list-item'>
+            <p class='user-info-change__text text-style'>{{dataType}}</p>
+            {{> InputNoBorder type='text' value=data}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/Form}}
+</div>

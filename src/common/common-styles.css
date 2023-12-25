@@ -1,0 +1,71 @@
+main {
+  color: black;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+input {
+  outline: unset;
+  border: unset;
+}
+
+.horizontal-centered {
+  justify-content: center;
+}
+
+.text-style {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.text-style_type_bold {
+  font-weight: 600;
+}
+
+.text-style_color_gray {
+  color: #999999;
+}
+
+.text-style_color_red {
+  color: #ff2f2f;
+}
+
+.text-style_color_blue {
+  color: #3369f3;
+}
+
+.text-style_size_12 {
+  font-size: 12px;
+}
+
+.btn-styles {
+  border: none;
+  background-color: unset;
+  padding: 0;
+  margin: auto 0;
+  cursor: pointer;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #eaeaea;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.user-entitys-wrapper {
+  flex-direction: column;
+  gap: 60px;
+  width: 510px;
+  margin: 50px 50px 0;
+  display: flex;
+}

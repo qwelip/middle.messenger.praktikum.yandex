@@ -1,0 +1,19 @@
+<div class='dialog-sender'>
+  <a class='dialog-sender__pin-btn btn-styles'>
+    {{> PopupDialogSender}}
+    <img class='dialog-sender__pin-img' src={{pinIcon}} alt='Прикрепить' />
+  </a>
+  <div class="dialog-sender__input-wrapper">
+    {{#> Form}}
+      <input
+        name='message'
+        class='dialog-sender__input text-style text-style_color_gray'
+        type='text'
+        placeholder='Сообщение'
+      />
+    {{/Form}}
+  </div>
+  <a class='dialog-sender__send-btn btn-styles'>
+    <img class='dialog-sender__send-img' src={{sendIcon}} alt='Отправить' />
+  </a>
+</div>

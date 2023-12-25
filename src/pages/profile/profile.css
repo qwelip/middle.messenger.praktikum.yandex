@@ -1,0 +1,12 @@
+.profile {
+  display: flex;
+}
+
+.profile__button {
+  padding: 10px 0;
+  border-bottom: solid 1px #eaeaea;
+}
+
+.profile__button:last-child {
+  border-bottom: unset;
+}

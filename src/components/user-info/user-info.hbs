@@ -1,0 +1,10 @@
+<section class='user-info'>
+  <ul class='user-info__list list'>
+    {{#each (userInfo)}}
+      <li class='user-info__list-item list-item'>
+        <p class='user-info__text text-style'>{{dataType}}</p>
+        <p class='user-info__text text-style text-style_gray'>{{data}}</p>
+      </li>
+    {{/each}}
+  </ul>
+</section>

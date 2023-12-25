@@ -1,0 +1,39 @@
+.login {
+  display: flex;
+  margin-top: 50px;
+}
+.login__container {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 30px 30px;
+  border: solid 1px #cdcdcd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 340px;
+  margin: 0 20px;
+}
+.login__title {
+  text-align: center;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.login__input:first-child {
+  margin-bottom: 16px;
+}
+
+.login__btn-wrapper {
+  margin-top: 160px;
+}
+
+.login__btn {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.login__btn:first-child {
+  margin-bottom: 14px;
+}
