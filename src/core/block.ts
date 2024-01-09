@@ -1,15 +1,33 @@
 import EventBus from './event-bus'
+import Handlebars from 'handlebars'
+import { nanoid } from 'nanoid'
+
+interface IPropsWithChildren {
+  [keys: string]: unknown
+  events?: IEvents
+}
+
+type Events = keyof HTMLElementEventMap
+
+type IEvents = {
+  [keys in Events]?: (val?: any) => void
+}
+
+// interface IChildren {
+//   [keys: string]: Block
+// }
 
 interface IMeta {
   tagName: string
-  props: Record<string, unknown>
 }
 
 export default class Block {
-  private props: Record<string, unknown>
+  props: IPropsWithChildren
   private _meta: IMeta
   private eventBus: EventBus
-  private _element: HTMLElement | null = null
+  private _element: Element | null = null
+  children: Record<string, Block>
+  private _id: string
 
   static EVENTS = {
     INIT: 'init',
@@ -18,11 +36,13 @@ export default class Block {
     FLOW_RENDER: 'flow:render',
   }
 
-  constructor(tagName = 'div', props = {}) {
+  constructor(tagName = 'div', propsWithChildren: IPropsWithChildren) {
     this._meta = {
       tagName,
-      props,
     }
+    this._id = nanoid(6)
+    const { props, children } = this._getChildrenAndProps(propsWithChildren)
+    this.children = children
     this.props = this._makePropsProxy(props)
     this.eventBus = new EventBus()
 
@@ -45,6 +65,25 @@ export default class Block {
   init() {
     this._createResources()
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER)
+  }
+
+  _addEvents() {
+    const { events = {} } = this.props
+    Object.keys(events).forEach((event) => {
+      const handler = events[event as keyof typeof events]!
+      const isElementForEvent = (val: string): boolean => {
+        return val === 'A' || val === 'INPUT'
+      }
+      if (isElementForEvent(this._element!.nodeName)) {
+        this._element!.addEventListener(event, handler)
+      }
+
+      this._element?.childNodes.forEach((element) => {
+        if (isElementForEvent(element.nodeName)) {
+          element.addEventListener(event, handler)
+        }
+      })
+    })
   }
 
   _componentDidMount() {
@@ -74,7 +113,7 @@ export default class Block {
   }
 
   // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps: object, newProps: object) {
+  componentDidUpdate(oldProps?: object, newProps?: object) {
     if (oldProps !== newProps) {
       return true
     }
@@ -85,7 +124,6 @@ export default class Block {
     if (!nextProps) {
       return
     }
-
     Object.assign(this.props, nextProps)
   }
 
@@ -93,23 +131,71 @@ export default class Block {
     return this._element
   }
 
+  _getChildrenAndProps(value: IPropsWithChildren) {
+    const props: IPropsWithChildren = {}
+    const children: Record<string, Block> = {}
+
+    Object.entries(value).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value
+      } else {
+        props[key] = value
+      }
+    })
+    return { props, children }
+  }
+
   _render() {
-    const block = this.render()
-    // Этот небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно не в строку компилировать (или делать это правильно),
-    // либо сразу в DOM-элементы возвращать из compile DOM-ноду
-    this._element!.innerHTML = 'block'
+    const propsAndStubs = { ...this.props }
+
+    Object.entries(this.children).forEach(([key, value]) => {
+      propsAndStubs[key] = `<div data-id="${value._id}"></div>`
+    })
+
+    const fragment = this._createDocumentElement(
+      'template'
+    ) as HTMLTemplateElement
+    const block = this.render() as unknown as string
+    console.log('propsAndStubs', propsAndStubs)
+    console.log(
+      'Handlebars.compile(block)(propsAndStubs)',
+      Handlebars.compile(block)(propsAndStubs)
+    )
+    fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
+    const newElemenet = fragment.content.firstElementChild
+
+    Object.values(this.children).forEach((child) => {
+      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+      stub?.replaceWith(child.getContent()!)
+    })
+
+    if (this._element) {
+      this._element.replaceWith(newElemenet!)
+    }
+    this._element = newElemenet!
+
+    this._addEvents()
+    this._componentDidMount()
   }
 
   // Может переопределять пользователь, необязательно трогать
   render() {}
 
   getContent() {
+    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      setTimeout(() => {
+        if (
+          this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE
+        ) {
+          this.dispatchComponentDidMount()
+        }
+      }, 100)
+    }
+
     return this.element
   }
 
-  _makePropsProxy(props: Record<string, unknown>) {
+  _makePropsProxy(props: IPropsWithChildren) {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this
@@ -138,13 +224,13 @@ export default class Block {
 
   show() {
     const content = this.getContent()
-    content && content.style.display
+    // content && content.style.display
     // content && content.style.display = "block";
   }
 
   hide() {
     const content = this.getContent()
-    content && content.style.display
+    // content && content.style.display
     // content && content.style.display = "none";
   }
 }
