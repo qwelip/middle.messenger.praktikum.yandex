@@ -3,7 +3,7 @@ import Block from '../../core/block'
 interface IInputComponent {
   name: string
   type: string
-  inputValue?: string // todom возможно лишний
+  inputValue: string // todom возможно лишний
   isError?: boolean // todom возможно лишний
   errorMsg?: string
   onInput?: (val: string) => void

@@ -156,11 +156,6 @@ export default class Block {
       'template'
     ) as HTMLTemplateElement
     const block = this.render() as unknown as string
-    console.log('propsAndStubs', propsAndStubs)
-    console.log(
-      'Handlebars.compile(block)(propsAndStubs)',
-      Handlebars.compile(block)(propsAndStubs)
-    )
     fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
 
@@ -199,7 +194,6 @@ export default class Block {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this
-
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop]

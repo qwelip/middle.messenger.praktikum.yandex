@@ -18,6 +18,7 @@ export default class LoginPage extends Block {
       input_2: new InputComponent({
         name: 'password',
         type: 'password',
+        inputValue: '',
         isError: false,
         validateFn: passwordValidate,
       }),
