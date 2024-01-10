@@ -8,18 +8,16 @@ export default class LoginPage extends Block {
   constructor(props?: any) {
     super('main', {
       ...props,
-      input_1: new InputComponent({
+      input_login: new InputComponent({
         name: 'login',
         type: 'text',
-        inputValue: '',
-        isError: false,
+        errorMsg: 'Неверный логин',
         validateFn: loginValidate,
       }),
-      input_2: new InputComponent({
+      input_password: new InputComponent({
         name: 'password',
         type: 'password',
-        inputValue: '',
-        isError: false,
+        errorMsg: 'Неверный пароль',
         validateFn: passwordValidate,
       }),
       button: new ButtonComponent({
@@ -38,14 +36,12 @@ export default class LoginPage extends Block {
 
   dispatchComponentDidMount() {
     const form = document.body.querySelector('form')!
-    const login: HTMLFormElement = form.querySelector('input[name=login]')!
-    const password: HTMLFormElement = form.querySelector(
-      'input[name=password]'
-    )!
-    form?.addEventListener('submit', (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault()
-      console.log('ogin.value', login.value)
-      console.log('password.value', password.value)
+      const login: HTMLFormElement = form.querySelector('input[name=login]')!
+      const password: HTMLFormElement = form.querySelector(
+        'input[name=password]'
+      )!
       if (loginValidate(login.value) && passwordValidate(password.value)) {
         const formData = {
           login: login.value,
@@ -54,13 +50,6 @@ export default class LoginPage extends Block {
         console.log('formData', formData)
       }
     })
-  }
-
-  componentDidUpdate(oldProps: any, newProps: any) {
-    if (oldProps.caption !== newProps.caption) {
-      this.children.button.setProps({ caption: newProps.caption })
-    }
-    return false
   }
 
   render() {
@@ -72,12 +61,12 @@ export default class LoginPage extends Block {
           {{#> Form}}
             <div class='login__input'>
               <label for='input' class='input-label text-style_color_gray'>Логин</label>
-              {{{input_1}}}
+              {{{input_login}}}
             </div>
 
             <div class='login__input'>
               <label for='input' class='input-label text-style_color_gray'>Пароль</label>
-              {{{input_2}}}
+              {{{input_password}}}
             </div>
             <div class='login__btn-wrapper'>
               <div class='login__btn'>

@@ -4,16 +4,14 @@ interface IButtonStringComponent {
   caption: string
   page: string
   isRed: boolean
-  onClick: () => void
+  onClick?: () => void
 }
 
 export default class ButtonStringComponent extends Block {
   constructor(props: IButtonStringComponent) {
     super('a', {
       ...props,
-      events: {
-        click: () => props.onClick(),
-      },
+      events: {},
     })
   }
 

@@ -3,16 +3,14 @@ import Block from '../../core/block'
 interface IButtonComponent {
   caption: string
   page: string
-  onClick: () => void
+  onClick?: () => void
 }
 
 export class ButtonComponent extends Block {
   constructor(props: IButtonComponent) {
     super('a', {
       ...props,
-      events: {
-        click: () => props.onClick(),
-      },
+      events: {},
     })
   }
 

@@ -3,11 +3,11 @@ import Block from '../../core/block'
 interface IInputComponent {
   name: string
   type: string
-  inputValue: string // todom возможно лишний
-  isError?: boolean // todom возможно лишний
+  inputValue?: string // todom возможно лишний
+  isError?: boolean
   errorMsg?: string
   onInput?: (val: string) => void
-  validateFn: (val: string) => boolean
+  validateFn?: (val: string) => boolean
 }
 
 export default class InputComponent extends Block {
@@ -17,12 +17,12 @@ export default class InputComponent extends Block {
       events: {
         blur: (ev: any) => {
           this.setProps({ inputValue: ev.target.value })
-          if (
-            ev.target.value.length > 0 &&
-            props.validateFn &&
-            !props.validateFn(ev.target.value)
-          ) {
-            this.setProps({ isError: true })
+          if (ev.target.value.length > 0 && props.validateFn) {
+            if (props.validateFn(ev.target.value)) {
+              this.setProps({ isError: false })
+            } else {
+              this.setProps({ isError: true })
+            }
           } else {
             this.setProps({ isError: false })
           }
@@ -30,11 +30,6 @@ export default class InputComponent extends Block {
       },
     })
   }
-
-  // dispatchComponentDidMount() {
-  //   this.setProps({ value: '1123' })
-  //   this.setProps({ value: '' })
-  // }
 
   render() {
     return `
@@ -59,7 +54,7 @@ export default class InputComponent extends Block {
         {{#if isError}}
           <label
             for={{name}}
-            class='input-label input-label_error text-style_color_red'>Неправильное значение</label>
+            class='input-label input-label_error text-style_color_red'>{{errorMsg}}</label>
         {{/if}}
       </div>
     `

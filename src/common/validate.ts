@@ -1,10 +1,21 @@
 export const nameValidate = (val: string): boolean => {
-  var regex = /[^a-zа-я-\/\*]/g
+  var regex = /[^A-ZА-Яa-zа-я-*]/g
   const res = val.replace(regex, '')
   if (res.length !== val.length) {
     return false
   }
+  if (val.length === 1) {
+    return false
+  }
   if (val[0] !== val[0].toUpperCase()) {
+    return false
+  }
+  if (
+    val
+      .split('')
+      .slice(1)
+      .some((i) => i === i.toUpperCase())
+  ) {
     return false
   }
   return true
@@ -14,7 +25,7 @@ export const loginValidate = (val: string): boolean => {
   if (val.length < 3) {
     return false
   }
-  var regex = /[^a-z1-9-\_/\*]/g
+  var regex = /[^A-Za-z1-9-\_/\*]/g
   const res = val.replace(regex, '')
   if (res.length !== val.length) {
     return false
@@ -52,17 +63,32 @@ export const passwordValidate = (val: string): boolean => {
   return true
 }
 
+export const passwordRepeateValidate = (repeatePassword: string): boolean => {
+  const password: HTMLFormElement = document.querySelector(
+    'input[name=password]'
+  )!
+  console.log(
+    'password.value === repeatePassword',
+    password.value === repeatePassword
+  )
+  return password.value === repeatePassword
+}
+
 export const phoneValidate = (val: string): boolean => {
-  if (val[0] !== '+' || !Number(val[0])) {
+  if (val.length < 10 || val.length >= 15) {
     return false
   }
-  if (val.length < 10 || val.length > 15) {
-    return false
+  if (val[0] === '+') {
+    if (!Number(val.slice(1))) {
+      return false
+    }
+    return true
+  } else {
+    if (!Number(val)) {
+      return false
+    }
+    return true
   }
-  if (!Number(val.slice(1))) {
-    return false
-  }
-  return true
 }
 
 export const messageValidate = (val: string): boolean => {
