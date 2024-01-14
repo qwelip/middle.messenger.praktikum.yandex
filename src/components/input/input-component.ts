@@ -6,6 +6,7 @@ interface IInputComponent {
   inputValue?: string // todom возможно лишний
   isError?: boolean
   errorMsg?: string
+  placeholder?: string
   onInput?: (val: string) => void
   validateFn?: (val: string) => boolean
 }
@@ -15,10 +16,11 @@ export default class InputComponent extends Block {
     super('input', {
       ...props,
       events: {
-        blur: (ev: any) => {
-          this.setProps({ inputValue: ev.target.value })
-          if (ev.target.value.length > 0 && props.validateFn) {
-            if (props.validateFn(ev.target.value)) {
+        blur: (ev) => {
+          const element = ev.target as HTMLInputElement
+          this.setProps({ inputValue: element.value })
+          if (element.value.length > 0 && props.validateFn) {
+            if (props.validateFn(element.value)) {
               this.setProps({ isError: false })
             } else {
               this.setProps({ isError: true })
@@ -36,19 +38,23 @@ export default class InputComponent extends Block {
       <div>
         {{#if isError}}
           <input
+            data-setevent
             name={{name}}
             id={{name}}
             type={{type}}
             class='input text-style text-style_color_red'
-            value={{inputValue}}
+            value='{{inputValue}}'
+            placeholder='{{placeholder}}'
           />
         {{else}}
           <input
+            data-setevent
             name={{name}}
             id={{name}}
             type={{type}}
             class='input text-style'
-            value={{inputValue}}
+            value='{{inputValue}}'
+            placeholder='{{placeholder}}'
           />
         {{/if}}
         {{#if isError}}

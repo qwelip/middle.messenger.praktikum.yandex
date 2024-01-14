@@ -1,4 +1,5 @@
 .user-avatar__img-wrapper {
+  display: block;
   position: relative;
   margin: 0 auto;
   width: 130px;

@@ -20,3 +20,10 @@ export const addOpenPopupHandle = (
     }
   })
 }
+
+export const convertElementToString = (node: Element) => {
+  var tmpNode = document.createElement('div')
+  tmpNode.appendChild(node.cloneNode(true))
+  var str = tmpNode.innerHTML
+  return str
+}

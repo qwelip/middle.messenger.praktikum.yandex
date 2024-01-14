@@ -1,4 +1,4 @@
-export type Listener = (...args: unknown[]) => void
+export type Listener = (...args: any[]) => void
 
 // todom спросить зачем мы присваиваем string = string, зачем так сложно определять типы
 export default class EventBus {
@@ -26,7 +26,6 @@ export default class EventBus {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`)
     }
-
     this.listeners[event].forEach(function (listener) {
       listener(...args)
     })

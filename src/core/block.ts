@@ -2,15 +2,20 @@ import EventBus from './event-bus'
 import Handlebars from 'handlebars'
 import { nanoid } from 'nanoid'
 
-interface IPropsWithChildren {
+export interface IPropsWithChildren {
   [keys: string]: unknown
   events?: IEvents
+}
+
+export interface IPropsCompare {
+  oldProps: IPropsWithChildren
+  newProps: IPropsWithChildren
 }
 
 type Events = keyof HTMLElementEventMap
 
 type IEvents = {
-  [keys in Events]?: (val?: any) => void
+  [keys in Events]?: (val: Event) => void
 }
 
 // interface IChildren {
@@ -24,7 +29,7 @@ interface IMeta {
 export default class Block {
   props: IPropsWithChildren
   private _meta: IMeta
-  private eventBus: EventBus
+  private eventBus: () => EventBus
   private _element: Element | null = null
   children: Record<string, Block>
   private _id: string
@@ -37,6 +42,8 @@ export default class Block {
   }
 
   constructor(tagName = 'div', propsWithChildren: IPropsWithChildren) {
+    const eventBus = new EventBus()
+    this.eventBus = () => eventBus
     this._meta = {
       tagName,
     }
@@ -44,10 +51,9 @@ export default class Block {
     const { props, children } = this._getChildrenAndProps(propsWithChildren)
     this.children = children
     this.props = this._makePropsProxy(props)
-    this.eventBus = new EventBus()
 
-    this._registerEvents(this.eventBus)
-    this.eventBus.emit(Block.EVENTS.INIT)
+    this._registerEvents(eventBus)
+    eventBus.emit(Block.EVENTS.INIT)
   }
 
   _registerEvents(eventBus: EventBus) {
@@ -64,22 +70,21 @@ export default class Block {
 
   init() {
     this._createResources()
-    this.eventBus.emit(Block.EVENTS.FLOW_RENDER)
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
 
   _addEvents() {
     const { events = {} } = this.props
     Object.keys(events).forEach((event) => {
       const handler = events[event as keyof typeof events]!
-      const isElementForEvent = (val: string): boolean => {
-        return val === 'A' || val === 'INPUT'
-      }
-      if (isElementForEvent(this._element!.nodeName)) {
+      if (this._element!.getAttribute('data-setevent') !== null) {
         this._element!.addEventListener(event, handler)
       }
-
       this._element?.childNodes.forEach((element) => {
-        if (isElementForEvent(element.nodeName)) {
+        if (
+          element instanceof Element &&
+          element.getAttribute('data-setevent') !== null
+        ) {
           element.addEventListener(event, handler)
         }
       })
@@ -90,34 +95,15 @@ export default class Block {
     this.componentDidMount()
   }
 
+  _beforeMount() {
+    this.beforeMount()
+  }
+
   // Может переопределять пользователь, необязательно трогать
   componentDidMount() {}
 
   dispatchComponentDidMount() {
-    this.eventBus.emit(Block.EVENTS.FLOW_CDM)
-  }
-
-  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
-    if (
-      oldProps &&
-      newProps &&
-      typeof oldProps === 'object' &&
-      typeof newProps === 'object'
-    ) {
-      const response = this.componentDidUpdate(oldProps, newProps)
-      if (!response) {
-        return
-      }
-      this._render()
-    }
-  }
-
-  // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps?: object, newProps?: object) {
-    if (oldProps !== newProps) {
-      return true
-    }
-    return false
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM)
   }
 
   setProps = (nextProps: object) => {
@@ -145,6 +131,19 @@ export default class Block {
     return { props, children }
   }
 
+  _componentDidUpdate(oldProps: IPropsCompare, newProps: IPropsWithChildren) {
+    const response = this.componentDidUpdate(oldProps, newProps)
+    if (!response) {
+      return
+    }
+    this._render()
+  }
+
+  // Может переопределять пользователь, необязательно трогать
+  componentDidUpdate(oldProps: IPropsCompare, newProps: IPropsWithChildren) {
+    return true
+  }
+
   _render() {
     const propsAndStubs = { ...this.props }
 
@@ -156,8 +155,11 @@ export default class Block {
       'template'
     ) as HTMLTemplateElement
     const block = this.render() as unknown as string
+    // console.log('block', block)
     fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
+    // console.log('propsAndStubs', propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
+    // console.log('newElemenet', newElemenet)
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
@@ -168,6 +170,7 @@ export default class Block {
       this._element.replaceWith(newElemenet!)
     }
     this._element = newElemenet!
+    this._beforeMount()
 
     this._addEvents()
     this._componentDidMount()
@@ -175,6 +178,8 @@ export default class Block {
 
   // Может переопределять пользователь, необязательно трогать
   render() {}
+
+  beforeMount() {}
 
   getContent() {
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
@@ -202,7 +207,7 @@ export default class Block {
       set(target, prop: string, value: unknown) {
         const oldValue = { ...target }
         target[prop] = value
-        self.eventBus.emit(Block.EVENTS.FLOW_CDU, oldValue, target)
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, target)
         return true
       },
       deleteProperty() {
@@ -217,14 +222,16 @@ export default class Block {
   }
 
   show() {
-    const content = this.getContent()
-    // content && content.style.display
-    // content && content.style.display = "block";
+    //   const content = this.getContent()
+    //   content && content.style.display
+    const element = this._element as HTMLElement
+    element.style.display = 'flex'
   }
 
   hide() {
-    const content = this.getContent()
+    // const content = this.getContent()
     // content && content.style.display
-    // content && content.style.display = "none";
+    const element = this._element as HTMLElement
+    element.style.display = 'none'
   }
 }

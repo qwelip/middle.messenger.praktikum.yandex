@@ -18,18 +18,15 @@ export default class LoginPage extends Block {
         name: 'password',
         type: 'password',
         errorMsg: 'Неверный пароль',
-        validateFn: passwordValidate,
       }),
       button: new ButtonComponent({
         caption: 'Авторизоваться',
         page: 'chatPage',
-        onClick: () => {},
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Нет аккаунта?',
         page: 'signInPage',
         isRed: false,
-        onClick: () => {},
       }),
     })
   }

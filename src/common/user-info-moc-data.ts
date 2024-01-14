@@ -1,6 +1,6 @@
 import { IUserInfo } from '../models/chat-list'
 
-// todom удалить
+// todom возможно удалить
 export const baseUserInfo: IUserInfo[] = [
   {
     dataType: 'Почта',
