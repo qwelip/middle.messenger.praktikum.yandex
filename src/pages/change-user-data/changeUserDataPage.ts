@@ -1,4 +1,3 @@
-import { ButtonComponent } from '../../components/button/button-component'
 import SideButtonComponent from '../../components/side-button/side-button-component'
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoChangeComponent from '../../components/user-info-change/user-info-change-component'
@@ -15,10 +14,6 @@ export default class ChangeUserDataPage extends Block {
       userAvatar: new UserAvatarComponent({
         avatarPlaceholder: images.avatarPlaceholder,
       }),
-      button: new ButtonComponent({
-        caption: 'Сохранить',
-        page: 'chatPage',
-      }),
       userInfo: new UserInfoChangeComponent(),
     })
   }
@@ -30,7 +25,6 @@ export default class ChangeUserDataPage extends Block {
           {{{ sideButton }}}
           {{{ userAvatar }}}
           {{{ userInfo }}}
-          {{{ button }}}
         </div>
       </main>
     `
