@@ -10,8 +10,9 @@ import { addOpenPopupHandle } from './utils/utils'
 // import LoginPage from './pages/login/loginPage'
 // import SignInPage from './pages/sign-in/signInPage'
 // import ProfilePage from './pages/profile/profilePage' ({ isPopupShow: false })
-import ChangeUserDataPage from './pages/change-user-data/changeUserDataPage'
+// import ChangeUserDataPage from './pages/change-user-data/changeUserDataPage'
 // import ChangePasswordPage from './pages/change-password/changePasswordPage'
+import ChatPage from './pages/chat/chat-page'
 
 const pages = {
   chatPage: [Pages.ChatPage, { ...images }],
@@ -38,7 +39,7 @@ Object.entries({
 function navigate(page: keyof typeof pages) {
   const container = document.getElementById('app')!
   const [source, context] = pages[page]
-  const block = new ChangeUserDataPage()
+  const block = new ChatPage()
   container.append(block.getContent()!)
   // container.innerHTML = Handlebars.compile(source)(context)
 }
