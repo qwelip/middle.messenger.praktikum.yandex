@@ -4,7 +4,7 @@ import PopupComponent from '../../components/popup/popup-component'
 import SideButtonComponent from '../../components/side-button/side-button-component'
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoComponent from '../../components/user-info/user-info-component'
-import Block, { IPropsWithChildren } from '../../core/block'
+import Block, { IOldNewProps } from '../../core/block'
 import images from '../../utils/import-img'
 
 interface IProps {
@@ -59,10 +59,7 @@ export default class ProfilePage extends Block {
     })
   }
 
-  componentDidUpdate(
-    oldProps: IPropsWithChildren,
-    newProps: IPropsWithChildren
-  ) {
+  componentDidUpdate({ newProps }: IOldNewProps) {
     const isPopupShow = newProps.isPopupShow
     if (isPopupShow) {
       const popup = this.children.popup as Block

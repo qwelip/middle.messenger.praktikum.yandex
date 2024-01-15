@@ -17,8 +17,6 @@ export default class InputMessageComponent extends Block {
     })
   }
 
-  // todom собрать классы для label в одно место
-
   render() {
     return `
     <form class='dialog-sender-wrapper__form'>

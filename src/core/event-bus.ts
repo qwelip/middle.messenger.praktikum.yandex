@@ -1,6 +1,5 @@
 export type Listener = (...args: any[]) => void
 
-// todom спросить зачем мы присваиваем string = string, зачем так сложно определять типы
 export default class EventBus {
   private listeners: { [key in string]: Listener[] } = {}
 

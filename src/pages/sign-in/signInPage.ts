@@ -51,40 +51,40 @@ export default class SignInPage extends Block {
         errorMsg: 'Неверный пароль',
         validateFn: passwordValidate,
       }),
-      input_passwordSec: new InputCheckRepetePasswordComp({
+      input_passwordRepete: new InputCheckRepetePasswordComp({
         target: 'password',
       }),
       button: new ButtonComponent({
         caption: 'Зарегистрироваться',
         page: 'chatPage',
         onClick: () => {
-          const email =
-            (this.children.input_mail.props.inputValue as string) || ''
-          const login =
-            (this.children.input_login.props.inputValue as string) || ''
-          const firstName =
-            (this.children.input_name.props.inputValue as string) || ''
-          const secondName =
-            (this.children.input_surname.props.inputValue as string) || ''
-          const phone =
-            (this.children.input_tel.props.inputValue as string) || ''
-          const password =
-            (this.children.input_password.props.inputValue as string) || ''
+          const emailComp = this.children.input_mail
+          const loginComp = this.children.input_login
+          const firstNameComp = this.children.input_name
+          const secondNameComp = this.children.input_surname
+          const phoneComp = this.children.input_tel
+          const passwordComp = this.children.input_password
+          const passwordRepeteComp = this.children.input_passwordRepete
+
+          const email = (emailComp.props.inputValue as string) || ''
+          const login = (loginComp.props.inputValue as string) || ''
+          const firstName = (firstNameComp.props.inputValue as string) || ''
+          const secondName = (secondNameComp.props.inputValue as string) || ''
+          const phone = (phoneComp.props.inputValue as string) || ''
+          const password = (passwordComp.props.inputValue as string) || ''
           const passwordRepete =
-            (this.children.input_passwordSec.props.inputValue as string) || ''
-          if (password !== passwordRepete) {
-            this.children.input_passwordSec.setProps({ isError: true })
-            return
-          } else {
-            this.children.input_passwordSec.setProps({ isError: false })
-          }
+            (passwordRepeteComp.props.inputValue as string) || ''
+
           if (
             loginValidate(login) &&
             emailValidate(email) &&
             nameValidate(firstName) &&
             nameValidate(secondName) &&
             phoneValidate(phone) &&
-            passwordValidate(password)
+            passwordValidate(password) &&
+            password &&
+            passwordRepete &&
+            password === passwordRepete
           ) {
             const formData = {
               login,
@@ -95,12 +95,41 @@ export default class SignInPage extends Block {
               password,
             }
             console.log('formData', formData)
+            return
+          }
+
+          if (password && passwordRepete && password !== passwordRepete) {
+            passwordRepeteComp.setProps({ isError: true })
+            return
+          }
+
+          if (!passwordRepete) {
+            passwordRepeteComp.setProps({ isError: true })
+          }
+
+          if (!loginValidate(login)) {
+            loginComp.setProps({ isError: true })
+          }
+          if (!emailValidate(email)) {
+            emailComp.setProps({ isError: true })
+          }
+          if (!nameValidate(firstName)) {
+            firstNameComp.setProps({ isError: true })
+          }
+          if (!nameValidate(secondName)) {
+            secondNameComp.setProps({ isError: true })
+          }
+          if (!phoneValidate(phone)) {
+            phoneComp.setProps({ isError: true })
+          }
+          if (!passwordValidate(password)) {
+            passwordComp.setProps({ isError: true })
           }
         },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
-        page: 'signInPage',
+        page: 'loginPage',
         isRed: false,
       }),
     })
@@ -113,7 +142,7 @@ export default class SignInPage extends Block {
           <h2 class='sign-in__title'>Регистрация</h2>
 
           <div class='sign-in__input-wrapper'>
-            {{#> Form}}
+            <form>
                 <div class='sign-in__input'>
                   <label for='input' class='input-label text-style_color_gray'>Почта</label>
                   {{{ input_mail }}}
@@ -140,7 +169,7 @@ export default class SignInPage extends Block {
               </div>
               <div class='sign-in__input'>
                 <label for='input' class='input-label text-style_color_gray'>Пароль (ещё раз)</label>
-                {{{ input_passwordSec }}}
+                {{{ input_passwordRepete }}}
               </div>
               <div class='sign-in__btn-wrapper'>
                 <div class='sign-in__btn'>
@@ -150,7 +179,7 @@ export default class SignInPage extends Block {
                   {{{ buttonString }}}
                 </div>
               </div>
-            {{/Form}}
+            </form>
           </div>
         </div>
       </main>

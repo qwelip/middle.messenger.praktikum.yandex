@@ -89,7 +89,6 @@ export default class Block {
 
   _componentDidMount() {
     this.componentDidMount()
-    // добавил новое из теории
     Object.values(this.children).forEach((child) => {
       child.dispatchComponentDidMount()
     })
@@ -99,7 +98,6 @@ export default class Block {
     this.beforeMount()
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount() {}
 
   dispatchComponentDidMount() {
@@ -136,15 +134,12 @@ export default class Block {
     newProps: IPropsWithChildren
   ) {
     const response = this.componentDidUpdate({ oldProps, newProps })
-    // console.log('oldProps', oldProps)
-    // console.log('newProps', newProps)
     if (!response) {
       return
     }
     this._render()
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidUpdate({}: IOldNewProps) {
     return true
   }
@@ -160,18 +155,12 @@ export default class Block {
       'template'
     ) as HTMLTemplateElement
     const block = this.render() as unknown as string
-    // console.log('block', block)
     fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
-    // console.log('propsAndStubs', propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
-    // console.log('newElemenet', newElemenet)
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
       stub?.replaceWith(child.getContent()!)
-      // if (this.renderCount !== 0) {
-      //   child._componentDidUpdate(undefined, child.props)
-      // }
     })
 
     if (this._element) {
@@ -184,7 +173,6 @@ export default class Block {
     this._componentDidMount()
   }
 
-  // Может переопределять пользователь, необязательно трогать
   render() {}
 
   beforeMount() {}
@@ -204,8 +192,6 @@ export default class Block {
   }
 
   _makePropsProxy(props: IPropsWithChildren) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
     const self = this
     return new Proxy(props, {
       get(target, prop: string) {
@@ -225,20 +211,15 @@ export default class Block {
   }
 
   _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName)
   }
 
   show() {
-    //   const content = this.getContent()
-    //   content && content.style.display
     const element = this._element as HTMLElement
     element.style.display = 'flex'
   }
 
   hide() {
-    // const content = this.getContent()
-    // content && content.style.display
     const element = this._element as HTMLElement
     element.style.display = 'none'
   }

@@ -52,15 +52,13 @@ export default class LoginPage extends Block {
     })
   }
 
-  // todom протестировать инпуты если в них ничего нет, как  работает валидация
-
   render() {
     return `
     <main class='login horizontal-centered'>
       <div class='login__container'>
         <h2 class='login__title'>Вход</h2>
         <div class='login__input-wrapper'>
-          {{#> Form}}
+          <form>
             <div class='login__input'>
               <label for='input' class='input-label text-style_color_gray'>Логин</label>
               {{{input_login}}}
@@ -78,7 +76,7 @@ export default class LoginPage extends Block {
                 {{{ buttonString }}}
               </div>
             </div>
-          {{/Form}}
+          </form>
         </div>
       </div>
     </main>`

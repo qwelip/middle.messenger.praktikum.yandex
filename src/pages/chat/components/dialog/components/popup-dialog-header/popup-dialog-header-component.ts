@@ -15,24 +15,24 @@ export default class PopupDialogHeaderComponent extends Block {
   render() {
     return `
       <div class='popup-dialog-header popup-dialog-header_hidden'>
-        <div class='popup-item btn-styles' page='newUserPage'>
+        <div class='popup-item btn-styles' page='page500'>
           <img
             class='popup-dialog-header_img popup-item__img'
             src={{addIcon}}
             alt='Добавить пользователя'
-            page='newUserPage'
+            page='page500'
           />
-          <p class='popup-item__text text-style' page='newUserPage'>Добавить
+          <p class='popup-item__text text-style' page='page500'>Добавить
             пользователя</p>
         </div>
-        <div class='popup-item btn-styles' page='page404'>
+        <div class='popup-item btn-styles' page='page500'>
           <img
             class='popup-dialog-header_img popup-item__img'
             src={{deleteIcon}}
             alt='Удалить пользователя'
-            page='page404'
+            page='page500'
           />
-          <p class='popup-item__text text-style' page='page404'>Удалить пользователя</p>
+          <p class='popup-item__text text-style' page='page500'>Удалить пользователя</p>
         </div>
       </div>
     `

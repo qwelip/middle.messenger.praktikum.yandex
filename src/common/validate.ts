@@ -4,7 +4,7 @@ export const nameValidate = (val: string): boolean => {
   if (res.length !== val.length) {
     return false
   }
-  if (val.length === 1) {
+  if (val.length <= 1) {
     return false
   }
   if (val[0] !== val[0].toUpperCase()) {

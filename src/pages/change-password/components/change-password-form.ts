@@ -10,14 +10,14 @@ export class ChangePasswordForm extends Block {
       input_old_password: new InputNoBorderComponent({
         name: 'oldPassword',
         type: 'password',
-        errorMsg: 'Неверный пароль',
+        errorMsg: 'Неправильный пароль',
         inputValue: '',
         validateFn: passwordValidate,
       }),
       input_new_password: new InputNoBorderComponent({
         name: 'newPassword',
         type: 'password',
-        errorMsg: 'Неверный пароль',
+        errorMsg: 'Неправильный пароль',
         inputValue: '',
         validateFn: passwordValidate,
       }),
@@ -28,23 +28,37 @@ export class ChangePasswordForm extends Block {
         caption: 'Сохранить',
         page: 'chatPage',
         onClick: () => {
-          const oldPassword = this.children.input_old_password.props
-            .inputValue as string
-          const repetePassword = this.children.input_new_repete_password.props
-            .inputValue as string
-          const newPassword = this.children.input_new_password.props
-            .inputValue as string
-          if (repetePassword !== newPassword) {
-            this.children.input_new_repete_password.setProps({ isError: true })
-            return
-          } else {
-            this.children.input_new_repete_password.setProps({ isError: false })
-          }
+          const oldPasswordComp = this.children.input_old_password
+          const newPasswordComp = this.children.input_new_password
+          const repetePassComp = this.children.input_new_repete_password
+
+          const oldPassword = (oldPasswordComp.props.inputValue as string) || ''
+          const newPassword = (newPasswordComp.props.inputValue as string) || ''
+          const repetePassword =
+            (repetePassComp.props.inputValue as string) || ''
+
           if (
             passwordValidate(oldPassword) &&
-            passwordValidate(repetePassword)
+            passwordValidate(repetePassword) &&
+            repetePassword &&
+            newPassword &&
+            repetePassword === newPassword
           ) {
+            oldPasswordComp.setProps({ isError: false })
+            newPasswordComp.setProps({ isError: false })
+            repetePassComp.setProps({ isError: false })
             console.log({ oldPassword, newPassword })
+            return
+          }
+
+          if (!repetePassword) {
+            repetePassComp.setProps({ isError: true })
+          }
+          if (!passwordValidate(oldPassword)) {
+            oldPasswordComp.setProps({ isError: true })
+          }
+          if (!passwordValidate(newPassword)) {
+            newPasswordComp.setProps({ isError: true })
           }
         },
       }),
@@ -53,7 +67,7 @@ export class ChangePasswordForm extends Block {
 
   render() {
     return `
-        {{#> Form}}
+        <form>
           <ul class='change-password__list list'>
             <li class='change-password__list-item list-item'>
                 <p class='change-password__text text-style'>Старый пароль</p>
@@ -67,9 +81,9 @@ export class ChangePasswordForm extends Block {
                 <p class='change-password__text text-style'>Повторите новый пароль</p>
                 {{{ input_new_repete_password }}}
               </li>
-          </ul>
-          {{{ button }}}
-        {{/Form}}
+              </ul>
+            {{{ button }}}
+        </form>
       `
   }
 }

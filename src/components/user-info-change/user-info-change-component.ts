@@ -115,7 +115,7 @@ export default class UserInfoChangeComponent extends Block {
   render() {
     return `
     <div class='user-info-change'>
-        {{#> Form}}
+        <form>
           <ul class='user-info-change__list list'>
             <li class='user-info-change__list-item list-item'>
               <p class='user-info-change__text text-style'>Почта</p>
@@ -143,7 +143,7 @@ export default class UserInfoChangeComponent extends Block {
             </li>
           </ul>
           {{{ button }}}
-        {{/Form}}
+        </form>
     </div>
     `
   }

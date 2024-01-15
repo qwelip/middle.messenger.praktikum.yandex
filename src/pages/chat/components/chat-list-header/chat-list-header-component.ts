@@ -29,9 +29,9 @@ export default class ChatListHeaderComponent extends Block {
             page='profilePage'
           />
         </a>
-        {{#> Form}}
+        <form>
           {{{ inputSearch }}}
-        {{/Form}}
+        </form>
           <img
             src={{magnifierIcon}}
             alt='Поиск'

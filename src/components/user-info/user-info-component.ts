@@ -12,7 +12,6 @@ export default class UserInfoComponent extends Block {
   }
 
   render() {
-    // todom подумать как дженериком передавать тип пропсов в Block
     const data = this.props.data as Record<string, unknown>[]
 
     const renderItems = () => {
