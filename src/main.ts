@@ -7,9 +7,11 @@ import * as PagesTemp from './pages/composite-pages-temp'
 import images from './utils/import-img'
 import { addOpenPopupHandle } from './utils/utils'
 // todom собрать все страницы в один индекс
-import LoginPage from './pages/login/loginPage'
+// import LoginPage from './pages/login/loginPage'
 // import SignInPage from './pages/sign-in/signInPage'
 // import ProfilePage from './pages/profile/profilePage' ({ isPopupShow: false })
+// import ChangeUserDataPage from './pages/change-user-data/changeUserDataPage'
+import ChangePasswordPage from './pages/change-password/changePasswordPage'
 
 const pages = {
   chatPage: [Pages.ChatPage, { ...images }],
@@ -36,7 +38,7 @@ Object.entries({
 function navigate(page: keyof typeof pages) {
   const container = document.getElementById('app')!
   const [source, context] = pages[page]
-  const block = new LoginPage()
+  const block = new ChangePasswordPage()
   container.append(block.getContent()!)
   // container.innerHTML = Handlebars.compile(source)(context)
 }

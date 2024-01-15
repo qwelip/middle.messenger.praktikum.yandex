@@ -3,7 +3,7 @@ import Block from '../../core/block'
 interface IProps {
   name?: string
   avatarPlaceholder: string
-  onClick: () => void
+  onClick?: () => void
 }
 
 export default class UserAvatarComponent extends Block {
@@ -11,7 +11,7 @@ export default class UserAvatarComponent extends Block {
     super('main', {
       ...props,
       events: {
-        click: () => props.onClick(),
+        click: () => props.onClick && props.onClick(),
       },
     })
   }
@@ -19,19 +19,25 @@ export default class UserAvatarComponent extends Block {
   render() {
     return `
     <div class='user-avatar'>
-      <div data-setevent class='user-avatar__img-wrapper centered-content' page='newAvatarPage'>
-        <img
-          class='user-avatar__img'
-          src={{avatarPlaceholder}}
-          alt='Иконка аватара'
-          page='newAvatarPage'
-        />
-        <p class='user-avatar__change-avatar' page='newAvatarPage'>Поменять аватар</p>
-      </div>
       {{#if name}}
+        <div data-setevent class='user-avatar__img-wrapper user-avatar__img-wrapper_useHover centered-content'>
+          <img
+            class='user-avatar__img'
+            src={{avatarPlaceholder}}
+            alt='Иконка аватара'
+          />
+          <p class='user-avatar__change-avatar'>Поменять аватар</p>
+        </div>
         <h2 class='user-avatar__name'>{{name}}</h2>
+      {{else}}
+        <div data-setevent class='user-avatar__img-wrapper centered-content'>
+          <img
+            class='user-avatar__img'
+            src={{avatarPlaceholder}}
+            alt='Иконка аватара'
+          />
+        </div>
       {{/if}}
-    </div>
     `
   }
 }

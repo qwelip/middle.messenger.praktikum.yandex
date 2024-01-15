@@ -7,8 +7,8 @@ export interface IPropsWithChildren {
   events?: IEvents
 }
 
-export interface IPropsCompare {
-  oldProps: IPropsWithChildren
+export interface IOldNewProps {
+  oldProps?: IPropsWithChildren
   newProps: IPropsWithChildren
 }
 
@@ -17,10 +17,6 @@ type Events = keyof HTMLElementEventMap
 type IEvents = {
   [keys in Events]?: (val: Event) => void
 }
-
-// interface IChildren {
-//   [keys: string]: Block
-// }
 
 interface IMeta {
   tagName: string
@@ -93,6 +89,10 @@ export default class Block {
 
   _componentDidMount() {
     this.componentDidMount()
+    // добавил новое из теории
+    Object.values(this.children).forEach((child) => {
+      child.dispatchComponentDidMount()
+    })
   }
 
   _beforeMount() {
@@ -131,8 +131,13 @@ export default class Block {
     return { props, children }
   }
 
-  _componentDidUpdate(oldProps: IPropsCompare, newProps: IPropsWithChildren) {
-    const response = this.componentDidUpdate(oldProps, newProps)
+  _componentDidUpdate(
+    oldProps: IPropsWithChildren | undefined,
+    newProps: IPropsWithChildren
+  ) {
+    const response = this.componentDidUpdate({ oldProps, newProps })
+    // console.log('oldProps', oldProps)
+    // console.log('newProps', newProps)
     if (!response) {
       return
     }
@@ -140,7 +145,7 @@ export default class Block {
   }
 
   // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps: IPropsCompare, newProps: IPropsWithChildren) {
+  componentDidUpdate({}: IOldNewProps) {
     return true
   }
 
@@ -164,6 +169,9 @@ export default class Block {
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
       stub?.replaceWith(child.getContent()!)
+      // if (this.renderCount !== 0) {
+      //   child._componentDidUpdate(undefined, child.props)
+      // }
     })
 
     if (this._element) {

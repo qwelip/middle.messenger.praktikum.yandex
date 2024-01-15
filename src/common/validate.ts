@@ -63,14 +63,13 @@ export const passwordValidate = (val: string): boolean => {
   return true
 }
 
-export const passwordRepeateValidate = (repeatePassword: string): boolean => {
+export const passwordRepeateValidate = (
+  repeatePassword: string,
+  target: string
+): boolean => {
   const password: HTMLFormElement = document.querySelector(
-    'input[name=password]'
+    `input[name=${target}]`
   )!
-  console.log(
-    'password.value === repeatePassword',
-    password.value === repeatePassword
-  )
   return password.value === repeatePassword
 }
 

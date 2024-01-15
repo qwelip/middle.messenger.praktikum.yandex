@@ -1,18 +1,16 @@
 import Block from '../../core/block'
 
-interface IInputComponent {
+interface IProps {
   name: string
   type: string
-  inputValue?: string // todom возможно лишний
-  isError?: boolean
-  errorMsg?: string
-  placeholder?: string
+  inputValue: string
+  errorMsg: string
   onInput?: (val: string) => void
   validateFn?: (val: string) => boolean
 }
 
-export default class InputComponent extends Block {
-  constructor(props: IInputComponent) {
+export default class InputNoBorderComponent extends Block {
+  constructor(props: IProps) {
     super('div', {
       ...props,
       events: {
@@ -39,26 +37,25 @@ export default class InputComponent extends Block {
         {{#if isError}}
           <input
             data-setevent
+            class='input-no-border text-style text-style_color_red'
             name={{name}}
             type={{type}}
-            class='input text-style text-style_color_red'
             value='{{inputValue}}'
-            placeholder='{{placeholder}}'
           />
         {{else}}
           <input
             data-setevent
+            class='input-no-border text-style text-style_color_gray'
             name={{name}}
             type={{type}}
-            class='input text-style'
             value='{{inputValue}}'
-            placeholder='{{placeholder}}'
           />
         {{/if}}
         {{#if isError}}
           <label
             for={{name}}
-            class='input-label input-label_error text-style_color_red'>{{errorMsg}}</label>
+            class='input-label input-label_error text-style_color_red input-label_align_end'>{{errorMsg}}
+          </label>
         {{/if}}
       </div>
     `

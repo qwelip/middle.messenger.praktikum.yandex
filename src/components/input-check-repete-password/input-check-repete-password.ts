@@ -1,26 +1,21 @@
+import { passwordRepeateValidate } from '../../common/validate'
 import Block from '../../core/block'
 
-interface IInputComponent {
-  name: string
-  type: string
-  inputValue?: string // todom возможно лишний
-  isError?: boolean
-  errorMsg?: string
-  placeholder?: string
+interface IProps {
+  target: string
   onInput?: (val: string) => void
-  validateFn?: (val: string) => boolean
 }
 
-export default class InputComponent extends Block {
-  constructor(props: IInputComponent) {
+export default class InputCheckRepetePassword extends Block {
+  constructor(props: IProps) {
     super('div', {
       ...props,
       events: {
         blur: (ev) => {
           const element = ev.target as HTMLInputElement
           this.setProps({ inputValue: element.value })
-          if (element.value.length > 0 && props.validateFn) {
-            if (props.validateFn(element.value)) {
+          if (element.value.length > 0) {
+            if (passwordRepeateValidate(element.value, props.target)) {
               this.setProps({ isError: false })
             } else {
               this.setProps({ isError: true })
@@ -39,26 +34,25 @@ export default class InputComponent extends Block {
         {{#if isError}}
           <input
             data-setevent
-            name={{name}}
-            type={{type}}
-            class='input text-style text-style_color_red'
+            class='input-no-border text-style text-style_color_red'
+            name='repetePassword'
+            type='password'
             value='{{inputValue}}'
-            placeholder='{{placeholder}}'
           />
         {{else}}
           <input
             data-setevent
-            name={{name}}
-            type={{type}}
-            class='input text-style'
+            class='input-no-border text-style text-style_color_gray'
+            name='repetePassword'
+            type='password'
             value='{{inputValue}}'
-            placeholder='{{placeholder}}'
           />
         {{/if}}
         {{#if isError}}
           <label
-            for={{name}}
-            class='input-label input-label_error text-style_color_red'>{{errorMsg}}</label>
+            for='repetePassword'
+            class='input-label input-label_error text-style_color_red input-label_align_end'>Пароли не совпадают
+          </label>
         {{/if}}
       </div>
     `

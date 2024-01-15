@@ -10,13 +10,18 @@ export class ButtonComponent extends Block {
   constructor(props: IButtonComponent) {
     super('a', {
       ...props,
-      events: {},
+      events: {
+        click: (e) => {
+          e.preventDefault()
+          props.onClick && props.onClick()
+        },
+      },
     })
   }
 
   render() {
     return `
-      <a class='button' page={{page}}>
+      <a data-setevent class='button' page={{page}}>
         <button type='submit' class='button__button'>
           {{caption}}
         </button>

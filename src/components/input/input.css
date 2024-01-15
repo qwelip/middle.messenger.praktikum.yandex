@@ -13,3 +13,7 @@
 .input-label_error {
   padding-top: 7px;
 }
+
+.input-label_align_end {
+  text-align: end;
+}
