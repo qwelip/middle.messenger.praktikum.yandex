@@ -89,7 +89,3 @@ export const phoneValidate = (val: string): boolean => {
     return true
   }
 }
-
-export const messageValidate = (val: string): boolean => {
-  return val.length > 0
-}

@@ -15,12 +15,7 @@ export default class ChangePasswordPage extends Block {
       userAvatar: new UserAvatarComponent({
         avatarPlaceholder: images.avatarPlaceholder,
       }),
-      form: new ChangePasswordForm({
-        oldPassword: '',
-        newPassword: '',
-        repetePassword: '',
-        isPasswordRepeteError: false,
-      }),
+      form: new ChangePasswordForm(),
       userInfo: new UserInfoChangeComponent(),
     })
   }

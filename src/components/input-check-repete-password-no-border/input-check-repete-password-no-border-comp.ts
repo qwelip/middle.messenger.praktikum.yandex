@@ -6,7 +6,7 @@ interface IProps {
   onInput?: (val: string) => void
 }
 
-export default class InputCheckRepetePasswordComp extends Block {
+export default class InputCheckRepetePasswordNoBorderComp extends Block {
   constructor(props: IProps) {
     super('div', {
       ...props,
@@ -34,7 +34,7 @@ export default class InputCheckRepetePasswordComp extends Block {
         {{#if isError}}
           <input
             data-setevent
-            class='input text-style text-style_color_red'
+            class='input-no-border text-style text-style_color_red'
             name='repetePassword'
             type='password'
             value='{{inputValue}}'
@@ -42,7 +42,7 @@ export default class InputCheckRepetePasswordComp extends Block {
         {{else}}
           <input
             data-setevent
-            class='input text-style'
+            class='input-no-border text-style text-style_color_gray'
             name='repetePassword'
             type='password'
             value='{{inputValue}}'
@@ -51,7 +51,7 @@ export default class InputCheckRepetePasswordComp extends Block {
         {{#if isError}}
           <label
             for='repetePassword'
-            class='input-label input-label_error text-style_color_red '>Пароли не совпадают
+            class='input-label input-label_error text-style_color_red input-label_align_end'>Пароли не совпадают
           </label>
         {{/if}}
       </div>

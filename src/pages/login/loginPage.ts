@@ -22,6 +22,27 @@ export default class LoginPage extends Block {
       button: new ButtonComponent({
         caption: 'Авторизоваться',
         page: 'chatPage',
+        onClick: () => {
+          const loginComp = this.children.input_login
+          const passwordComp = this.children.input_password
+          const login = (loginComp.props.inputValue as string) || ''
+          const password = (passwordComp.props.inputValue as string) || ''
+
+          if (loginValidate(login)) {
+            loginComp.setProps({ isError: false })
+          } else {
+            loginComp.setProps({ isError: true })
+            return
+          }
+
+          if (passwordValidate(password)) {
+            passwordComp.setProps({ isError: false })
+          } else {
+            passwordComp.setProps({ isError: true })
+            return
+          }
+          console.log({ login, password })
+        },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Нет аккаунта?',
@@ -31,23 +52,7 @@ export default class LoginPage extends Block {
     })
   }
 
-  dispatchComponentDidMount() {
-    const form = document.body.querySelector('form')!
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const login: HTMLFormElement = form.querySelector('input[name=login]')!
-      const password: HTMLFormElement = form.querySelector(
-        'input[name=password]'
-      )!
-      if (loginValidate(login.value) && passwordValidate(password.value)) {
-        const formData = {
-          login: login.value,
-          password: password.value,
-        }
-        console.log('formData', formData)
-      }
-    })
-  }
+  // todom протестировать инпуты если в них ничего нет, как  работает валидация
 
   render() {
     return `

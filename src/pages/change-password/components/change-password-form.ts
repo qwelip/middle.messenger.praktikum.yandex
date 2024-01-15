@@ -1,35 +1,27 @@
 import { passwordValidate } from '../../../common/validate'
 import { ButtonComponent } from '../../../components/button/button-component'
-import InputCheckRepetePassword from '../../../components/input-check-repete-password/input-check-repete-password'
+import InputCheckRepetePasswordNoBorderComp from '../../../components/input-check-repete-password-no-border/input-check-repete-password-no-border-comp'
 import InputNoBorderComponent from '../../../components/input-no-border/input-no-border-component'
 import Block from '../../../core/block'
 
-interface IProps {
-  oldPassword: string
-  newPassword: string
-  repetePassword: string
-  isPasswordRepeteError: boolean
-}
-
 export class ChangePasswordForm extends Block {
-  constructor(props: IProps) {
+  constructor() {
     super('ul', {
-      ...props,
       input_old_password: new InputNoBorderComponent({
         name: 'oldPassword',
         type: 'password',
         errorMsg: 'Неверный пароль',
-        inputValue: props.oldPassword,
+        inputValue: '',
         validateFn: passwordValidate,
       }),
       input_new_password: new InputNoBorderComponent({
         name: 'newPassword',
         type: 'password',
         errorMsg: 'Неверный пароль',
-        inputValue: props.newPassword,
+        inputValue: '',
         validateFn: passwordValidate,
       }),
-      input_new_repete_password: new InputCheckRepetePassword({
+      input_new_repete_password: new InputCheckRepetePasswordNoBorderComp({
         target: 'newPassword',
       }),
       button: new ButtonComponent({

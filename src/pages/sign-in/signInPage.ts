@@ -2,12 +2,12 @@ import {
   emailValidate,
   loginValidate,
   nameValidate,
-  passwordRepeateValidate,
   passwordValidate,
   phoneValidate,
 } from '../../common/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
+import InputCheckRepetePasswordComp from '../../components/input-check-repete-password/input-check-repete-password'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 
@@ -51,64 +51,58 @@ export default class SignInPage extends Block {
         errorMsg: 'Неверный пароль',
         validateFn: passwordValidate,
       }),
-      input_passwordSec: new InputComponent({
-        name: 'passwordSec',
-        type: 'password',
-        errorMsg: 'Пароли не совпадают',
-        validateFn: passwordRepeateValidate,
+      input_passwordSec: new InputCheckRepetePasswordComp({
+        target: 'password',
       }),
       button: new ButtonComponent({
         caption: 'Зарегистрироваться',
         page: 'chatPage',
+        onClick: () => {
+          const email =
+            (this.children.input_mail.props.inputValue as string) || ''
+          const login =
+            (this.children.input_login.props.inputValue as string) || ''
+          const firstName =
+            (this.children.input_name.props.inputValue as string) || ''
+          const secondName =
+            (this.children.input_surname.props.inputValue as string) || ''
+          const phone =
+            (this.children.input_tel.props.inputValue as string) || ''
+          const password =
+            (this.children.input_password.props.inputValue as string) || ''
+          const passwordRepete =
+            (this.children.input_passwordSec.props.inputValue as string) || ''
+          if (password !== passwordRepete) {
+            this.children.input_passwordSec.setProps({ isError: true })
+            return
+          } else {
+            this.children.input_passwordSec.setProps({ isError: false })
+          }
+          if (
+            loginValidate(login) &&
+            emailValidate(email) &&
+            nameValidate(firstName) &&
+            nameValidate(secondName) &&
+            phoneValidate(phone) &&
+            passwordValidate(password)
+          ) {
+            const formData = {
+              login,
+              email,
+              firstName,
+              secondName,
+              phone,
+              password,
+            }
+            console.log('formData', formData)
+          }
+        },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
         page: 'signInPage',
         isRed: false,
       }),
-    })
-  }
-
-  dispatchComponentDidMount() {
-    const form = document.body.querySelector('form')!
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const email: HTMLFormElement = form.querySelector('input[name=email]')!
-      const login: HTMLFormElement = form.querySelector('input[name=login]')!
-      const first_name: HTMLFormElement = form.querySelector(
-        'input[name=first_name]'
-      )!
-      const second_name: HTMLFormElement = form.querySelector(
-        'input[name=second_name]'
-      )!
-      const phone: HTMLFormElement = form.querySelector('input[name=phone]')!
-      const password: HTMLFormElement = form.querySelector(
-        'input[name=password]'
-      )!
-      const passwordSec: HTMLFormElement = form.querySelector(
-        'input[name=passwordSec]'
-      )!
-
-      if (
-        loginValidate(login.value) &&
-        emailValidate(email.value) &&
-        nameValidate(first_name.value) &&
-        nameValidate(second_name.value) &&
-        phoneValidate(phone.value) &&
-        passwordValidate(password.value) &&
-        passwordRepeateValidate(passwordSec.value)
-      ) {
-        const formData = {
-          login: login.value,
-          email: email.value,
-          first_name: first_name.value,
-          second_name: second_name.value,
-          phone: phone.value,
-          password: password.value,
-          passwordSec: passwordSec.value,
-        }
-        console.log('formData', formData)
-      }
     })
   }
 
