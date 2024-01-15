@@ -27,6 +27,7 @@
 @import './pages/chat/components/dialog/components/popup-dialog-sender/popup-dialog-sender.css';
 @import './pages/chat/components/dialog/components/common-styles.css';
 @import './pages/chat/components/dialog/components/input-search/input-search.css';
+@import './pages/chat/components/dialog/components/input-message/input-message.css';
 
 /* common components */
 @import './components/user-avatar/user-avatar.css';

@@ -10,11 +10,19 @@ export default class ChatListComponent extends Block {
         arrowIcon: images.arrowIcon,
         magnifierIcon: images.magnifierIcon,
       }),
-      chatListItem: new ChatListItemComponent({
-        date: '',
+      chatListItem1: new ChatListItemComponent({
+        date: '12:00',
         isSelected: true,
-        message: '',
-        name: '',
+        message:
+          'Друзья, у меня для вас особенный выпуск новостей новостей новостей!',
+        name: 'Илья',
+        onClick: () => console.log('123', 123),
+      }),
+      chatListItem2: new ChatListItemComponent({
+        date: '1 Мая 2020',
+        isSelected: false,
+        message: 'Миллионы россиян ежедневно проводят десятки часов свое...',
+        name: 'тет-а-теты',
         onClick: () => console.log('123', 123),
       }),
     })
@@ -25,9 +33,8 @@ export default class ChatListComponent extends Block {
       <section class='chat-list'>
         {{{ header }}}
         <div class='chat-list__list'>
-          
-            {{{ chatListItem }}}
-          
+            {{{ chatListItem1 }}}
+            {{{ chatListItem2 }}}
         </div>
       </section>
     `

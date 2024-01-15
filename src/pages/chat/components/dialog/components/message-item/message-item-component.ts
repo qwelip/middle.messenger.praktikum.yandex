@@ -2,10 +2,10 @@ import Block from '../../../../../../core/block'
 
 interface IProps {
   isMine: boolean
-  contentImg: string
   message: string
   date: string
-  msgReceivedIcon: string
+  contentImg?: string
+  msgReceivedIcon?: string
 }
 
 export default class MessageItemComponent extends Block {

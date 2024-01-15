@@ -2,6 +2,7 @@ import Block from '../../../../../../core/block'
 import images from '../../../../../../utils/import-img'
 import InputMessageComponent from '../input-message/input-message-component'
 import PopupDialogSenderComponent from '../popup-dialog-sender/popup-dialog-sender-component'
+import SendButtonComponent from '../send-button/send-button-component'
 
 interface IProps {
   pinIcon: string
@@ -18,6 +19,18 @@ export default class DialogSenderComponent extends Block {
         locationIcon: images.locationIcon,
       }),
       input: new InputMessageComponent(),
+      button: new SendButtonComponent({
+        sendIcon: images.sendIcon,
+        onClick: () => {
+          const inputVal = this.children.input.props.inputValue as string
+          if (!inputVal) {
+            this.children.input.setProps({ isError: true })
+          } else {
+            this.children.input.setProps({ isError: false })
+            console.log('inputVal', inputVal)
+          }
+        },
+      }),
     })
   }
 
@@ -28,14 +41,10 @@ export default class DialogSenderComponent extends Block {
           {{{ popupDialogSender }}}
           <img class='dialog-sender__pin-img' src={{pinIcon}} alt='Прикрепить' />
         </a>
-        <div class="dialog-sender__input-wrapper">
-          {{#> Form}}
-            {{{ input }}}
-          {{/Form}}
+        <div class='dialog-sender__input-wrapper'>
+          {{{ input }}}
         </div>
-        <a class='dialog-sender__send-btn btn-styles'>
-          <img class='dialog-sender__send-img' src={{sendIcon}} alt='Отправить' />
-        </a>
+        {{{ button }}}
       </div>
     `
   }

@@ -14,6 +14,12 @@
   padding-top: 7px;
 }
 
+.input-label_msg-error {
+  position: absolute;
+  bottom: 65px;
+  left: 65px;
+}
+
 .input-label_align_end {
   text-align: end;
 }
