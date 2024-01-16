@@ -34,18 +34,8 @@ export function navigate(page: keyof typeof pages) {
 
 document.addEventListener('DOMContentLoaded', () => {
   navigate('chatPage')
-  addOpenPopupHandle(
-    'dialog-sender__pin-img',
-    'popup-dialog-sender',
-    images.pinIcon,
-    images.pinIconActive,
-  )
-  addOpenPopupHandle(
-    'dialog-header__btn-img',
-    'popup-dialog-header',
-    images.contextMenuIcon,
-    images.contextMenuIconActive,
-  )
+  addOpenPopupHandle('dialog-sender__pin-img', 'popup-dialog-sender', images.pinIcon, images.pinIconActive)
+  addOpenPopupHandle('dialog-header__btn-img', 'popup-dialog-header', images.contextMenuIcon, images.contextMenuIconActive)
 })
 
 document.addEventListener('click', (e) => {
