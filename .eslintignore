@@ -5,3 +5,7 @@
 /node_modules 
 
 /vite.config.js
+*.css
+*.hbs
+/src/assets/*
+/src/vendor/*

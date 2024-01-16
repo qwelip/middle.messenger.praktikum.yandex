@@ -24,7 +24,7 @@ export default class DialogContentComponent extends Block {
         contentImg: '',
         date: '12:00',
         isMine: true,
-        message: `Круто!`,
+        message: 'Круто!',
         msgReceivedIcon: images.msgReceivedIcon,
       }),
     })

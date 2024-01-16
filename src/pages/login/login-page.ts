@@ -5,9 +5,8 @@ import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 
 export default class LoginPage extends Block {
-  constructor(props?: any) {
+  constructor() {
     super('main', {
-      ...props,
       input_login: new InputComponent({
         name: 'login',
         type: 'text',

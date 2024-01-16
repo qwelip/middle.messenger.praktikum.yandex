@@ -1,7 +1,13 @@
-import EventBus from './event-bus'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Handlebars from 'handlebars'
 import { nanoid } from 'nanoid'
+import EventBus from './event-bus'
 
+type Events = keyof HTMLElementEventMap
+
+type IEvents = {
+  [keys in Events]?: (val: Event) => void
+}
 export interface IPropsWithChildren {
   [keys: string]: unknown
   events?: IEvents
@@ -12,22 +18,22 @@ export interface IOldNewProps {
   newProps: IPropsWithChildren
 }
 
-type Events = keyof HTMLElementEventMap
-
-type IEvents = {
-  [keys in Events]?: (val: Event) => void
-}
-
 interface IMeta {
   tagName: string
 }
 
 export default class Block {
   props: IPropsWithChildren
+
   private _meta: IMeta
+
   private eventBus: () => EventBus
+
   private _element: Element | null = null
+
+  // eslint-disable-next-line no-use-before-define
   children: Record<string, Block>
+
   private _id: string
 
   static EVENTS = {
@@ -37,11 +43,11 @@ export default class Block {
     FLOW_RENDER: 'flow:render',
   }
 
-  constructor(tagName = 'div', propsWithChildren: IPropsWithChildren) {
+  constructor(tagName: string, propsWithChildren: IPropsWithChildren) {
     const eventBus = new EventBus()
     this.eventBus = () => eventBus
     this._meta = {
-      tagName,
+      tagName: tagName || 'div',
     }
     this._id = nanoid(6)
     const { props, children } = this._getChildrenAndProps(propsWithChildren)
@@ -77,10 +83,7 @@ export default class Block {
         this._element!.addEventListener(event, handler)
       }
       this._element?.childNodes.forEach((element) => {
-        if (
-          element instanceof Element &&
-          element.getAttribute('data-setevent') !== null
-        ) {
+        if (element instanceof Element && element.getAttribute('data-setevent') !== null) {
           element.addEventListener(event, handler)
         }
       })
@@ -119,20 +122,17 @@ export default class Block {
     const props: IPropsWithChildren = {}
     const children: Record<string, Block> = {}
 
-    Object.entries(value).forEach(([key, value]) => {
-      if (value instanceof Block) {
-        children[key] = value
+    Object.entries(value).forEach(([key, prop]) => {
+      if (prop instanceof Block) {
+        children[key] = prop
       } else {
-        props[key] = value
+        props[key] = prop
       }
     })
     return { props, children }
   }
 
-  _componentDidUpdate(
-    oldProps: IPropsWithChildren | undefined,
-    newProps: IPropsWithChildren
-  ) {
+  _componentDidUpdate(oldProps: IPropsWithChildren | undefined, newProps: IPropsWithChildren) {
     const response = this.componentDidUpdate({ oldProps, newProps })
     if (!response) {
       return
@@ -140,7 +140,8 @@ export default class Block {
     this._render()
   }
 
-  componentDidUpdate({}: IOldNewProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  componentDidUpdate(val?: IOldNewProps) {
     return true
   }
 
@@ -151,9 +152,7 @@ export default class Block {
       propsAndStubs[key] = `<div data-id="${value._id}"></div>`
     })
 
-    const fragment = this._createDocumentElement(
-      'template'
-    ) as HTMLTemplateElement
+    const fragment = this._createDocumentElement('template') as HTMLTemplateElement
     const block = this.render() as unknown as string
     fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
@@ -180,9 +179,7 @@ export default class Block {
   getContent() {
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
-        if (
-          this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE
-        ) {
+        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
           this.dispatchComponentDidMount()
         }
       }, 100)
@@ -192,6 +189,7 @@ export default class Block {
   }
 
   _makePropsProxy(props: IPropsWithChildren) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     return new Proxy(props, {
       get(target, prop: string) {
@@ -200,6 +198,7 @@ export default class Block {
       },
       set(target, prop: string, value: unknown) {
         const oldValue = { ...target }
+        // eslint-disable-next-line no-param-reassign
         target[prop] = value
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, target)
         return true

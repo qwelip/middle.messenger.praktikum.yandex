@@ -14,18 +14,14 @@ export default class UserInfoComponent extends Block {
   render() {
     const data = this.props.data as Record<string, unknown>[]
 
-    const renderItems = () => {
-      return data
-        .map((item) => {
-          return `
+    const renderItems = () => data
+      .map((item) => `
           <li class='user-info__list-item list-item'>
             <p class='user-info__text text-style'>${item.dataType}</p>
             <p class='user-info__text text-style text-style_gray'>${item.data}</p>
           </li>
-        `
-        })
-        .join('')
-    }
+        `)
+      .join('')
 
     return `
     <section class='user-info'>

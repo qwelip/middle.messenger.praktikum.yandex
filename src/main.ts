@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'dialog-sender__pin-img',
     'popup-dialog-sender',
     images.pinIcon,
-    images.pinIconActive
+    images.pinIconActive,
   )
   addOpenPopupHandle(
     'dialog-header__btn-img',
     'popup-dialog-header',
     images.contextMenuIcon,
-    images.contextMenuIconActive
+    images.contextMenuIconActive,
   )
 })
 

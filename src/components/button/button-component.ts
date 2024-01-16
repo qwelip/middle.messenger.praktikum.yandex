@@ -13,6 +13,7 @@ export class ButtonComponent extends Block {
       events: {
         click: (e) => {
           e.preventDefault()
+          // eslint-disable-next-line no-unused-expressions
           props.onClick && props.onClick()
         },
       },

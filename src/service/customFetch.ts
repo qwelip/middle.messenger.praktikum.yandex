@@ -5,52 +5,41 @@ interface IOptions {
   data: Document | XMLHttpRequestBodyInit | null | undefined
 }
 
-var t = () => {}
-
 function queryStringify(data: Record<string, string>) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object')
   }
 
   const keys = Object.keys(data)
-  return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`
-  }, '?')
+  return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?')
 }
 
-class HTTPTransport {
-  get = (url: string, options: IOptions) => {
-    return this.request(url, { ...options, method: 'GET' }, options.timeout)
-  }
-  post = (url: string, options: IOptions) => {
-    return this.request(url, { ...options, method: 'POST' }, options.timeout)
-  }
-  put = (url: string, options: IOptions) => {
-    return this.request(url, { ...options, method: 'PUT' }, options.timeout)
-  }
-  delete = (url: string, options: IOptions) => {
-    return this.request(url, { ...options, method: 'DELETE' }, options.timeout)
-  }
+export default class HTTPTransport {
+  get = (url: string, options: IOptions) => this.request(url, { ...options, method: 'GET' }, options.timeout)
+
+  post = (url: string, options: IOptions) => this.request(url, { ...options, method: 'POST' }, options.timeout)
+
+  put = (url: string, options: IOptions) => this.request(url, { ...options, method: 'PUT' }, options.timeout)
+
+  delete = (url: string, options: IOptions) => this.request(url, { ...options, method: 'DELETE' }, options.timeout)
 
   request = (url: string, options: IOptions, timeout = 5000) => {
     const { headers = {}, method, data } = options
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!method) {
-        reject('No method')
-        return
+        reject()
+        throw new Error('No method')
       }
       const xhr = new XMLHttpRequest()
       const isGet = method === 'GET'
       const getData = data as unknown as Record<string, string>
-      xhr.open(
-        method,
-        isGet && !!data ? `${url}${queryStringify(getData)}` : url
-      )
+      xhr.open(method, isGet && !!data ? `${url}${queryStringify(getData)}` : url)
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key])
       })
 
+      // eslint-disable-next-line func-names
       xhr.onload = function () {
         resolve(xhr)
       }

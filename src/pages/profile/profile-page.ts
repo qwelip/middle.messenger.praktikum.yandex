@@ -60,7 +60,7 @@ export default class ProfilePage extends Block {
   }
 
   componentDidUpdate({ newProps }: IOldNewProps) {
-    const isPopupShow = newProps.isPopupShow
+    const { isPopupShow } = newProps
     if (isPopupShow) {
       const popup = this.children.popup as Block
       popup.show()

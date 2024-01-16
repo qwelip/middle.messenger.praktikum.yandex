@@ -106,7 +106,9 @@ export default class UserInfoChangeComponent extends Block {
             return
           }
 
-          console.log({ mail, login, name, surname, nick, phone })
+          console.log({
+            mail, login, name, surname, nick, phone,
+          })
         },
       }),
     })

@@ -34,15 +34,14 @@ export class ChangePasswordForm extends Block {
 
           const oldPassword = (oldPasswordComp.props.inputValue as string) || ''
           const newPassword = (newPasswordComp.props.inputValue as string) || ''
-          const repetePassword =
-            (repetePassComp.props.inputValue as string) || ''
+          const repetePassword = (repetePassComp.props.inputValue as string) || ''
 
           if (
-            passwordValidate(oldPassword) &&
-            passwordValidate(repetePassword) &&
-            repetePassword &&
-            newPassword &&
-            repetePassword === newPassword
+            passwordValidate(oldPassword)
+            && passwordValidate(repetePassword)
+            && repetePassword
+            && newPassword
+            && repetePassword === newPassword
           ) {
             oldPasswordComp.setProps({ isError: false })
             newPasswordComp.setProps({ isError: false })

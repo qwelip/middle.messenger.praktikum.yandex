@@ -1,5 +1,5 @@
 export const nameValidate = (val: string): boolean => {
-  var regex = /[^A-ZА-Яa-zа-я-*]/g
+  const regex = /[^A-ZА-Яa-zа-я-*]/g
   const res = val.replace(regex, '')
   if (res.length !== val.length) {
     return false
@@ -25,7 +25,8 @@ export const loginValidate = (val: string): boolean => {
   if (val.length < 3) {
     return false
   }
-  var regex = /[^A-Za-z1-9-\_/\*]/g
+  // eslint-disable-next-line no-useless-escape
+  const regex = /[^A-Za-z1-9-\_/\*]/g
   const res = val.replace(regex, '')
   if (res.length !== val.length) {
     return false
@@ -40,8 +41,7 @@ export const loginValidate = (val: string): boolean => {
 }
 
 export const emailValidate = (val: string): boolean => {
-  const reg =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
   return val.match(reg) !== null
 }
 
@@ -63,13 +63,8 @@ export const passwordValidate = (val: string): boolean => {
   return true
 }
 
-export const passwordRepeateValidate = (
-  repeatePassword: string,
-  target: string
-): boolean => {
-  const password: HTMLFormElement = document.querySelector(
-    `input[name=${target}]`
-  )!
+export const passwordRepeateValidate = (repeatePassword: string, target: string): boolean => {
+  const password: HTMLFormElement = document.querySelector(`input[name=${target}]`)!
   return password.value === repeatePassword
 }
 
@@ -82,10 +77,9 @@ export const phoneValidate = (val: string): boolean => {
       return false
     }
     return true
-  } else {
-    if (!Number(val)) {
-      return false
-    }
-    return true
   }
+  if (!Number(val)) {
+    return false
+  }
+  return true
 }

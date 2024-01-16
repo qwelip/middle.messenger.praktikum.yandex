@@ -1,9 +1,5 @@
 import {
-  emailValidate,
-  loginValidate,
-  nameValidate,
-  passwordValidate,
-  phoneValidate,
+  emailValidate, loginValidate, nameValidate, passwordValidate, phoneValidate,
 } from '../../common/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
@@ -12,9 +8,8 @@ import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 
 export default class SignInPage extends Block {
-  constructor(props?: any) {
+  constructor() {
     super('main', {
-      ...props,
       input_mail: new InputComponent({
         name: 'email',
         type: 'text',
@@ -72,19 +67,18 @@ export default class SignInPage extends Block {
           const secondName = (secondNameComp.props.inputValue as string) || ''
           const phone = (phoneComp.props.inputValue as string) || ''
           const password = (passwordComp.props.inputValue as string) || ''
-          const passwordRepete =
-            (passwordRepeteComp.props.inputValue as string) || ''
+          const passwordRepete = (passwordRepeteComp.props.inputValue as string) || ''
 
           if (
-            loginValidate(login) &&
-            emailValidate(email) &&
-            nameValidate(firstName) &&
-            nameValidate(secondName) &&
-            phoneValidate(phone) &&
-            passwordValidate(password) &&
-            password &&
-            passwordRepete &&
-            password === passwordRepete
+            loginValidate(login)
+            && emailValidate(email)
+            && nameValidate(firstName)
+            && nameValidate(secondName)
+            && phoneValidate(phone)
+            && passwordValidate(password)
+            && password
+            && passwordRepete
+            && password === passwordRepete
           ) {
             const formData = {
               login,
