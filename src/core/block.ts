@@ -154,7 +154,7 @@ export default class Block {
 
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement
     const block = this.render() as unknown as string
-    fragment.textContent = Handlebars.compile(block)(propsAndStubs)
+    fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
 
     Object.values(this.children).forEach((child) => {
