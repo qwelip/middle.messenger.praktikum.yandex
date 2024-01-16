@@ -1,7 +1,14 @@
+enum ReqMethods {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
 interface IOptions {
   timeout: number
   headers: Record<string, string>
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method: ReqMethods
   data: Document | XMLHttpRequestBodyInit | null | undefined
 }
 
@@ -15,13 +22,13 @@ function queryStringify(data: Record<string, string>) {
 }
 
 export default class HTTPTransport {
-  get = (url: string, options: IOptions) => this.request(url, { ...options, method: 'GET' }, options.timeout)
+  get = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.GET }, options.timeout)
 
-  post = (url: string, options: IOptions) => this.request(url, { ...options, method: 'POST' }, options.timeout)
+  post = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.POST }, options.timeout)
 
-  put = (url: string, options: IOptions) => this.request(url, { ...options, method: 'PUT' }, options.timeout)
+  put = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.PUT }, options.timeout)
 
-  delete = (url: string, options: IOptions) => this.request(url, { ...options, method: 'DELETE' }, options.timeout)
+  delete = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.DELETE }, options.timeout)
 
   request = (url: string, options: IOptions, timeout = 5000) => {
     const { headers = {}, method, data } = options

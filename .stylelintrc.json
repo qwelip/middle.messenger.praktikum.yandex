@@ -4,7 +4,7 @@
     "selector-class-pattern": null,
     "import-notation": ["string", null],
     "font-family-name-quotes": "always-unless-keyword",
-    "color-hex-length": ["short", null],
+    "color-hex-length": null,
     "declaration-block-no-redundant-longhand-properties": null
   }
 }
