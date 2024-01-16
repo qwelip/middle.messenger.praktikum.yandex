@@ -1,6 +1,7 @@
 import Block from '../../core/block'
+import InputLabelErrorComponent from '../input-label-error/input-label-error-component'
 
-interface IInputComponent {
+interface IProps {
   name: string
   type: string
   isError?: boolean
@@ -11,7 +12,7 @@ interface IInputComponent {
 }
 
 export default class InputComponent extends Block {
-  constructor(props: IInputComponent) {
+  constructor(props: IProps) {
     super('div', {
       ...props,
       events: {
@@ -29,6 +30,10 @@ export default class InputComponent extends Block {
           }
         },
       },
+      labelError: new InputLabelErrorComponent({
+        errorMsg: props.errorMsg || '',
+        forName: props.name,
+      }),
     })
   }
 
@@ -55,9 +60,7 @@ export default class InputComponent extends Block {
           />
         {{/if}}
         {{#if isError}}
-          <label
-            for={{name}}
-            class='input-label input-label_error text-style_color_red'>{{errorMsg}}</label>
+          {{{ labelError }}}
         {{/if}}
       </div>
     `

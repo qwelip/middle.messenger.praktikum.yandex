@@ -3,23 +3,3 @@
   border-bottom: solid 1px #3369f3;
   padding-bottom: 8px;
 }
-
-.input-label {
-  font-size: 9px;
-  text-align: start;
-  display: inherit;
-}
-
-.input-label_error {
-  padding-top: 7px;
-}
-
-.input-label_msg-error {
-  position: absolute;
-  bottom: 65px;
-  left: 65px;
-}
-
-.input-label_align_end {
-  text-align: end;
-}

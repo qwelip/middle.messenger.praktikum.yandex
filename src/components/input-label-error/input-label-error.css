@@ -1,0 +1,19 @@
+.input-label {
+  font-size: 9px;
+  text-align: start;
+  display: inherit;
+}
+
+.input-label_error {
+  padding-top: 7px;
+}
+
+.input-label_msg-error {
+  position: absolute;
+  bottom: 65px;
+  left: 65px;
+}
+
+.input-label_align_end {
+  text-align: end;
+}
