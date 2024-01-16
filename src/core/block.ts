@@ -3,10 +3,10 @@ import Handlebars from 'handlebars'
 import { nanoid } from 'nanoid'
 import EventBus from './event-bus'
 
-type Events = keyof HTMLElementEventMap
+type HTMLEvents = keyof HTMLElementEventMap
 
 type IEvents = {
-  [keys in Events]?: (val: Event) => void
+  [keys in HTMLEvents]?: (val: Event) => void
 }
 export interface IPropsWithChildren {
   [keys: string]: unknown
@@ -141,7 +141,7 @@ export default class Block {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(val?: IOldNewProps) {
+  componentDidUpdate(_val?: IOldNewProps) {
     return true
   }
 
@@ -154,7 +154,7 @@ export default class Block {
 
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement
     const block = this.render() as unknown as string
-    fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
+    fragment.textContent = Handlebars.compile(block)(propsAndStubs)
     const newElemenet = fragment.content.firstElementChild
 
     Object.values(this.children).forEach((child) => {
