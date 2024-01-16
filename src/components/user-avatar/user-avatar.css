@@ -1,25 +1,16 @@
 .user-avatar__img-wrapper {
+  display: block;
   position: relative;
   margin: 0 auto;
   width: 130px;
   height: 130px;
-  background-color: rgba(239, 239, 239, 1);
+  background-color: rgb(239 239 239 / 100%);
   border-radius: 50%;
-  cursor: pointer;
   transition: all 0.1s ease;
 }
 
-.user-avatar__img-wrapper:hover {
-  background-color: #000000da;
-  opacity: 0.6;
-}
-
-.user-avatar__img-wrapper:hover .user-avatar__change-avatar {
-  opacity: 1;
-}
-
-.user-avatar__img-wrapper:hover .user-avatar__img {
-  opacity: 0.1;
+.user-avatar__img-wrapper_useHover {
+  cursor: pointer;
 }
 
 .user-avatar__img {
@@ -30,10 +21,15 @@
   transform: translate(-50%, -50%);
 }
 
+.user-avatar__img-wrapper_useHover:hover {
+  background-color: #000000da;
+  opacity: 0.6;
+}
+
 .user-avatar__change-avatar {
   font-size: 13px;
   line-height: 14px;
-  color: #ffffff;
+  color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -41,6 +37,14 @@
   width: 64px;
   opacity: 0;
   text-align: center;
+}
+
+.user-avatar__img-wrapper_useHover:hover .user-avatar__change-avatar {
+  opacity: 1;
+}
+
+.user-avatar__img-wrapper_useHover:hover .user-avatar__img {
+  opacity: 0.1;
 }
 
 .user-avatar__name {

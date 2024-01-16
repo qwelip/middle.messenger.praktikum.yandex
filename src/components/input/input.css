@@ -3,13 +3,3 @@
   border-bottom: solid 1px #3369f3;
   padding-bottom: 8px;
 }
-
-.input-label {
-  font-size: 9px;
-  text-align: start;
-  display: inherit;
-}
-
-.input-label_error {
-  padding-top: 7px;
-}

@@ -2,7 +2,7 @@ export const addOpenPopupHandle = (
   btnClass: string,
   popupClass: string,
   img: string,
-  imgActive: string
+  imgActive: string,
 ): void => {
   const hideClass = `${popupClass}_hidden`
   const btn = document.querySelector(`.${btnClass}`)
@@ -19,4 +19,11 @@ export const addOpenPopupHandle = (
       popup.classList.add(hideClass)
     }
   })
+}
+
+export const convertElementToString = (node: Element) => {
+  const tmpNode = document.createElement('div')
+  tmpNode.appendChild(node.cloneNode(true))
+  const str = tmpNode.innerHTML
+  return str
 }

@@ -1,13 +1,15 @@
 .chat-list-item {
   position: relative;
   display: flex;
-  padding: 12px 10px 12px;
+  padding: 12px 10px;
   border-bottom: solid 1px #eaeaea;
   cursor: pointer;
 }
+
 .chat-list-item_selected {
   background-color: #e4edfd;
 }
+
 .chat-list-item__counter {
   position: absolute;
   top: 10px;
@@ -21,6 +23,7 @@
   text-align: center;
   line-height: 20px;
 }
+
 .chat-list-item__avatar {
   width: 47px;
   height: 47px;
@@ -29,14 +32,17 @@
   margin-right: 10px;
   flex-shrink: 0;
 }
+
 .chat-list-item__content {
   width: 100%;
 }
+
 .chat-list-item__info {
   display: flex;
   justify-content: space-between;
   padding-bottom: 4px;
 }
+
 .chat-list-item__message {
   overflow: hidden;
   display: -webkit-box;

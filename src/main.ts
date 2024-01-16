@@ -1,39 +1,35 @@
-import Handlebars from 'handlebars'
-import * as Components from './components'
-import * as ChatComponents from './pages/chat/components'
-import * as DialogComponents from './pages/chat/components/dialog/components'
-import * as Pages from './pages'
-import * as PagesTemp from './pages/composite-pages-temp'
 import images from './utils/import-img'
 import { addOpenPopupHandle } from './utils/utils'
+import LoginPage from './pages/login/login-page'
+import SignInPage from './pages/sign-in/signIn-page'
+import ProfilePage from './pages/profile/profile-page'
+import ChangeUserDataPage from './pages/change-user-data/change-user-data-page'
+import ChangePasswordPage from './pages/change-password/change-password-page'
+import ChatPage from './pages/chat/chat-page'
+import Page500 from './pages/page-500/page-500-page'
+import Page404 from './pages/page-404/page-404-page'
 
-const pages = {
-  chatPage: [Pages.ChatPage, { ...images }],
-  profilePage: [Pages.ProfilePage, { ...images }],
-  changeUserDataPage: [Pages.ChangeUserDataPage, { ...images }],
-  changePasswordPage: [Pages.ChangePasswordPage, { ...images }],
-  loginPage: [Pages.LoginPage],
-  signInPage: [Pages.SignInPage],
-  page500: [Pages.Page500],
-  page404: [Pages.Page404],
-  newAvatarPage: [PagesTemp.NewAvatarPage, { ...images }],
-  newUserPage: [PagesTemp.NewUser, { ...images }],
-  empyChat: [PagesTemp.EmpyChat, { ...images }],
+export const pages = {
+  chatPage: new ChatPage(),
+  profilePage: new ProfilePage({ isPopupShow: false }),
+  changeUserDataPage: new ChangeUserDataPage(),
+  changePasswordPage: new ChangePasswordPage(),
+  loginPage: new LoginPage(),
+  signInPage: new SignInPage(),
+  page500: new Page500(),
+  page404: new Page404(),
 }
 
-Object.entries({
-  ...Components,
-  ...ChatComponents,
-  ...DialogComponents,
-}).forEach(([name, component]) => {
-  Handlebars.registerPartial(name, component)
-})
-
-function navigate(page: keyof typeof pages) {
-  console.log(pages[page])
-  const [source, context] = pages[page]
+export function navigate(page: keyof typeof pages) {
   const container = document.getElementById('app')!
-  container.innerHTML = Handlebars.compile(source)(context)
+  const child = container.firstChild
+  const content = pages[page]
+  if (child) {
+    container.removeChild(child)
+    container.append(content.getContent()!)
+    return
+  }
+  container.append(content.getContent()!)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'dialog-sender__pin-img',
     'popup-dialog-sender',
     images.pinIcon,
-    images.pinIconActive
+    images.pinIconActive,
   )
   addOpenPopupHandle(
     'dialog-header__btn-img',
     'popup-dialog-header',
     images.contextMenuIcon,
-    images.contextMenuIconActive
+    images.contextMenuIconActive,
   )
 })
 

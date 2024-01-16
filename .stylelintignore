@@ -1,0 +1,7 @@
+/build
+/public
+/dist
+**/*.min.js
+/node_modules
+
+/src/vendor/*
