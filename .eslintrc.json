@@ -12,7 +12,7 @@
     "quotes": ["error", "single"],
     "no-multi-spaces": "error",
     "no-multiple-empty-lines": "error",
-    "linebreak-style": ["error", "windows"],
+    // "linebreak-style": ["error", "windows"],
     "class-methods-use-this": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
