@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.send(
     `<html>
       <body>
-          <p>Ответ на сигнал из далёкого космоса</p>
+          <p>Ответ</p>
       </body>
     </html>`
   )

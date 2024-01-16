@@ -8,11 +8,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "tsc && vite build",
+    "start": "tsc && vite build && node ./src/server.js",
     "preview": "vite preview",
     "eslint": "eslint .",
-    "stylelint": "stylelint **/*.css",
-    "start_node": "node ./src/server.js"
+    "stylelint": "stylelint **/*.css"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
