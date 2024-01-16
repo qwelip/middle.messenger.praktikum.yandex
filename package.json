@@ -10,7 +10,8 @@
     "dev": "vite",
     "start": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . && stylelint **/*.css"
+    "eslint": "eslint .",
+    "stylelint": "stylelint **/*.css"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.0",
