@@ -5,12 +5,20 @@ enum ReqMethods {
   DELETE = 'DELETE',
 }
 
-interface IOptions {
-  timeout: number
-  headers: Record<string, string>
-  method: ReqMethods
-  data: Document | XMLHttpRequestBodyInit | null | undefined
+interface IRequestBase {
+  headers?: Record<string, string>
+  data?: Document | XMLHttpRequestBodyInit | null
 }
+
+interface IRequestOptions extends IRequestBase {
+  method: ReqMethods
+}
+
+interface IMethodOptions extends IRequestBase {
+  timeout: number
+}
+
+type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<unknown>
 
 function queryStringify(data: Record<string, string>) {
   if (typeof data !== 'object') {
@@ -22,15 +30,15 @@ function queryStringify(data: Record<string, string>) {
 }
 
 export default class HTTPTransport {
-  get = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.GET }, options.timeout)
+  get: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.GET }, options?.timeout)
 
-  post = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.POST }, options.timeout)
+  post: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.POST }, options?.timeout)
 
-  put = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.PUT }, options.timeout)
+  put: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.PUT }, options?.timeout)
 
-  delete = (url: string, options: IOptions) => this.request(url, { ...options, method: ReqMethods.DELETE }, options.timeout)
+  delete: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.DELETE }, options?.timeout)
 
-  request = (url: string, options: IOptions, timeout = 5000) => {
+  request = (url: string, options: IRequestOptions, timeout = 5000) => {
     const { headers = {}, method, data } = options
     return new Promise((resolve, reject) => {
       if (!method) {
