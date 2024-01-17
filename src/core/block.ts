@@ -90,6 +90,21 @@ export default class Block {
     })
   }
 
+  _removeEvents() {
+    const { events = {} } = this.props
+    Object.keys(events).forEach((event) => {
+      const handler = events[event as keyof typeof events]!
+      if (this._element!.getAttribute('data-setevent') !== null) {
+        this._element!.removeEventListener(event, handler)
+      }
+      this._element?.childNodes.forEach((element) => {
+        if (element instanceof Element && element.getAttribute('data-setevent') !== null) {
+          element.removeEventListener(event, handler)
+        }
+      })
+    })
+  }
+
   _componentDidMount() {
     this.componentDidMount()
     Object.values(this.children).forEach((child) => {
@@ -147,6 +162,7 @@ export default class Block {
 
   _render() {
     const propsAndStubs = { ...this.props }
+    this._removeEvents()
 
     Object.entries(this.children).forEach(([key, value]) => {
       propsAndStubs[key] = `<div data-id="${value._id}"></div>`
