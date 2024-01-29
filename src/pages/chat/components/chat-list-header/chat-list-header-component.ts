@@ -1,4 +1,5 @@
 import Block from '../../../../core/block'
+import { router } from '../../../../core/router'
 import InputSearchComponent from '../dialog/components/input-search/input-search-component'
 
 interface IProps {
@@ -14,14 +15,25 @@ export default class ChatListHeaderComponent extends Block {
     })
   }
 
+  componentDidMount() {
+    const btn = document.getElementById('profileBtn')
+    if (btn) {
+      btn.addEventListener('click', () => {
+        router.go('/profile')
+      })
+    }
+  }
+
   render() {
     return `
       <div class='chat-list-header'>
         <a class='chat-list-header__profile-btn btn-styles'>
           <p
-            page='profilePage'
+            id='profileBtn'
             class='chat-list-header__text text-style text-style_color_gray'
-          >Профиль</p>
+          >
+            Профиль
+          </p>
           <img
             src={{arrowIcon}}
             alt='Профиль'

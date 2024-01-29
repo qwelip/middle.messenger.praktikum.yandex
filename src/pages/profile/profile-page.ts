@@ -5,19 +5,20 @@ import SideButtonComponent from '../../components/side-button/side-button-compon
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoComponent from '../../components/user-info/user-info-component'
 import Block, { IOldNewProps } from '../../core/block'
+import { router } from '../../core/router'
 import images from '../../utils/import-img'
 
 interface IProps {
-  isPopupShow: boolean
+  isPopupShow?: boolean
 }
 
 export default class ProfilePage extends Block {
-  constructor(props: IProps) {
+  constructor(props?: IProps) {
     super('main', {
       ...props,
       sideButton: new SideButtonComponent({
-        page: 'changeUserDataPage',
         goBackIcon: images.goBackIcon,
+        onClick: () => router.go('/'),
       }),
       userAvatar: new UserAvatarComponent({
         name: 'Иван',
@@ -28,32 +29,30 @@ export default class ProfilePage extends Block {
       }),
       buttonChangeData: new ButtonStringComponent({
         caption: 'Изменить данные',
-        page: 'changeUserDataPage',
         isRed: false,
+        onClick: () => router.go('/change-user-data'),
       }),
       buttonChangePassword: new ButtonStringComponent({
         caption: 'Изменить пароль',
-        page: 'changePasswordPage',
         isRed: false,
+        onClick: () => router.go('/change-password'),
       }),
       buttonExit: new ButtonStringComponent({
         caption: 'Выйти',
-        page: 'loginPage',
         isRed: true,
+        onClick: () => router.go('/login'),
       }),
       userInfo: new UserInfoComponent({ data: userInfoMocData }),
       popup: new PopupComponent({
-        isOpen: props.isPopupShow,
+        isOpen: props?.isPopupShow || false,
         caption: 'Загрузите файл',
         btnCaption: 'Поменять',
-        page: 'profilePage',
         onClick: () => {
           this.setProps({ isPopupShow: false })
         },
         content: new ButtonStringComponent({
           caption: 'Выбрать файл на компьютере',
           isRed: false,
-          page: '',
         }).element,
       }),
     })

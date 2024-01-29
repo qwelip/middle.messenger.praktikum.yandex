@@ -3,6 +3,7 @@ import ButtonStringComponent from '../../components/button-string/button-string-
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
+import { router } from '../../core/router'
 
 export default class LoginPage extends Block {
   constructor() {
@@ -20,7 +21,6 @@ export default class LoginPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Авторизоваться',
-        page: 'chatPage',
         onClick: () => {
           const loginComp = this.children.input_login
           const passwordComp = this.children.input_password
@@ -41,12 +41,13 @@ export default class LoginPage extends Block {
             return
           }
           console.log({ login, password })
+          router.go('/')
         },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Нет аккаунта?',
-        page: 'signInPage',
         isRed: false,
+        onClick: () => router.go('/signin'),
       }),
     })
   }

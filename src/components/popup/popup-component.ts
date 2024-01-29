@@ -6,7 +6,6 @@ interface IProps {
   isOpen: boolean
   caption: string
   btnCaption: string
-  page: string
   content: Element | null
   onClick: () => void
 }
@@ -25,7 +24,6 @@ export default class PopupComponent extends Block {
       },
       button: new ButtonComponent({
         caption: props.caption,
-        page: props.page,
       }),
     })
   }

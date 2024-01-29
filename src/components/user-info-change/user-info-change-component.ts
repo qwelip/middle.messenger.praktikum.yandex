@@ -1,10 +1,6 @@
-import {
-  emailValidate,
-  loginValidate,
-  nameValidate,
-  phoneValidate,
-} from '../../common/validate'
+import { emailValidate, loginValidate, nameValidate, phoneValidate } from '../../common/validate'
 import Block from '../../core/block'
+import { router } from '../../core/router'
 import { ButtonComponent } from '../button/button-component'
 import InputNoBorderComponent from '../input-no-border/input-no-border-component'
 
@@ -55,7 +51,6 @@ export default class UserInfoChangeComponent extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Сохранить',
-        page: 'chatPage',
         onClick: () => {
           const mail = this.children.input_mail.props.inputValue as string
           const login = this.children.input_login.props.inputValue as string
@@ -107,8 +102,14 @@ export default class UserInfoChangeComponent extends Block {
           }
 
           console.log({
-            mail, login, name, surname, nick, phone,
+            mail,
+            login,
+            name,
+            surname,
+            nick,
+            phone,
           })
+          router.go('/')
         },
       }),
     })

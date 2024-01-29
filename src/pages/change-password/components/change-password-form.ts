@@ -3,6 +3,7 @@ import { ButtonComponent } from '../../../components/button/button-component'
 import InputCheckRepetePasswordNoBorderComp from '../../../components/input-check-repete-password-no-border/input-check-repete-password-no-border-comp'
 import InputNoBorderComponent from '../../../components/input-no-border/input-no-border-component'
 import Block from '../../../core/block'
+import { router } from '../../../core/router'
 
 export class ChangePasswordForm extends Block {
   constructor() {
@@ -26,7 +27,6 @@ export class ChangePasswordForm extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Сохранить',
-        page: 'chatPage',
         onClick: () => {
           const oldPasswordComp = this.children.input_old_password
           const newPasswordComp = this.children.input_new_password
@@ -37,16 +37,17 @@ export class ChangePasswordForm extends Block {
           const repetePassword = (repetePassComp.props.inputValue as string) || ''
 
           if (
-            passwordValidate(oldPassword)
-            && passwordValidate(repetePassword)
-            && repetePassword
-            && newPassword
-            && repetePassword === newPassword
+            passwordValidate(oldPassword) &&
+            passwordValidate(repetePassword) &&
+            repetePassword &&
+            newPassword &&
+            repetePassword === newPassword
           ) {
             oldPasswordComp.setProps({ isError: false })
             newPasswordComp.setProps({ isError: false })
             repetePassComp.setProps({ isError: false })
             console.log({ oldPassword, newPassword })
+            router.go('/profile')
             return
           }
 

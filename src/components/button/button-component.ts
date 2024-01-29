@@ -2,7 +2,6 @@ import Block from '../../core/block'
 
 interface IButtonComponent {
   caption: string
-  page: string
   onClick?: () => void
 }
 
@@ -22,7 +21,7 @@ export class ButtonComponent extends Block {
 
   render() {
     return `
-      <a data-setevent class='button' page={{page}}>
+      <a data-setevent class='button'>
         <button type='submit' class='button__button'>
           {{caption}}
         </button>

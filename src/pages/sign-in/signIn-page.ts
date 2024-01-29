@@ -1,11 +1,16 @@
 import {
-  emailValidate, loginValidate, nameValidate, passwordValidate, phoneValidate,
+  emailValidate,
+  loginValidate,
+  nameValidate,
+  passwordValidate,
+  phoneValidate,
 } from '../../common/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputCheckRepetePasswordComp from '../../components/input-check-repete-password/input-check-repete-password'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
+import { router } from '../../core/router'
 
 export default class SignInPage extends Block {
   constructor() {
@@ -51,7 +56,6 @@ export default class SignInPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Зарегистрироваться',
-        page: 'chatPage',
         onClick: () => {
           const emailComp = this.children.input_mail
           const loginComp = this.children.input_login
@@ -70,15 +74,15 @@ export default class SignInPage extends Block {
           const passwordRepete = (passwordRepeteComp.props.inputValue as string) || ''
 
           if (
-            loginValidate(login)
-            && emailValidate(email)
-            && nameValidate(firstName)
-            && nameValidate(secondName)
-            && phoneValidate(phone)
-            && passwordValidate(password)
-            && password
-            && passwordRepete
-            && password === passwordRepete
+            loginValidate(login) &&
+            emailValidate(email) &&
+            nameValidate(firstName) &&
+            nameValidate(secondName) &&
+            phoneValidate(phone) &&
+            passwordValidate(password) &&
+            password &&
+            passwordRepete &&
+            password === passwordRepete
           ) {
             const formData = {
               login,
@@ -89,6 +93,7 @@ export default class SignInPage extends Block {
               password,
             }
             console.log('formData', formData)
+            router.go('/')
             return
           }
 
@@ -123,8 +128,8 @@ export default class SignInPage extends Block {
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
-        page: 'loginPage',
         isRed: false,
+        onClick: () => router.go('/login'),
       }),
     })
   }
