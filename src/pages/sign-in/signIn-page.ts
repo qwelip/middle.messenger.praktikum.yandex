@@ -93,7 +93,7 @@ export default class SignInPage extends Block {
               password,
             }
             console.log('formData', formData)
-            router.go('/')
+            router.go('/messenger')
             return
           }
 
@@ -129,7 +129,7 @@ export default class SignInPage extends Block {
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
         isRed: false,
-        onClick: () => router.go('/login'),
+        onClick: () => router.go('/'),
       }),
     })
   }

@@ -41,13 +41,13 @@ export default class LoginPage extends Block {
             return
           }
           console.log({ login, password })
-          router.go('/')
+          router.go('/messenger')
         },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Нет аккаунта?',
         isRed: false,
-        onClick: () => router.go('/signin'),
+        onClick: () => router.go('/sign-up'),
       }),
     })
   }

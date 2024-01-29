@@ -70,11 +70,11 @@ export class Router {
 }
 
 export const router = new Router('app')
-router.use('/', ChatPage)
+router.use('/', LoginPage)
+router.use('/messenger', ChatPage)
 router.use('/profile', ProfilePage)
-router.use('/change-user-data', ChangeUserDataPage)
+router.use('/settings', ChangeUserDataPage)
 router.use('/change-password', ChangePasswordPage)
-router.use('/login', LoginPage)
-router.use('/signin', SignInPage)
+router.use('/sign-up', SignInPage)
 router.use('/page500', Page500)
 router.use('/page404', Page404)

@@ -6,6 +6,7 @@ interface IProps {
 
 function render(query: string, block: Block | null) {
   const root = document.getElementById(query)!
+  root.firstChild?.remove()
   root.append(block!.element!)
   return root
 }

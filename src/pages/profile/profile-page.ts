@@ -18,7 +18,7 @@ export default class ProfilePage extends Block {
       ...props,
       sideButton: new SideButtonComponent({
         goBackIcon: images.goBackIcon,
-        onClick: () => router.go('/'),
+        onClick: () => router.go('/messenger'),
       }),
       userAvatar: new UserAvatarComponent({
         name: 'Иван',
@@ -30,7 +30,7 @@ export default class ProfilePage extends Block {
       buttonChangeData: new ButtonStringComponent({
         caption: 'Изменить данные',
         isRed: false,
-        onClick: () => router.go('/change-user-data'),
+        onClick: () => router.go('/settings'),
       }),
       buttonChangePassword: new ButtonStringComponent({
         caption: 'Изменить пароль',
@@ -40,7 +40,7 @@ export default class ProfilePage extends Block {
       buttonExit: new ButtonStringComponent({
         caption: 'Выйти',
         isRed: true,
-        onClick: () => router.go('/login'),
+        onClick: () => router.go('/'),
       }),
       userInfo: new UserInfoComponent({ data: userInfoMocData }),
       popup: new PopupComponent({

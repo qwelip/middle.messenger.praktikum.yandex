@@ -109,7 +109,7 @@ export default class UserInfoChangeComponent extends Block {
             nick,
             phone,
           })
-          router.go('/')
+          router.go('/messenger')
         },
       }),
     })
