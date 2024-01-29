@@ -1,0 +1,10 @@
+/build
+/public
+/dist
+**/*.min.js
+/node_modules 
+
+*.css
+*.hbs
+/src/assets/*
+/src/vendor/*

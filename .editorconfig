@@ -1,0 +1,6 @@
+# Пришлось закоментить т.к. .editorconfig выставляет точки с запятой, хотя
+# они в моем проекте не используются
+# [*.js]
+# indent_style = space
+# indent_size = 2
+# insert_final_newline = true

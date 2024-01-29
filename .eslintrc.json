@@ -1,0 +1,24 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["airbnb", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "globals": {
+    "document": "writable",
+    "console": "writable"
+  },
+  "rules": {
+    "max-len": "off",
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "no-multi-spaces": "error",
+    "no-multiple-empty-lines": "error",
+    // "linebreak-style": ["error", "windows"],
+    "class-methods-use-this": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "no-shadow": "off"
+  }
+}

@@ -15,7 +15,7 @@ import addIcon from '../assets/add-icon.png'
 import deleteIcon from '../assets/delete-icon.png'
 import magnifierIcon from '../assets/magnifier-icon.png'
 
-export default {
+const images = {
   avatarPlaceholder,
   goBackIcon,
   arrowIcon,
@@ -33,3 +33,5 @@ export default {
   deleteIcon,
   magnifierIcon,
 }
+
+export default images
