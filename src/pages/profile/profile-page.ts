@@ -18,7 +18,7 @@ export default class ProfilePage extends Block {
       ...props,
       sideButton: new SideButtonComponent({
         goBackIcon: images.goBackIcon,
-        onClick: () => router.go('/messenger'),
+        onClick: () => router.back(),
       }),
       userAvatar: new UserAvatarComponent({
         name: 'Иван',
@@ -60,6 +60,7 @@ export default class ProfilePage extends Block {
 
   componentDidUpdate({ newProps }: IOldNewProps) {
     const { isPopupShow } = newProps
+    console.log('isPopupShow', isPopupShow)
     if (isPopupShow) {
       const popup = this.children.popup as Block
       popup.show()
@@ -74,8 +75,8 @@ export default class ProfilePage extends Block {
   render() {
     return `
     <main class='profile horizontal-centered'>
-      {{{ sideButton }}}
       {{{ popup }}}
+      {{{ sideButton }}}
       <div class='profile__wrapper user-entitys-wrapper'>
         {{{ userAvatar }}}
         {{{ userInfo }}}

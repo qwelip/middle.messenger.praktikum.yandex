@@ -11,7 +11,7 @@ export default class ChangePasswordPage extends Block {
     super('main', {
       sideButton: new SideButtonComponent({
         goBackIcon: images.goBackIcon,
-        onClick: () => router.go('/profile'),
+        onClick: () => router.back(),
       }),
       userAvatar: new UserAvatarComponent({
         avatarPlaceholder: images.avatarPlaceholder,

@@ -30,7 +30,6 @@ export class Router {
   start() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.onpopstate = (event: any) => {
-      console.log('event', event)
       this._onRoute(event.currentTarget?.location.pathname)
     }
 

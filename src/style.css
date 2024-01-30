@@ -17,6 +17,7 @@
 @import './pages/chat/components/chat-list/chat-list.css';
 @import './pages/chat/components/dialog/dialog.css';
 @import './pages/chat/components/chat-list-header/chat-list-header.css';
+@import './pages/chat/components/chat-list-header/components/profile-btn/profile-btn.css';
 @import './pages/chat/components/chat-list-item/chat-list-item.css';
 @import './pages/chat/components/dialog/components/dialog-content/dialog-content.css';
 @import './pages/chat/components/dialog/components/dialog-header/dialog-header.css';

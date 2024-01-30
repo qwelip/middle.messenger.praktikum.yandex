@@ -6,7 +6,6 @@ interface IProps {
 
 function render(query: string, block: Block | null) {
   const root = document.getElementById(query)!
-  root.firstChild?.remove()
   root.append(block!.element!)
   return root
 }
@@ -33,7 +32,7 @@ export class Route {
   }
 
   leave() {
-    if (this._block) this._block.hide()
+    if (this._block) this._block.unmount()
   }
 
   match(pathname: string) {
@@ -46,6 +45,6 @@ export class Route {
       render(this._props.rootQuery, this._block)
       return
     }
-    this._block.show()
+    render(this._props.rootQuery, this._block)
   }
 }

@@ -24,13 +24,10 @@ interface IMeta {
 
 export default class Block {
   props: IPropsWithChildren
-
   private _meta: IMeta
-
+  private _rootQuery: string
   private eventBus: () => EventBus
-
   private _element: Element | null = null
-
   // eslint-disable-next-line no-use-before-define
   children: Record<string, Block>
 
@@ -44,6 +41,7 @@ export default class Block {
   }
 
   constructor(tagName: string, propsWithChildren: IPropsWithChildren) {
+    this._rootQuery = 'app'
     const eventBus = new EventBus()
     this.eventBus = () => eventBus
     this._meta = {
@@ -237,5 +235,10 @@ export default class Block {
   hide() {
     const element = this._element as HTMLElement
     element.style.display = 'none'
+  }
+
+  unmount() {
+    const root = document.getElementById(this._rootQuery)!
+    root.firstChild?.remove()
   }
 }
