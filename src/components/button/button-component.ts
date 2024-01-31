@@ -1,12 +1,12 @@
 import Block from '../../core/block'
 
-interface IButtonComponent {
+type IProps = {
   caption: string
   onClick?: () => void
 }
 
 export class ButtonComponent extends Block {
-  constructor(props: IButtonComponent) {
+  constructor(props: IProps) {
     super('a', {
       ...props,
       events: {

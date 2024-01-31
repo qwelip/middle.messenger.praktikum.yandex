@@ -25,6 +25,10 @@
     "no-continue": "off",
     "operator-linebreak": "off",
     "comma-dangle": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-param-reassign": "off",
+    "max-classes-per-file": "off",
+    "consistent-return": "off"
   }
 }

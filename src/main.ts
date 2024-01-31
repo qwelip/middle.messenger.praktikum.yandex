@@ -1,40 +1,19 @@
-// import images from './utils/import-img'
-// import { addOpenPopupHandle } from './utils/utils'
-// import LoginPage from './pages/login/login-page'
-// import SignInPage from './pages/sign-in/signIn-page'
-// import ProfilePage from './pages/profile/profile-page'
-// import ChangeUserDataPage from './pages/change-user-data/change-user-data-page'
-// import ChangePasswordPage from './pages/change-password/change-password-page'
-// import ChatPage from './pages/chat/chat-page'
-// import Page500 from './pages/page-500/page-500-page'
-// import Page404 from './pages/page-404/page-404-page'
 import { router } from './core/router'
+import { initApp } from './services/initApp'
+import { Store, store } from './store/store'
 
-// export const pages = {
-//   chatPage: new ChatPage(),
-//   profilePage: new ProfilePage({ isPopupShow: false }),
-//   changeUserDataPage: new ChangeUserDataPage(),
-//   changePasswordPage: new ChangePasswordPage(),
-//   // loginPage: new LoginPage(),
-//   signInPage: new SignInPage(),
-//   page500: new Page500(),
-//   page404: new Page404(),
-// }
+declare global {
+  interface Window {
+    store: Store
+  }
+}
 
-// export function navigate(page: keyof typeof pages) {
-//   const container = document.getElementById('app')!
-//   const child = container.firstChild
-//   const content = pages[page]
-//   if (child) {
-//     container.removeChild(child)
-//     container.append(content.getContent()!)
-//     return
-//   }
-//   container.append(content.getContent()!)
-// }
+window.store = store
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   router.start()
+  await initApp()
+  console.log('window.store', window.store)
   // const router = new Router('app')
   // router.use('/', LoginPage).start()
   // navigate('chatPage')

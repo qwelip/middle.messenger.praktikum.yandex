@@ -4,8 +4,10 @@ import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 import { router } from '../../core/router'
+import connect from '../../utils/connect'
+import { Indexed } from '../../utils/setValueToObject'
 
-export default class LoginPage extends Block {
+class LoginPage extends Block {
   constructor() {
     super('main', {
       input_login: new InputComponent({
@@ -82,3 +84,11 @@ export default class LoginPage extends Block {
     </main>`
   }
 }
+
+function mapToProps(state: Indexed) {
+  return {
+    name: state,
+  }
+}
+
+export default connect(LoginPage, mapToProps)

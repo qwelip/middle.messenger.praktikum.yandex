@@ -15,10 +15,11 @@ interface IRequestOptions extends IRequestBase {
 }
 
 interface IMethodOptions extends IRequestBase {
-  timeout: number
+  timeout?: number
 }
 
-type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<unknown>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<any>
 
 function queryStringify(data: Record<string, string>) {
   if (typeof data !== 'object') {
@@ -26,20 +27,31 @@ function queryStringify(data: Record<string, string>) {
   }
 
   const keys = Object.keys(data)
-  return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?')
+  return keys.reduce(
+    (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
+    '?'
+  )
 }
 
-export default class HTTPTransport {
-  get: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.GET }, options?.timeout)
+export default class CustomFetch {
+  private _url: string
 
-  post: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.POST }, options?.timeout)
+  constructor(url: string) {
+    this._url = `https://ya-praktikum.tech/api/v2${url}`
+  }
 
-  put: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.PUT }, options?.timeout)
-
-  delete: HTTPMethod = (url, options) => this.request(url, { ...options, method: ReqMethods.DELETE }, options?.timeout)
+  get: HTTPMethod = (url, options) =>
+    this.request(url, { ...options, method: ReqMethods.GET }, options?.timeout)
+  post: HTTPMethod = (url, options) =>
+    this.request(url, { ...options, method: ReqMethods.POST }, options?.timeout)
+  put: HTTPMethod = (url, options) =>
+    this.request(url, { ...options, method: ReqMethods.PUT }, options?.timeout)
+  delete: HTTPMethod = (url, options) =>
+    this.request(url, { ...options, method: ReqMethods.DELETE }, options?.timeout)
 
   request = (url: string, options: IRequestOptions, timeout = 5000) => {
     const { headers = {}, method, data } = options
+    const resUrl = `${this._url}${url}`
     return new Promise((resolve, reject) => {
       if (!method) {
         reject()
@@ -48,7 +60,7 @@ export default class HTTPTransport {
       const xhr = new XMLHttpRequest()
       const isGet = method === 'GET'
       const getData = data as unknown as Record<string, string>
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(getData)}` : url)
+      xhr.open(method, isGet && !!data ? `${resUrl}${queryStringify(getData)}` : resUrl)
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key])
