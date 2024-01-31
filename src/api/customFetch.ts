@@ -73,7 +73,7 @@ export default class CustomFetch {
 
       xhr.onabort = reject
       xhr.onerror = reject
-
+      xhr.withCredentials = true
       xhr.timeout = timeout
       xhr.ontimeout = reject
 

@@ -1,3 +1,4 @@
+import { INewUser } from '../../api/authApi'
 import {
   emailValidate,
   loginValidate,
@@ -11,6 +12,7 @@ import InputCheckRepetePasswordComp from '../../components/input-check-repete-pa
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 import { router } from '../../core/router'
+import { createUser } from '../../services/auth'
 
 export default class SignInPage extends Block {
   constructor() {
@@ -56,7 +58,7 @@ export default class SignInPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Зарегистрироваться',
-        onClick: () => {
+        onClick: async () => {
           const emailComp = this.children.input_mail
           const loginComp = this.children.input_login
           const firstNameComp = this.children.input_name
@@ -84,16 +86,23 @@ export default class SignInPage extends Block {
             passwordRepete &&
             password === passwordRepete
           ) {
-            const formData = {
+            const formData: INewUser = {
               login,
               email,
-              firstName,
-              secondName,
+              first_name: firstName,
+              second_name: secondName,
               phone,
               password,
             }
-            console.log('formData', formData)
-            router.go('/messenger')
+            try {
+              await createUser(formData)
+              this.setProps({ errorMsg: null })
+              router.go('/messenger')
+            } catch (error) {
+              if (error instanceof Error) {
+                this.setProps({ errorMsg: error.message })
+              }
+            }
             return
           }
 
@@ -179,6 +188,11 @@ export default class SignInPage extends Block {
                 </div>
               </div>
             </form>
+            {{#if errorMsg}}
+              <p class='sign-in__error text-style text-style_size_12 text-style_color_red'>
+                {{ errorMsg }}
+              </p>
+            {{/if}}
           </div>
         </div>
       </main>

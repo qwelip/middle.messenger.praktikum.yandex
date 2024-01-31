@@ -13,7 +13,7 @@ window.store = store
 document.addEventListener('DOMContentLoaded', async () => {
   router.start()
   await initApp()
-  console.log('window.store', window.store)
+  // console.log('window.store', window.store)
   // const router = new Router('app')
   // router.use('/', LoginPage).start()
   // navigate('chatPage')

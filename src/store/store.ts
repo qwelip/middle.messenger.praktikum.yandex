@@ -22,7 +22,6 @@ export class Store extends EventBus {
   }
 
   public set(path: string, value: unknown) {
-    console.log('2', 2)
     setValueToObject(this.state, path, value)
     this.emit(StoreEvents.Updated)
   }

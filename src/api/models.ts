@@ -8,7 +8,7 @@ export interface IUser {
   avatar: string
   email: string
 }
-
+// todom возможно не нужен
 export interface ICreateUserRes {
   id: number
 }

@@ -1,9 +1,9 @@
-import { ICreateUserRes, IHttpError, IUser } from '../models/apiModels'
+// import { ICreateUserRes, IHttpError, IUser } from '../models/apiModels'
 import CustomFetch from './customFetch'
 
 const authInstance = new CustomFetch('/auth')
 
-type INewUser = {
+export interface INewUser {
   first_name: string
   second_name: string
   login: string
@@ -12,16 +12,16 @@ type INewUser = {
   phone: string
 }
 
-interface ISignIn {
+export interface ISignIn {
   login: string
   password: string
 }
 
 export class AuthApi {
-  async me(): Promise<IUser | IHttpError> {
+  async me(): Promise<XMLHttpRequest> {
     return authInstance.get('/user')
   }
-  async createUser(data: INewUser): Promise<ICreateUserRes | IHttpError> {
+  async createUser(data: INewUser): Promise<XMLHttpRequest> {
     return authInstance.post('/signup', {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -29,7 +29,7 @@ export class AuthApi {
       data: JSON.stringify(data),
     })
   }
-  async signIn(data: ISignIn): Promise<string | IHttpError> {
+  async signIn(data: ISignIn): Promise<XMLHttpRequest> {
     return authInstance.post('/signin', {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -37,7 +37,7 @@ export class AuthApi {
       data: JSON.stringify(data),
     })
   }
-  async logout(): Promise<string> {
+  async logout(): Promise<XMLHttpRequest> {
     return authInstance.post('/logout')
   }
 }

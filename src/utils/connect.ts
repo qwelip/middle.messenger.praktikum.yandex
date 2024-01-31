@@ -14,7 +14,6 @@ export function connect<T extends Record<string, unknown>>(
       super(tagName, { ...args })
 
       store.on(StoreEvents.Updated, () => {
-        console.log('1', 1)
         const newState = mapStateToProps(store.getState())
         if (!isEqual(state, newState)) {
           this.setProps({ ...newState })
