@@ -1,4 +1,3 @@
-import { userInfoMocData } from '../../common/user-info-moc-data'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import PopupComponent from '../../components/popup/popup-component'
 import SideButtonComponent from '../../components/side-button/side-button-component'
@@ -9,7 +8,7 @@ import { router } from '../../core/router'
 import { logout } from '../../services/auth'
 import images from '../../utils/import-img'
 
-interface IProps {
+type IProps = {
   isPopupShow?: boolean
 }
 
@@ -21,8 +20,8 @@ export default class ProfilePage extends Block {
         goBackIcon: images.goBackIcon,
         onClick: () => router.back(),
       }),
-      userAvatar: new UserAvatarComponent({
-        name: 'Иван',
+      userAvatar: new UserAvatarComponent('div', {
+        isName: true,
         avatarPlaceholder: images.avatarPlaceholder,
         onClick: () => {
           this.setProps({ isPopupShow: true })
@@ -48,7 +47,7 @@ export default class ProfilePage extends Block {
           await logout()
         },
       }),
-      userInfo: new UserInfoComponent({ data: userInfoMocData }),
+      userInfo: new UserInfoComponent('section', {}),
       popup: new PopupComponent({
         isOpen: props?.isPopupShow || false,
         caption: 'Загрузите файл',
@@ -66,7 +65,6 @@ export default class ProfilePage extends Block {
 
   componentDidUpdate({ newProps }: IOldNewProps) {
     const { isPopupShow } = newProps
-    console.log('isPopupShow', isPopupShow)
     if (isPopupShow) {
       const popup = this.children.popup as Block
       popup.show()

@@ -13,11 +13,12 @@ export default class ChangePasswordPage extends Block {
         goBackIcon: images.goBackIcon,
         onClick: () => router.back(),
       }),
-      userAvatar: new UserAvatarComponent({
+      userAvatar: new UserAvatarComponent('div', {
+        isName: false,
         avatarPlaceholder: images.avatarPlaceholder,
       }),
       form: new ChangePasswordForm(),
-      userInfo: new UserInfoChangeComponent(),
+      userInfo: new UserInfoChangeComponent('div', {}),
     })
   }
 

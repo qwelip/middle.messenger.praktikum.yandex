@@ -27,7 +27,7 @@ export const baseUserInfo: IUserInfo[] = [
     inputName: 'phone',
   },
 ]
-
+// todom удалить
 export const userInfoMocData: IUserInfo[] = [
   ...baseUserInfo,
   {

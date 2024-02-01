@@ -2,8 +2,9 @@ import { passwordValidate } from '../../../common/validate'
 import { ButtonComponent } from '../../../components/button/button-component'
 import InputCheckRepetePasswordNoBorderComp from '../../../components/input-check-repete-password-no-border/input-check-repete-password-no-border-comp'
 import InputNoBorderComponent from '../../../components/input-no-border/input-no-border-component'
+import SuccessMsgComponent from '../../../components/user-info-change/components/success-msg/success-msg-component'
 import Block from '../../../core/block'
-import { router } from '../../../core/router'
+import { changePassword } from '../../../services/user'
 
 export class ChangePasswordForm extends Block {
   constructor() {
@@ -27,7 +28,7 @@ export class ChangePasswordForm extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Сохранить',
-        onClick: () => {
+        onClick: async () => {
           const oldPasswordComp = this.children.input_old_password
           const newPasswordComp = this.children.input_new_password
           const repetePassComp = this.children.input_new_repete_password
@@ -46,8 +47,16 @@ export class ChangePasswordForm extends Block {
             oldPasswordComp.setProps({ isError: false })
             newPasswordComp.setProps({ isError: false })
             repetePassComp.setProps({ isError: false })
-            console.log({ oldPassword, newPassword })
-            router.go('/profile')
+
+            try {
+              await changePassword({ oldPassword, newPassword })
+              this.setProps({ errorMsg: null })
+              this.children.sucMsg.setProps({ sucMsg: 'Данные обновлены' })
+            } catch (error) {
+              if (error instanceof Error) {
+                this.setProps({ errorMsg: error.message })
+              }
+            }
             return
           }
 
@@ -61,6 +70,9 @@ export class ChangePasswordForm extends Block {
             newPasswordComp.setProps({ isError: true })
           }
         },
+      }),
+      sucMsg: new SuccessMsgComponent({
+        sucMsg: '',
       }),
     })
   }
@@ -83,6 +95,12 @@ export class ChangePasswordForm extends Block {
               </li>
               </ul>
             {{{ button }}}
+            {{#if errorMsg}}
+              <p class='user-info-change__error text-style text-style_size_12 text-style_color_red'>
+                {{ errorMsg }}
+              </p>
+            {{/if}}
+            {{{ sucMsg }}}
         </form>
       `
   }

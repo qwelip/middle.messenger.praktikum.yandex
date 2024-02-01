@@ -12,9 +12,8 @@ export default class DialogPage extends Block {
   constructor(props: IProps) {
     super('section', {
       ...props,
-      dialogHeader: new DialogHeaderComponent({
+      dialogHeader: new DialogHeaderComponent('div', {
         contextMenuIcon: images.contextMenuIcon,
-        name: 'Ваня',
       }),
       dialogContent: new DialogContentComponent(),
       dialogSender: new DialogSenderComponent({

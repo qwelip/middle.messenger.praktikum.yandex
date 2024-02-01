@@ -1,5 +1,5 @@
 import { PlainObject, isArrayOrObject } from './utils'
-
+// todom удалить
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
     return false

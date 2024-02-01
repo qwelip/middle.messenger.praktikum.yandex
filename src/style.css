@@ -34,11 +34,11 @@
 @import './components/user-avatar/user-avatar.css';
 @import './components/button-string/button-string.css';
 @import './components/side-button/side-button.css';
-@import './components/user-info/user-info.css';
 @import './components/button/button.css';
 @import './components/popup/popup.css';
 @import './components/input/input.css';
 @import './components/input-no-border/input-no-border.css';
 @import './components/form/form.css';
 @import './components/user-info-change/user-info-change.css';
+@import './components/user-info-change/components/success-msg/success-msg.css';
 @import './components/input-label-error/input-label-error.css';

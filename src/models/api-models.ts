@@ -1,12 +1,12 @@
 export interface IUserResponse {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  password: string
-  phone: string
   avatar?: unknown
   display_name?: string
+  email: string
+  first_name: string
+  login: string
+  password: string
+  phone: string
+  second_name: string
 }
 
 export interface IHttpErrorResponse {
@@ -16,4 +16,15 @@ export interface IHttpErrorResponse {
 // todom возможно не нужен
 export interface ICreateUserResponse {
   id: number
+}
+
+export interface IChageProfileResponse {
+  avatar: string
+  display_name: string
+  email: string
+  first_name: string
+  id: number
+  login: string
+  phone: string
+  second_name: string
 }

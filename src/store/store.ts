@@ -1,5 +1,5 @@
 import EventBus from '../core/event-bus'
-import { IUser } from '../models/data-models'
+import { IChageProfileResponse, IUserResponse } from '../models/api-models'
 import { setValueToObject } from '../utils/set-value-to-object'
 
 export enum StoreEvents {
@@ -8,11 +8,13 @@ export enum StoreEvents {
 
 export interface IStore {
   [key: string]: unknown
-  user: IUser | null
+  user?: IUserResponse | null
+  profile?: IChageProfileResponse | null
 }
 
 export const initStore: IStore = {
   user: null,
+  profile: null,
 }
 
 export class Store extends EventBus {

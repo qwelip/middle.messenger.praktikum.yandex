@@ -1,34 +1,83 @@
-import Block from '../../core/block'
+import Block, { IOldNewProps } from '../../core/block'
+import { IChageProfileResponse } from '../../models/api-models'
+import { IStore, store } from '../../store/store'
+import connect from '../../utils/connect'
+import UserDataComponent from './components/user-data/user-data-component'
 
-interface IProps {
-  data: Record<string, unknown>[]
-}
-
-export default class UserInfoComponent extends Block {
-  constructor(props: IProps) {
-    super('section', {
-      ...props,
+class UserInfoComponent extends Block {
+  constructor(tagName: string) {
+    super(tagName, {
+      email: new UserDataComponent({
+        label: 'Почта',
+        value: '',
+      }),
+      login: new UserDataComponent({
+        label: 'Логин',
+        value: '',
+      }),
+      firstName: new UserDataComponent({
+        label: 'Имя',
+        value: '',
+      }),
+      secondName: new UserDataComponent({
+        label: 'Фамилия',
+        value: '',
+      }),
+      displayName: new UserDataComponent({
+        label: 'Имя в чате',
+        value: '',
+      }),
+      phone: new UserDataComponent({
+        label: 'Телефон',
+        value: '',
+      }),
     })
   }
 
+  componentDidUpdate({ newProps }: IOldNewProps) {
+    if (!newProps.profile) {
+      return true
+    }
+    const user = newProps.profile as IChageProfileResponse | null | undefined
+    this.children.email.setProps({ value: user?.email })
+    this.children.login.setProps({ value: user?.login })
+    this.children.firstName.setProps({ value: user?.first_name })
+    this.children.secondName.setProps({ value: user?.second_name })
+    this.children.displayName.setProps({ value: user?.display_name || user?.first_name })
+    this.children.phone.setProps({ value: user?.phone })
+    return false
+  }
+
+  componentDidMount(): void {
+    const { user } = store.getState()
+    this.children.email.setProps({ value: user?.email })
+    this.children.login.setProps({ value: user?.login })
+    this.children.firstName.setProps({ value: user?.first_name })
+    this.children.secondName.setProps({ value: user?.second_name })
+    this.children.displayName.setProps({ value: user?.display_name || user?.first_name })
+    this.children.phone.setProps({ value: user?.phone })
+  }
+
   render() {
-    const data = this.props.data as Record<string, unknown>[]
-
-    const renderItems = () => data
-      .map((item) => `
-          <li class='user-info__list-item list-item'>
-            <p class='user-info__text text-style'>${item.dataType}</p>
-            <p class='user-info__text text-style text-style_gray'>${item.data}</p>
-          </li>
-        `)
-      .join('')
-
     return `
     <section class='user-info'>
       <ul class='user-info__list list'>
-        ${renderItems()}
+        {{{ email }}}
+        {{{ login }}}
+        {{{ firstName }}}
+        {{{ secondName }}}
+        {{{ displayName }}}
+        {{{ phone }}}
       </ul>
     </section>
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    profile: state.profile,
+  }
+}
+
+export default connect(UserInfoComponent, mapToProps)

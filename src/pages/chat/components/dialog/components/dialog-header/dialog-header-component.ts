@@ -1,21 +1,51 @@
 import Block from '../../../../../../core/block'
+import { IStore, store } from '../../../../../../store/store'
+import connect from '../../../../../../utils/connect'
 import images from '../../../../../../utils/import-img'
 import PopupDialogHeaderComponent from '../popup-dialog-header/popup-dialog-header-component'
 
-interface IProps {
+interface IUserName {
   name: string
+}
+class UserName extends Block {
+  constructor(props: IUserName) {
+    super('p', {
+      ...props,
+    })
+  }
+
+  render() {
+    return `
+      <p class='dialog-header__name text-style text-style_type_bold'>{{name}}</p>
+    `
+  }
+}
+
+type IProps = {
   contextMenuIcon: string
 }
 
-export default class DialogHeaderComponent extends Block {
-  constructor(props: IProps) {
-    super('div', {
+class DialogHeaderComponent extends Block {
+  constructor(tagName: string, props: IProps) {
+    super(tagName, {
       ...props,
       popupDialog: new PopupDialogHeaderComponent({
         addIcon: images.addIcon,
         deleteIcon: images.deleteIcon,
       }),
+      userName: new UserName({
+        name: store.getState().user?.first_name || '',
+      }),
     })
+  }
+
+  componentDidMount() {
+    const { user, profile } = store.getState()
+    if (profile) {
+      this.children.userName.setProps({ name: profile?.first_name })
+    } else {
+      this.children.userName.setProps({ name: user?.first_name })
+    }
   }
 
   render() {
@@ -23,7 +53,7 @@ export default class DialogHeaderComponent extends Block {
       <div class='dialog-header'>
         <div class='dialog-header__info'>
           <div class='dialog-header__avatar'></div>
-          <p class='dialog-header__name text-style text-style_type_bold'>{{name}}</p>
+          {{{ userName }}}
         </div>
         <a class='dialog-header__context-btn btn-styles'>
           <img
@@ -37,3 +67,11 @@ export default class DialogHeaderComponent extends Block {
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    profile: state.profile,
+  }
+}
+
+export default connect(DialogHeaderComponent, mapToProps)
