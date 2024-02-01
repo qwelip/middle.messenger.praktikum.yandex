@@ -1,4 +1,4 @@
-import { IUserResponse } from './apiModels'
+import { IUserResponse } from './api-models'
 
 export interface ISignIn {
   login: string

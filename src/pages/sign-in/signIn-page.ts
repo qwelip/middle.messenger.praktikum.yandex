@@ -11,7 +11,7 @@ import InputCheckRepetePasswordComp from '../../components/input-check-repete-pa
 import InputComponent from '../../components/input/input-component'
 import Block, { IOldNewProps } from '../../core/block'
 import { router } from '../../core/router'
-import { IUser } from '../../models/dataModels'
+import { IUser } from '../../models/data-models'
 import { createUser } from '../../services/auth'
 import { IStore, store } from '../../store/store'
 import connect from '../../utils/connect'

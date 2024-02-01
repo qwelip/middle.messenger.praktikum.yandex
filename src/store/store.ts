@@ -1,6 +1,6 @@
 import EventBus from '../core/event-bus'
-import { IUser } from '../models/dataModels'
-import { setValueToObject } from '../utils/setValueToObject'
+import { IUser } from '../models/data-models'
+import { setValueToObject } from '../utils/set-value-to-object'
 
 export enum StoreEvents {
   Updated = 'updated',

@@ -1,6 +1,6 @@
-import { AuthApi } from '../api/authApi'
-import { IHttpErrorResponse, IUserResponse } from '../models/apiModels'
-import { ISignIn, IUser } from '../models/dataModels'
+import { AuthApi } from '../api/auth-api'
+import { IHttpErrorResponse, IUserResponse } from '../models/api-models'
+import { ISignIn, IUser } from '../models/data-models'
 
 const authApi = new AuthApi()
 

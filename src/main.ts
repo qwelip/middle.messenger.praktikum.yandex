@@ -1,5 +1,5 @@
 import { router } from './core/router'
-import { initApp } from './services/initApp'
+import { initApp } from './services/init-app'
 import { Store, store } from './store/store'
 
 declare global {

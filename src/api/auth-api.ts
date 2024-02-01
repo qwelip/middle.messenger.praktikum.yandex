@@ -1,5 +1,5 @@
-import { ISignIn, IUser } from '../models/dataModels'
-import CustomFetch from './customFetch'
+import { ISignIn, IUser } from '../models/data-models'
+import CustomFetch from './custom-fetch'
 
 const authInstance = new CustomFetch('/auth')
 
