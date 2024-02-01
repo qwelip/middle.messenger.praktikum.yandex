@@ -2,10 +2,11 @@ import { loginValidate, passwordValidate } from '../../common/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
-import Block from '../../core/block'
+import Block, { IOldNewProps } from '../../core/block'
 import { router } from '../../core/router'
+import { login } from '../../services/auth'
+import { IStore, store } from '../../store/store'
 import connect from '../../utils/connect'
-import { Indexed } from '../../utils/setValueToObject'
 
 class LoginPage extends Block {
   constructor() {
@@ -23,13 +24,13 @@ class LoginPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Авторизоваться',
-        onClick: () => {
+        onClick: async () => {
           const loginComp = this.children.input_login
           const passwordComp = this.children.input_password
-          const login = (loginComp.props.inputValue as string) || ''
+          const loginInput = (loginComp.props.inputValue as string) || ''
           const password = (passwordComp.props.inputValue as string) || ''
 
-          if (loginValidate(login)) {
+          if (loginValidate(loginInput)) {
             loginComp.setProps({ isError: false })
           } else {
             loginComp.setProps({ isError: true })
@@ -42,8 +43,15 @@ class LoginPage extends Block {
             passwordComp.setProps({ isError: true })
             return
           }
-          console.log({ login, password })
-          router.go('/messenger')
+          try {
+            await login({ login: loginInput, password })
+            this.setProps({ errorMsg: null })
+            router.go('/messenger')
+          } catch (error) {
+            if (error instanceof Error) {
+              this.setProps({ errorMsg: error.message })
+            }
+          }
         },
       }),
       buttonString: new ButtonStringComponent({
@@ -52,6 +60,20 @@ class LoginPage extends Block {
         onClick: () => router.go('/sign-up'),
       }),
     })
+  }
+
+  componentDidUpdate({ newProps }: IOldNewProps) {
+    if (newProps.user) {
+      router.go('/messenger')
+    }
+    return true
+  }
+
+  beforeMount() {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
   }
 
   render() {
@@ -79,15 +101,20 @@ class LoginPage extends Block {
               </div>
             </div>
           </form>
+          {{#if errorMsg}}
+            <p class='login__error text-style text-style_size_12 text-style_color_red'>
+              {{ errorMsg }}
+            </p>
+          {{/if}}
         </div>
       </div>
     </main>`
   }
 }
 
-function mapToProps(state: Indexed) {
+function mapToProps(state: IStore) {
   return {
-    name: state,
+    user: state.user,
   }
 }
 

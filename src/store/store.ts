@@ -1,18 +1,24 @@
 import EventBus from '../core/event-bus'
-import { Indexed, setValueToObject } from '../utils/setValueToObject'
+import { IUser } from '../models/dataModels'
+import { setValueToObject } from '../utils/setValueToObject'
 
 export enum StoreEvents {
   Updated = 'updated',
 }
 
-export const initStore: Indexed = {
+export interface IStore {
+  [key: string]: unknown
+  user: IUser | null
+}
+
+export const initStore: IStore = {
   user: null,
 }
 
 export class Store extends EventBus {
-  private state: Indexed
+  private state: IStore
 
-  constructor(state: Indexed) {
+  constructor(state: IStore) {
     super()
     this.state = state
   }

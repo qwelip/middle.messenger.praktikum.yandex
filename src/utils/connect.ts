@@ -1,11 +1,10 @@
 import Block from '../core/block'
-import { StoreEvents, store } from '../store/store'
+import { IStore, StoreEvents, store } from '../store/store'
 import isEqual from './isEqual'
-import { Indexed } from './setValueToObject'
 
 export function connect<T extends Record<string, unknown>>(
   Component: typeof Block,
-  mapStateToProps: (state: Indexed) => Indexed
+  mapStateToProps: (state: IStore) => IStore
 ) {
   return class extends Component {
     constructor(tagName: string, args: T) {

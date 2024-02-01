@@ -6,6 +6,7 @@ import Page404 from '../pages/page-404/page-404-page'
 import Page500 from '../pages/page-500/page-500-page'
 import ProfilePage from '../pages/profile/profile-page'
 import SignInPage from '../pages/sign-in/signIn-page'
+import { store } from '../store/store'
 import { Route } from './route'
 
 export class Router {
@@ -30,9 +31,18 @@ export class Router {
   start() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.onpopstate = (event: any) => {
-      this._onRoute(event.currentTarget?.location.pathname)
+      const currentPath = event.currentTarget?.location.pathname
+      const { user } = store.getState()
+      if (!user) {
+        this.go('/')
+        return
+      }
+      if (user && (currentPath === '/' || currentPath === '/sign-up')) {
+        this.go('/messenger')
+        return
+      }
+      this._onRoute(currentPath)
     }
-
     this._onRoute(window.location.pathname)
   }
 
@@ -45,7 +55,6 @@ export class Router {
     if (this._currentRoute) {
       this._currentRoute.leave()
     }
-
     this._currentRoute = route
     route.render()
   }

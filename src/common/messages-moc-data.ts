@@ -1,7 +1,7 @@
 import { IMessage } from '../models/chat-list'
 import msgReceivedIcon from '../assets/msg-received.png'
 import chatFoto from '../assets/chat-foto.png'
-
+// todom удалить
 export const messagesMocData: IMessage[] = [
   {
     date: '11:56',

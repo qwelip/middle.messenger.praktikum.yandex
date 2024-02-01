@@ -39,3 +39,8 @@
 .login__btn:first-child {
   margin-bottom: 14px;
 }
+
+.login__error {
+  text-align: center;
+  margin-top: 10px;
+}

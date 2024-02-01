@@ -6,6 +6,7 @@ import UserAvatarComponent from '../../components/user-avatar/user-avatar-compon
 import UserInfoComponent from '../../components/user-info/user-info-component'
 import Block, { IOldNewProps } from '../../core/block'
 import { router } from '../../core/router'
+import { logout } from '../../services/auth'
 import images from '../../utils/import-img'
 
 interface IProps {
@@ -40,7 +41,12 @@ export default class ProfilePage extends Block {
       buttonExit: new ButtonStringComponent({
         caption: 'Выйти',
         isRed: true,
-        onClick: () => router.go('/'),
+        onClick: async () => {
+          document.cookie = 'authCookie; max-age=0'
+          window.store.set('user', null)
+          router.go('/')
+          await logout()
+        },
       }),
       userInfo: new UserInfoComponent({ data: userInfoMocData }),
       popup: new PopupComponent({

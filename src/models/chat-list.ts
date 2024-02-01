@@ -1,3 +1,4 @@
+// todom возможно файл не нужен
 export interface IChatListItem {
   name: string
   date: string

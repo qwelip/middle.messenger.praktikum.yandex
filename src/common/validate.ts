@@ -1,3 +1,4 @@
+// todom перенести в utils
 export const nameValidate = (val: string): boolean => {
   const regex = /[^A-ZА-Яa-zа-я-*]/g
   const res = val.replace(regex, '')
@@ -41,7 +42,8 @@ export const loginValidate = (val: string): boolean => {
 }
 
 export const emailValidate = (val: string): boolean => {
-  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+  const reg =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
   return val.match(reg) !== null
 }
 

@@ -1,5 +1,5 @@
 import { IChatListItem } from '../models/chat-list'
-
+// todom удалить
 export const chatListMocData: IChatListItem[] = [
   {
     name: 'Андрей',

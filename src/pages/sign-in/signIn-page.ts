@@ -1,4 +1,3 @@
-import { INewUser } from '../../api/authApi'
 import {
   emailValidate,
   loginValidate,
@@ -10,11 +9,14 @@ import ButtonStringComponent from '../../components/button-string/button-string-
 import { ButtonComponent } from '../../components/button/button-component'
 import InputCheckRepetePasswordComp from '../../components/input-check-repete-password/input-check-repete-password'
 import InputComponent from '../../components/input/input-component'
-import Block from '../../core/block'
+import Block, { IOldNewProps } from '../../core/block'
 import { router } from '../../core/router'
+import { IUser } from '../../models/dataModels'
 import { createUser } from '../../services/auth'
+import { IStore, store } from '../../store/store'
+import connect from '../../utils/connect'
 
-export default class SignInPage extends Block {
+class SignInPage extends Block {
   constructor() {
     super('main', {
       input_mail: new InputComponent({
@@ -86,7 +88,7 @@ export default class SignInPage extends Block {
             passwordRepete &&
             password === passwordRepete
           ) {
-            const formData: INewUser = {
+            const formData: IUser = {
               login,
               email,
               first_name: firstName,
@@ -138,9 +140,25 @@ export default class SignInPage extends Block {
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
         isRed: false,
-        onClick: () => router.go('/'),
+        onClick: () => {
+          router.go('/')
+        },
       }),
     })
+  }
+
+  componentDidUpdate({ newProps }: IOldNewProps) {
+    if (newProps.user) {
+      router.go('/messenger')
+    }
+    return true
+  }
+
+  beforeMount() {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
   }
 
   render() {
@@ -199,3 +217,11 @@ export default class SignInPage extends Block {
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    user: state.user,
+  }
+}
+
+export default connect(SignInPage, mapToProps)
