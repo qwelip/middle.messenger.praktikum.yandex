@@ -20,7 +20,7 @@ export const addOpenPopupHandle = (
     }
   })
 }
-
+// todom delete
 export const convertElementToString = (node: Element) => {
   const tmpNode = document.createElement('div')
   tmpNode.appendChild(node.cloneNode(true))
@@ -71,3 +71,5 @@ export function isObjectsEqual(lhs: PlainObject, rhs: PlainObject) {
 
   return true
 }
+
+export const getFileName = (val: string): string => val.split('\\').at(-1)!

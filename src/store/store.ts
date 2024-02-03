@@ -10,6 +10,7 @@ export interface IStore {
   [key: string]: unknown
   user?: IUserResponse | null
   profile?: IChageProfileResponse | null
+  avatar?: string
 }
 
 export const initStore: IStore = {

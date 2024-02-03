@@ -24,6 +24,7 @@ interface IMeta {
 
 export default class Block {
   props: IPropsWithChildren
+  private _renderCounter: number
   private _meta: IMeta
   private _rootQuery: string
   private eventBus: () => EventBus
@@ -41,6 +42,7 @@ export default class Block {
   }
 
   constructor(tagName: string, propsWithChildren: IPropsWithChildren) {
+    this._renderCounter = 0
     this._rootQuery = 'app'
     const eventBus = new EventBus()
     this.eventBus = () => eventBus
@@ -177,10 +179,14 @@ export default class Block {
       this._element.replaceWith(newElemenet!)
     }
     this._element = newElemenet!
-    this._beforeMount()
+
+    if (this._renderCounter === 0) {
+      this._beforeMount()
+    }
 
     this._addEvents()
     this._componentDidMount()
+    this._renderCounter += 1
   }
 
   render() {}

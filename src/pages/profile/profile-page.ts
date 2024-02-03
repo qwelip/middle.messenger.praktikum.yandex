@@ -8,21 +8,15 @@ import { router } from '../../core/router'
 import { logout } from '../../services/auth'
 import images from '../../utils/import-img'
 
-type IProps = {
-  isPopupShow?: boolean
-}
-
 export default class ProfilePage extends Block {
-  constructor(props?: IProps) {
+  constructor() {
     super('main', {
-      ...props,
       sideButton: new SideButtonComponent({
         goBackIcon: images.goBackIcon,
         onClick: () => router.back(),
       }),
       userAvatar: new UserAvatarComponent('div', {
         isName: true,
-        avatarPlaceholder: images.avatarPlaceholder,
         onClick: () => {
           this.setProps({ isPopupShow: true })
         },
@@ -43,22 +37,19 @@ export default class ProfilePage extends Block {
         onClick: async () => {
           document.cookie = 'authCookie; max-age=0'
           window.store.set('user', null)
+          window.store.set('profile', null)
+          window.store.set('avatar', null)
           router.go('/')
           await logout()
+          // eslint-disable-next-line no-restricted-globals
+          location.reload()
         },
       }),
       userInfo: new UserInfoComponent('section', {}),
       popup: new PopupComponent({
-        isOpen: props?.isPopupShow || false,
-        caption: 'Загрузите файл',
-        btnCaption: 'Поменять',
-        onClick: () => {
+        close: () => {
           this.setProps({ isPopupShow: false })
         },
-        content: new ButtonStringComponent({
-          caption: 'Выбрать файл на компьютере',
-          isRed: false,
-        }).element,
       }),
     })
   }

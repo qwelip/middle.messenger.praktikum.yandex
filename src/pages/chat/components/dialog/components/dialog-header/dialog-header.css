@@ -16,6 +16,8 @@
   background-color: #efefef;
   margin-right: 10px;
   border-radius: 50%;
+  overflow: hidden;
+  position: relative;
 }
 
 .dialog-header__name {

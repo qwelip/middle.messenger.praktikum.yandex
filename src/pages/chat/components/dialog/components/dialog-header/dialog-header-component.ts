@@ -1,4 +1,6 @@
+import ImgComponent from '../../../../../../components/user-avatar/components/img/img-component'
 import Block from '../../../../../../core/block'
+import { getAvatar } from '../../../../../../services/resources'
 import { IStore, store } from '../../../../../../store/store'
 import connect from '../../../../../../utils/connect'
 import images from '../../../../../../utils/import-img'
@@ -33,6 +35,11 @@ class DialogHeaderComponent extends Block {
         addIcon: images.addIcon,
         deleteIcon: images.deleteIcon,
       }),
+      avatar: new ImgComponent({
+        imgSrc: images.avatarPlaceholder,
+        isNoAvatar: true,
+        isSmall: true,
+      }),
       userName: new UserName({
         name: store.getState().user?.first_name || '',
       }),
@@ -40,7 +47,20 @@ class DialogHeaderComponent extends Block {
   }
 
   componentDidMount() {
-    const { user, profile } = store.getState()
+    const { user, profile, avatar } = store.getState()
+
+    const avatarSrc = avatar || user?.avatar
+    if (avatarSrc) {
+      getAvatar(avatarSrc)
+        .then((res) => {
+          this.children.avatar.setProps({ isNoAvatar: false })
+          this.children.avatar.setProps({ imgSrc: res?.responseURL })
+        })
+        .catch((err) => console.log('err', err))
+    } else {
+      this.children.avatar.setProps({ isNoAvatar: true })
+    }
+
     if (profile) {
       this.children.userName.setProps({ name: profile?.first_name })
     } else {
@@ -52,7 +72,9 @@ class DialogHeaderComponent extends Block {
     return `
       <div class='dialog-header'>
         <div class='dialog-header__info'>
-          <div class='dialog-header__avatar'></div>
+          <div class='dialog-header__avatar'>
+            {{{ avatar }}}
+          </div>
           {{{ userName }}}
         </div>
         <a class='dialog-header__context-btn btn-styles'>

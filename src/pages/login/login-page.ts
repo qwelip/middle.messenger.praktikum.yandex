@@ -2,7 +2,7 @@ import { loginValidate, passwordValidate } from '../../common/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
-import Block, { IOldNewProps } from '../../core/block'
+import Block from '../../core/block'
 import { router } from '../../core/router'
 import { login } from '../../services/auth'
 import { IStore, store } from '../../store/store'
@@ -46,6 +46,8 @@ class LoginPage extends Block {
           try {
             await login({ login: loginInput, password })
             this.setProps({ errorMsg: null })
+            this.children.input_login.setProps({ inputValue: '' })
+            this.children.input_password.setProps({ inputValue: '' })
             router.go('/messenger')
           } catch (error) {
             if (error instanceof Error) {
@@ -60,13 +62,6 @@ class LoginPage extends Block {
         onClick: () => router.go('/sign-up'),
       }),
     })
-  }
-
-  componentDidUpdate({ newProps }: IOldNewProps) {
-    if (newProps.user) {
-      router.go('/messenger')
-    }
-    return true
   }
 
   beforeMount() {

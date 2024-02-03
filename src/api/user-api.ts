@@ -20,4 +20,9 @@ export class UserApi {
       data: JSON.stringify(data),
     })
   }
+  async changeAvatar(data: FormData): Promise<XMLHttpRequest> {
+    return authInstance.put('/profile/avatar', {
+      data,
+    })
+  }
 }

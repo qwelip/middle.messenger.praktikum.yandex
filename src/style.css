@@ -36,6 +36,7 @@
 @import './components/side-button/side-button.css';
 @import './components/button/button.css';
 @import './components/popup/popup.css';
+@import './components/popup/components/add-photo-btn/add-photo-btn.css';
 @import './components/input/input.css';
 @import './components/input-no-border/input-no-border.css';
 @import './components/form/form.css';

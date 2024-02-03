@@ -1,6 +1,8 @@
 import Block from '../../core/block'
 import { IStore, store } from '../../store/store'
 import connect from '../../utils/connect'
+import images from '../../utils/import-img'
+import AvatarComponent from './components/avatar/avatar-component'
 
 interface IAvatar {
   name: string
@@ -22,7 +24,6 @@ class UserAvatarName extends Block {
 
 type IProps = {
   isName: boolean
-  avatarPlaceholder: string
   onClick?: () => void
 }
 
@@ -35,6 +36,14 @@ class UserAvatarComponent extends Block {
       },
       avatarName: new UserAvatarName({
         name: store.getState().user?.first_name || '',
+      }),
+      avatar: new AvatarComponent('div', {
+        avatarPlaceholder: images.avatarPlaceholder,
+        isHover: true,
+      }),
+      avatarNoHover: new AvatarComponent('div', {
+        avatarPlaceholder: images.avatarPlaceholder,
+        isHover: false,
       }),
     })
   }
@@ -50,26 +59,14 @@ class UserAvatarComponent extends Block {
 
   render() {
     return `
-    <div class='user-avatar'>
+    <div data-setevent class='user-avatar'>
       {{#if isName}}
-        <div data-setevent class='user-avatar__img-wrapper user-avatar__img-wrapper_useHover centered-content'>
-          <img
-            class='user-avatar__img'
-            src={{avatarPlaceholder}}
-            alt='Иконка аватара'
-          />
-          <p class='user-avatar__change-avatar'>Поменять аватар</p>
-        </div>
+        {{{ avatar }}}
         {{{ avatarName }}}
       {{else}}
-        <div data-setevent class='user-avatar__img-wrapper centered-content'>
-          <img
-            class='user-avatar__img'
-            src={{avatarPlaceholder}}
-            alt='Иконка аватара'
-          />
-        </div>
+        {{{ avatarNoHover }}}
       {{/if}}
+    </div>
     `
   }
 }
