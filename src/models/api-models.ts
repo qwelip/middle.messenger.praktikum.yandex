@@ -1,4 +1,5 @@
 export interface IUserResponse {
+  id: number
   avatar?: string
   display_name?: string
   email: string
@@ -43,4 +44,12 @@ export interface IChageAvatarResponse {
 export interface IGetAvatarResponse {
   responseURL: string
   [keys: string]: unknown
+}
+
+export interface INewChatResponse {
+  id: number
+}
+
+export interface IGetChatUsersResponse {
+  token: string
 }

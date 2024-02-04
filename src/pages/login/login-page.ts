@@ -64,6 +64,13 @@ class LoginPage extends Block {
     })
   }
 
+  componentDidMount(): void {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
+  }
+
   beforeMount() {
     const { user } = store.getState()
     if (user) {

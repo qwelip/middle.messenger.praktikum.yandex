@@ -11,6 +11,8 @@ export interface IStore {
   user?: IUserResponse | null
   profile?: IChageProfileResponse | null
   avatar?: string
+  chatId?: string
+  token?: string
 }
 
 export const initStore: IStore = {

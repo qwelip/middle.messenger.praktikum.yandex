@@ -31,6 +31,7 @@
 @import './pages/chat/components/dialog/components/input-message/input-message.css';
 
 /* common components */
+@import './components/add-chat-popup/add-chat-popup.css';
 @import './components/user-avatar/user-avatar.css';
 @import './components/button-string/button-string.css';
 @import './components/side-button/side-button.css';

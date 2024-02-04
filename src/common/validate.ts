@@ -85,3 +85,7 @@ export const phoneValidate = (val: string): boolean => {
   }
   return true
 }
+
+export const notEmptyValidate = (val: string): boolean => val.length > 0
+
+export const userIdValidate = (val: string): boolean => !Number.isNaN(Number(val))

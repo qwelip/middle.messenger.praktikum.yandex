@@ -20,3 +20,12 @@ export interface IChangePassword {
   oldPassword: string
   newPassword: string
 }
+
+export interface INewChat {
+  title: string
+}
+
+export interface IAddUsersToChat {
+  users: number[]
+  chatId: number
+}

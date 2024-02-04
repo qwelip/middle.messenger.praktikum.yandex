@@ -1,8 +1,16 @@
 .chat-list-header {
   padding: 20px 0 15px;
   border-bottom: solid 1px #eaeaea;
-  margin: 0 10px;
   position: relative;
+}
+
+.chat-list-header__buttons {
+  display: flex;
+  margin: 0 10px;
+}
+
+.chat-list-header__form {
+  margin: 0 10px;
 }
 
 .chat-list-header__placeholder-icon {

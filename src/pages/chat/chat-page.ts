@@ -6,7 +6,7 @@ export default class ChatPage extends Block {
   constructor() {
     super('main', {
       chatList: new ChatListComponent(),
-      dialog: new DialogPage({
+      dialog: new DialogPage('section', {
         isEmpty: false,
       }),
     })
