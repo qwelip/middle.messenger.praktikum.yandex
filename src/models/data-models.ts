@@ -29,3 +29,9 @@ export interface IAddUsersToChat {
   users: number[]
   chatId: number
 }
+
+export interface IGetChats {
+  offset: number
+  limit: number
+  title?: string
+}

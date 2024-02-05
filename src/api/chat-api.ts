@@ -1,4 +1,4 @@
-import { IAddUsersToChat, INewChat } from '../models/data-models'
+import { IAddUsersToChat, IGetChats, INewChat } from '../models/data-models'
 import CustomFetch from './custom-fetch'
 
 const authInstance = new CustomFetch('/chats')
@@ -25,6 +25,14 @@ export class ChatApi {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
+    })
+  }
+  async getChats(data: IGetChats) {
+    return authInstance.get('/', {
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      data: JSON.stringify(data),
     })
   }
 }

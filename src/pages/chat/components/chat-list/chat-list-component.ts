@@ -1,9 +1,11 @@
 import Block from '../../../../core/block'
+import { IStore } from '../../../../store/store'
+import connect from '../../../../utils/connect'
 import images from '../../../../utils/import-img'
 import ChatListHeaderComponent from '../chat-list-header/chat-list-header-component'
 import ChatListItemComponent from '../chat-list-item/chat-list-item-component'
 
-export default class ChatListComponent extends Block {
+class ChatListComponent extends Block {
   constructor() {
     super('section', {
       header: new ChatListHeaderComponent({
@@ -27,6 +29,26 @@ export default class ChatListComponent extends Block {
     })
   }
 
+  //  componentDidMount() {
+  //    const { chats } = store.getState()
+  //    if (token && chatId && user) {
+  //      const socket = new WebSocket(
+  //        `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${token}`
+  //      )
+
+  //      socket.addEventListener('open', () => {
+  //        console.log('Соединение установлено')
+
+  //        socket.send(
+  //          JSON.stringify({
+  //            content: 'Моё первое сообщение миру!',
+  //            type: 'message',
+  //          })
+  //        )
+  //      })
+  //    }
+  //  }
+
   render() {
     return `
       <section class='chat-list'>
@@ -39,3 +61,11 @@ export default class ChatListComponent extends Block {
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    chats: state.chats,
+  }
+}
+
+export default connect(ChatListComponent, mapToProps)

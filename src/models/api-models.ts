@@ -53,3 +53,18 @@ export interface INewChatResponse {
 export interface IGetChatUsersResponse {
   token: string
 }
+
+interface ILastMessage {
+  user: Omit<IUserResponse, 'id'>
+  time: string
+  content: string
+}
+
+export interface IGetChatsResponse {
+  id: number
+  title: string
+  avatar: string
+  unread_count: number
+  created_by: number
+  last_message: ILastMessage
+}

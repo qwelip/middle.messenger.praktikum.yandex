@@ -1,6 +1,6 @@
 import { notEmptyValidate, userIdValidate } from '../../common/validate'
 import Block from '../../core/block'
-import { addUsersToChat, createChat, getChatUsers } from '../../services/chat'
+import { createChat, getChats } from '../../services/chat'
 import { store } from '../../store/store'
 import { ButtonComponent } from '../button/button-component'
 import InputComponent from '../input/input-component'
@@ -61,10 +61,16 @@ export default class AddChatPopupComponent extends Block {
             if (!newChat?.id) {
               throw new Error('Id пользователя не найден')
             }
-            await addUsersToChat({ chatId: newChat.id, users: [+userId] })
-            const token = await getChatUsers(`${newChat.id}`)
-            store.set('token', token)
-            store.set('chatId', newChat.id)
+            const chats = await getChats({
+              offset: 0,
+              limit: 100,
+            })
+            store.set('chats', chats)
+
+            // await addUsersToChat({ chatId: newChat.id, users: [+userId] })
+            // const token = await getChatUsers(`${newChat.id}`)
+            // store.set('token', token)
+            // store.set('chatId', newChat.id)
             this.hide()
           } catch (error) {
             if (error instanceof Error) {

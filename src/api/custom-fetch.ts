@@ -21,14 +21,15 @@ interface IMethodOptions extends IRequestBase {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<any>
 
-function queryStringify(data: Record<string, string>) {
-  if (typeof data !== 'object') {
+function queryStringify(data: string) {
+  const obj = JSON.parse(data)
+  if (typeof obj !== 'object') {
     throw new Error('Data must be object')
   }
 
-  const keys = Object.keys(data)
+  const keys = Object.keys(obj)
   return keys.reduce(
-    (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
+    (result, key, index) => `${result}${key}=${obj[key]}${index < keys.length - 1 ? '&' : ''}`,
     '?'
   )
 }
@@ -59,8 +60,8 @@ export default class CustomFetch {
       }
       const xhr = new XMLHttpRequest()
       const isGet = method === 'GET'
-      const getData = data as unknown as Record<string, string>
-      xhr.open(method, isGet && !!data ? `${resUrl}${queryStringify(getData)}` : resUrl)
+      const getData = data as unknown
+      xhr.open(method, isGet && !!data ? `${resUrl}${queryStringify(getData as string)}` : resUrl)
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key])
