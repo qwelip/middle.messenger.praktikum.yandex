@@ -66,5 +66,9 @@ export interface IGetChatsResponse {
   avatar: string
   unread_count: number
   created_by: number
-  last_message: ILastMessage
+  last_message?: ILastMessage
+}
+
+export interface IChatsWithActive extends IGetChatsResponse {
+  isSelected: boolean
 }

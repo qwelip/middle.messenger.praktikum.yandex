@@ -3,6 +3,11 @@ import Handlebars from 'handlebars'
 import { nanoid } from 'nanoid'
 import EventBus from './event-bus'
 
+export type RefType = {
+  // eslint-disable-next-line no-use-before-define
+  [key: string]: Element
+}
+
 type HTMLEvents = keyof HTMLElementEventMap
 
 type IEvents = {
@@ -31,8 +36,8 @@ export default class Block {
   private _element: Element | null = null
   // eslint-disable-next-line no-use-before-define
   children: Record<string, Block>
-
-  private _id: string
+  refs = {} as RefType
+  id: string
 
   static EVENTS = {
     INIT: 'init',
@@ -49,7 +54,7 @@ export default class Block {
     this._meta = {
       tagName: tagName || 'div',
     }
-    this._id = nanoid(6)
+    this.id = nanoid(6)
     const { props, children } = this._getChildrenAndProps(propsWithChildren)
     this.children = children
     this.props = this._makePropsProxy(props)
@@ -157,28 +162,45 @@ export default class Block {
     return true
   }
 
-  _render() {
-    const propsAndStubs = { ...this.props }
-    this._removeEvents()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private compile(template: string, context: any) {
+    const contextAndStubs = { ...context, __refs: this.refs }
 
-    Object.entries(this.children).forEach(([key, value]) => {
-      propsAndStubs[key] = `<div data-id="${value._id}"></div>`
+    Object.entries(this.children).forEach(([key, child]) => {
+      contextAndStubs[key] = `<div data-id="${child.id}"></div>`
     })
 
-    const fragment = this._createDocumentElement('template') as HTMLTemplateElement
-    const block = this.render() as unknown as string
-    fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
-    const newElemenet = fragment.content.firstElementChild
+    const html = Handlebars.compile(template)(contextAndStubs)
+
+    const temp = document.createElement('template')
+
+    temp.innerHTML = html
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    contextAndStubs.__children?.forEach(({ embed }: any) => {
+      embed(temp.content)
+    })
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+      const stub = temp.content.querySelector(`[data-id="${child.id}"]`)
       stub?.replaceWith(child.getContent()!)
     })
 
+    return temp.content
+  }
+
+  _render() {
+    this._removeEvents()
+    const fragment = this.compile(this.render(), this.props)
+
+    const newElement = fragment.firstElementChild as HTMLElement
+
     if (this._element) {
-      this._element.replaceWith(newElemenet!)
+      this._element.replaceWith(newElement)
     }
-    this._element = newElemenet!
+
+    this._element = newElement
+
+    this._addEvents()
 
     if (this._renderCounter === 0) {
       this._beforeMount()
@@ -189,7 +211,41 @@ export default class Block {
     this._renderCounter += 1
   }
 
-  render() {}
+  // _render() {
+  //   const propsAndStubs = { ...this.props }
+  //   this._removeEvents()
+
+  //   Object.entries(this.children).forEach(([key, value]) => {
+  //     propsAndStubs[key] = `<div data-id="${value._id}"></div>`
+  //   })
+
+  //   const fragment = this._createDocumentElement('template') as HTMLTemplateElement
+  //   const block = this.render() as unknown as string
+  //   fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
+  //   const newElemenet = fragment.content.firstElementChild
+
+  //   Object.values(this.children).forEach((child) => {
+  //     const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+  //     stub?.replaceWith(child.getContent()!)
+  //   })
+
+  //   if (this._element) {
+  //     this._element.replaceWith(newElemenet!)
+  //   }
+  //   this._element = newElemenet!
+
+  //   if (this._renderCounter === 0) {
+  //     this._beforeMount()
+  //   }
+
+  //   this._addEvents()
+  //   this._componentDidMount()
+  //   this._renderCounter += 1
+  // }
+
+  render() {
+    return ''
+  }
 
   beforeMount() {}
 

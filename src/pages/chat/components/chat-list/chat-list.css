@@ -7,3 +7,8 @@
   background-color: #fbfbfb;
   border-right: solid 1px #eaeaea;
 }
+
+.chat-list__list {
+  height: 100%;
+  overflow-y: scroll;
+}

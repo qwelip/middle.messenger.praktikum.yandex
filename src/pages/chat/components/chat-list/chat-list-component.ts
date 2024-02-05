@@ -1,9 +1,10 @@
 import Block from '../../../../core/block'
-import { IStore } from '../../../../store/store'
+import { IChatsWithActive } from '../../../../models/api-models'
+import { IStore, store } from '../../../../store/store'
 import connect from '../../../../utils/connect'
 import images from '../../../../utils/import-img'
 import ChatListHeaderComponent from '../chat-list-header/chat-list-header-component'
-import ChatListItemComponent from '../chat-list-item/chat-list-item-component'
+import ChatListWrapperComponent from './components/chat-list-wrapper-component'
 
 class ChatListComponent extends Block {
   constructor() {
@@ -12,50 +13,36 @@ class ChatListComponent extends Block {
         arrowIcon: images.arrowIcon,
         magnifierIcon: images.magnifierIcon,
       }),
-      chatListItem1: new ChatListItemComponent({
-        date: '12:00',
-        isSelected: true,
-        message: 'Друзья, у меня для вас особенный выпуск новостей новостей новостей!',
-        name: 'Илья',
-        onClick: () => {},
-      }),
-      chatListItem2: new ChatListItemComponent({
-        date: '1 Мая 2020',
-        isSelected: false,
-        message: 'Миллионы россиян ежедневно проводят десятки часов свое...',
-        name: 'тет-а-теты',
-        onClick: () => {},
-      }),
+      chatsWrapper: new ChatListWrapperComponent(),
     })
   }
 
-  //  componentDidMount() {
-  //    const { chats } = store.getState()
-  //    if (token && chatId && user) {
-  //      const socket = new WebSocket(
-  //        `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${token}`
-  //      )
-
-  //      socket.addEventListener('open', () => {
-  //        console.log('Соединение установлено')
-
-  //        socket.send(
-  //          JSON.stringify({
-  //            content: 'Моё первое сообщение миру!',
-  //            type: 'message',
-  //          })
-  //        )
-  //      })
-  //    }
-  //  }
+  componentDidMount() {
+    const { chats, selectedChat } = store.getState()
+    const chatsWithActiveChat = chats?.map<IChatsWithActive>((item) => {
+      const isSelected = selectedChat ? +selectedChat === item.id : false
+      const day = new Date(item.created_by).getDay()
+      const month = new Date(item.created_by).getMonth()
+      const date = `${day}.${month}`
+      const message = item.last_message?.content || '-'
+      const name = item.title
+      return {
+        ...item,
+        isSelected,
+        date,
+        message,
+        name,
+      }
+    })
+    this.children.chatsWrapper.setProps({ chats: chatsWithActiveChat })
+  }
 
   render() {
     return `
       <section class='chat-list'>
         {{{ header }}}
         <div class='chat-list__list'>
-            {{{ chatListItem1 }}}
-            {{{ chatListItem2 }}}
+            {{{ chatsWrapper }}}
         </div>
       </section>
     `
@@ -65,6 +52,7 @@ class ChatListComponent extends Block {
 function mapToProps(state: IStore) {
   return {
     chats: state.chats,
+    selectedChat: state.selectedChat,
   }
 }
 
