@@ -5,6 +5,7 @@ import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
 import { router } from '../../core/router'
 import { login } from '../../services/auth'
+import { getChats } from '../../services/chat'
 import { IStore, store } from '../../store/store'
 import connect from '../../utils/connect'
 
@@ -48,6 +49,11 @@ class LoginPage extends Block {
             this.setProps({ errorMsg: null })
             this.children.input_login.setProps({ inputValue: '' })
             this.children.input_password.setProps({ inputValue: '' })
+            const chats = await getChats({
+              offset: 0,
+              limit: 100,
+            })
+            window.store.set('chats', chats)
             router.go('/messenger')
           } catch (error) {
             if (error instanceof Error) {

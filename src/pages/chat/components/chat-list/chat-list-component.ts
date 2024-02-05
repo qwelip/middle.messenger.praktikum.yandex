@@ -42,7 +42,7 @@ class ChatListComponent extends Block {
       <section class='chat-list'>
         {{{ header }}}
         <div class='chat-list__list'>
-            {{{ chatsWrapper }}}
+          {{{ chatsWrapper }}}
         </div>
       </section>
     `

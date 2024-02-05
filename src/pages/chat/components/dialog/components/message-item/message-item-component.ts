@@ -7,7 +7,7 @@ interface IProps {
   contentImg?: string
   msgReceivedIcon?: string
 }
-
+// todom удалить
 export default class MessageItemComponent extends Block {
   constructor(props: IProps) {
     super('div', {

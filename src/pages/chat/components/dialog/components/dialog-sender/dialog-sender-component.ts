@@ -7,6 +7,7 @@ import SendButtonComponent from '../send-button/send-button-component'
 interface IProps {
   pinIcon: string
   sendIcon: string
+  send: (val: string) => void
 }
 
 export default class DialogSenderComponent extends Block {
@@ -27,7 +28,8 @@ export default class DialogSenderComponent extends Block {
             this.children.input.setProps({ isError: true })
           } else {
             this.children.input.setProps({ isError: false })
-            console.log('inputVal', inputVal)
+            props.send(inputVal)
+            this.children.input.setProps({ inputValue: '' })
           }
         },
       }),
