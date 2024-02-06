@@ -1,5 +1,9 @@
 import { IUserResponse } from './api-models'
 
+export type PlainObject<T = unknown> = {
+  [k in string]: T
+}
+
 export interface ISignIn {
   login: string
   password: string

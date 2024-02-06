@@ -1,7 +1,6 @@
 import { isPlainObject } from './utils'
 
-// todom вынести в общие типы
-export type Indexed<T = unknown> = {
+type Indexed<T = unknown> = {
   [key in string]: T
 }
 

@@ -4,7 +4,7 @@ import {
   nameValidate,
   passwordValidate,
   phoneValidate,
-} from '../../common/validate'
+} from '../../utils/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputCheckRepetePasswordComp from '../../components/input-check-repete-password/input-check-repete-password'

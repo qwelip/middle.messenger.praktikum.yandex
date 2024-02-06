@@ -1,4 +1,4 @@
-import { notEmptyValidate, userIdValidate } from '../../common/validate'
+import { notEmptyValidate, userIdValidate } from '../../utils/validate'
 import Block from '../../core/block'
 import { addUsersToChat, createChat, getChats } from '../../services/chat'
 import { store } from '../../store/store'

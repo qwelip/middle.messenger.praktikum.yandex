@@ -1,3 +1,5 @@
+import { PlainObject } from '../models/data-models'
+
 export const addOpenPopupHandle = (
   btnClass: string,
   popupClass: string,
@@ -19,18 +21,6 @@ export const addOpenPopupHandle = (
       popup.classList.add(hideClass)
     }
   })
-}
-// todom delete
-export const convertElementToString = (node: Element) => {
-  const tmpNode = document.createElement('div')
-  tmpNode.appendChild(node.cloneNode(true))
-  const str = tmpNode.innerHTML
-  return str
-}
-
-// todom вынести
-export type PlainObject<T = unknown> = {
-  [k in string]: T
 }
 
 export function isPlainObject(value: unknown): value is PlainObject {

@@ -12,7 +12,6 @@ function render(query: string, block: Block | null) {
 
 export class Route {
   private _pathname: string
-  // todom
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _blockClass: any
   private _block: Block | null

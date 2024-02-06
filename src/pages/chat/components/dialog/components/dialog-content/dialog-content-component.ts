@@ -15,8 +15,6 @@ export default class DialogContentComponent extends Block {
     })
   }
 
-  // todom нету dialogDate
-
   render() {
     return `
     <section class='dialog-content'>

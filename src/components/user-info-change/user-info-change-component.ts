@@ -1,4 +1,4 @@
-import { emailValidate, loginValidate, nameValidate, phoneValidate } from '../../common/validate'
+import { emailValidate, loginValidate, nameValidate, phoneValidate } from '../../utils/validate'
 import Block from '../../core/block'
 import { changeProfile } from '../../services/user'
 import { IStore, store } from '../../store/store'

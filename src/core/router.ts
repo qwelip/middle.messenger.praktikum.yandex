@@ -86,4 +86,3 @@ router.use('/change-password', ChangePasswordPage)
 router.use('/sign-up', SignInPage)
 router.use('/page500', Page500)
 router.use('/page404', Page404)
-// todom страницы 404 500

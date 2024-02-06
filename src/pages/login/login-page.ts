@@ -1,4 +1,4 @@
-import { loginValidate, passwordValidate } from '../../common/validate'
+import { loginValidate, passwordValidate } from '../../utils/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'

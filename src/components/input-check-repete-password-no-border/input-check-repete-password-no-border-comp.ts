@@ -1,4 +1,4 @@
-import { passwordRepeateValidate } from '../../common/validate'
+import { passwordRepeateValidate } from '../../utils/validate'
 import Block from '../../core/block'
 
 interface IProps {

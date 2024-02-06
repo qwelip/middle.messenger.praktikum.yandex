@@ -1,4 +1,3 @@
-// todom перенести в utils
 export const nameValidate = (val: string): boolean => {
   const regex = /[^A-ZА-Яa-zа-я-*]/g
   const res = val.replace(regex, '')

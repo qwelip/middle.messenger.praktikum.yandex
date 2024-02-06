@@ -1,4 +1,4 @@
-import { passwordValidate } from '../../../common/validate'
+import { passwordValidate } from '../../../utils/validate'
 import { ButtonComponent } from '../../../components/button/button-component'
 import InputCheckRepetePasswordNoBorderComp from '../../../components/input-check-repete-password-no-border/input-check-repete-password-no-border-comp'
 import InputNoBorderComponent from '../../../components/input-no-border/input-no-border-component'

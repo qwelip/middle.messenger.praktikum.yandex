@@ -14,11 +14,6 @@ export interface IHttpErrorResponse {
   reason: string
 }
 
-// todom возможно не нужен
-export interface ICreateUserResponse {
-  id: number
-}
-
 export interface IChageProfileResponse {
   avatar: string
   display_name: string
