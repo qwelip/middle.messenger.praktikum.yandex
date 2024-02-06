@@ -211,38 +211,6 @@ export default class Block {
     this._renderCounter += 1
   }
 
-  // _render() {
-  //   const propsAndStubs = { ...this.props }
-  //   this._removeEvents()
-
-  //   Object.entries(this.children).forEach(([key, value]) => {
-  //     propsAndStubs[key] = `<div data-id="${value._id}"></div>`
-  //   })
-
-  //   const fragment = this._createDocumentElement('template') as HTMLTemplateElement
-  //   const block = this.render() as unknown as string
-  //   fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
-  //   const newElemenet = fragment.content.firstElementChild
-
-  //   Object.values(this.children).forEach((child) => {
-  //     const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
-  //     stub?.replaceWith(child.getContent()!)
-  //   })
-
-  //   if (this._element) {
-  //     this._element.replaceWith(newElemenet!)
-  //   }
-  //   this._element = newElemenet!
-
-  //   if (this._renderCounter === 0) {
-  //     this._beforeMount()
-  //   }
-
-  //   this._addEvents()
-  //   this._componentDidMount()
-  //   this._renderCounter += 1
-  // }
-
   render() {
     return ''
   }
