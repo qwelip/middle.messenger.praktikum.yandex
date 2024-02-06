@@ -3,6 +3,7 @@
   display: inline-block;
   cursor: pointer;
 }
+
 .input-file span {
   position: relative;
   display: inline-block;
@@ -21,6 +22,7 @@
   margin: 0;
   transition: background-color 0.2s;
 }
+
 .input-file input[type='file'] {
   position: absolute;
   z-index: -1;
