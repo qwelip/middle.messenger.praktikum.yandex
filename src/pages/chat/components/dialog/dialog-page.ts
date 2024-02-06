@@ -1,10 +1,10 @@
 import Block from '../../../../core/block'
 import { IMessageResponse } from '../../../../models/api-models'
-import { getChatUsers } from '../../../../services/chat'
+import { getToken } from '../../../../services/chat'
 import { IStore, store } from '../../../../store/store'
 import connect from '../../../../utils/connect'
 import images from '../../../../utils/import-img'
-import { getTime } from '../../../../utils/utils'
+import { addOpenPopupHandle, getTime } from '../../../../utils/utils'
 import DialogContentComponent from './components/dialog-content/dialog-content-component'
 import DialogHeaderComponent from './components/dialog-header/dialog-header-component'
 import DialogSenderComponent from './components/dialog-sender/dialog-sender-component'
@@ -42,14 +42,19 @@ class DialogPage extends Block {
   }
 
   async componentDidMount() {
+    addOpenPopupHandle(
+      'dialog-header__btn-img',
+      'popup-dialog-header',
+      images.contextMenuIcon,
+      images.contextMenuIconActive
+    )
     if (this.socket) {
-      console.log('close')
       this.socket.close(1000)
     }
     const { selectedChat, user } = store.getState()
     if (selectedChat && user) {
       this.children.dialogContent.setProps({ isEmpty: false })
-      const token = await getChatUsers(selectedChat)
+      const token = await getToken(selectedChat)
       this.socket = new WebSocket(
         `wss://ya-praktikum.tech/ws/chats/${user.id}/${selectedChat}/${token?.token}`
       )

@@ -25,7 +25,7 @@ export interface INewChat {
   title: string
 }
 
-export interface IAddUsersToChat {
+export interface IUsersChatMap {
   users: number[]
   chatId: number
 }

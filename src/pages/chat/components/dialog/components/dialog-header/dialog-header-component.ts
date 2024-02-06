@@ -1,5 +1,6 @@
 import ImgComponent from '../../../../../../components/user-avatar/components/img/img-component'
 import Block from '../../../../../../core/block'
+import { deleteUserFromChat } from '../../../../../../services/chat'
 import { getAvatar } from '../../../../../../services/resources'
 import { IStore, store } from '../../../../../../store/store'
 import connect from '../../../../../../utils/connect'
@@ -34,6 +35,20 @@ class DialogHeaderComponent extends Block {
       popupDialog: new PopupDialogHeaderComponent({
         addIcon: images.addIcon,
         deleteIcon: images.deleteIcon,
+        onClick: async () => {
+          const { notAdminUserId, selectedChat } = store.getState()
+          if (notAdminUserId && selectedChat) {
+            try {
+              await deleteUserFromChat({
+                chatId: +selectedChat,
+                users: [+notAdminUserId],
+              })
+              console.log('Пользователь успешно удален')
+            } catch (error) {
+              console.log('Ошибка при удалении пользователя')
+            }
+          }
+        },
       }),
       avatar: new ImgComponent({
         imgSrc: images.avatarPlaceholder,

@@ -15,6 +15,7 @@ export interface IStore {
   token?: string
   chats?: IGetChatsResponse[] | undefined
   selectedChat?: string
+  notAdminUserId?: string
 }
 
 export const initStore: IStore = {

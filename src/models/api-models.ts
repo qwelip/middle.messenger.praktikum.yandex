@@ -80,3 +80,13 @@ export interface IMessageResponse {
   type: string
   user_id: number
 }
+
+export interface IChatUsersResponse {
+  id: number
+  first_name: string
+  second_name: string
+  display_name?: string
+  avatar?: string
+  login: string
+  role: string
+}
