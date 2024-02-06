@@ -1,6 +1,6 @@
 import { notEmptyValidate, userIdValidate } from '../../common/validate'
 import Block from '../../core/block'
-import { createChat, getChats } from '../../services/chat'
+import { addUsersToChat, createChat, getChats } from '../../services/chat'
 import { store } from '../../store/store'
 import { ButtonComponent } from '../button/button-component'
 import InputComponent from '../input/input-component'
@@ -67,10 +67,7 @@ export default class AddChatPopupComponent extends Block {
             })
             store.set('chats', chats)
 
-            // await addUsersToChat({ chatId: newChat.id, users: [+userId] })
-            // const token = await getChatUsers(`${newChat.id}`)
-            // store.set('token', token)
-            // store.set('chatId', newChat.id)
+            await addUsersToChat({ chatId: newChat.id, users: [+userId] })
             this.hide()
           } catch (error) {
             if (error instanceof Error) {

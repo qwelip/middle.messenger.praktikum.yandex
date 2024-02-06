@@ -1,8 +1,10 @@
 import Block from '../../../../core/block'
+import { IMessageResponse } from '../../../../models/api-models'
 import { getChatUsers } from '../../../../services/chat'
 import { IStore, store } from '../../../../store/store'
 import connect from '../../../../utils/connect'
 import images from '../../../../utils/import-img'
+import { getTime } from '../../../../utils/utils'
 import DialogContentComponent from './components/dialog-content/dialog-content-component'
 import DialogHeaderComponent from './components/dialog-header/dialog-header-component'
 import DialogSenderComponent from './components/dialog-sender/dialog-sender-component'
@@ -12,7 +14,7 @@ type IProps = {
 }
 
 class DialogPage extends Block {
-  ws: WebSocket | undefined
+  socket: WebSocket | undefined
   constructor(tagName: string, props: IProps) {
     super(tagName, {
       ...props,
@@ -26,8 +28,8 @@ class DialogPage extends Block {
         pinIcon: images.pinIcon,
         sendIcon: images.sendIcon,
         send: (val: string) => {
-          if (this.ws) {
-            this.ws.send(
+          if (this.socket) {
+            this.socket.send(
               JSON.stringify({
                 content: val,
                 type: 'message',
@@ -40,20 +42,31 @@ class DialogPage extends Block {
   }
 
   async componentDidMount() {
-    if (this.ws) {
-      this.ws.close(1000)
+    if (this.socket) {
+      console.log('close')
+      this.socket.close(1000)
     }
     const { selectedChat, user } = store.getState()
     if (selectedChat && user) {
       this.children.dialogContent.setProps({ isEmpty: false })
       const token = await getChatUsers(selectedChat)
-      this.ws = new WebSocket(
+      this.socket = new WebSocket(
         `wss://ya-praktikum.tech/ws/chats/${user.id}/${selectedChat}/${token?.token}`
       )
-      this.ws.addEventListener('open', () => {
+
+      this.socket!.onopen = () => {
+        this.socket!.send(
+          JSON.stringify({
+            content: '0',
+            type: 'get old',
+          })
+        )
+      }
+
+      this.socket.addEventListener('open', () => {
         console.log('Соединение установлено')
       })
-      this.ws.addEventListener('close', (event) => {
+      this.socket.addEventListener('close', (event) => {
         if (event.wasClean) {
           console.log('Соединение закрыто чисто')
         } else {
@@ -61,22 +74,51 @@ class DialogPage extends Block {
         }
         console.log(`Код: ${event.code} | Причина: ${event.reason}`)
       })
-      this.ws.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data)
+
+      this.socket.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data) as IMessageResponse | IMessageResponse[]
+        if (!Array.isArray(data) && data.type === 'user connected') {
+          return
+        }
         const messages = document.querySelector('.dialog-content')
         let msgTemplate: HTMLTemplateElement
 
-        if (data.user_id === user.id) {
-          msgTemplate = document.getElementById('myMsg')! as HTMLTemplateElement
+        if (Array.isArray(data)) {
+          data.sort((a, b) => {
+            const timeA = Date.parse(a.time)
+            const timeB = Date.parse(b.time)
+            return timeA - timeB
+          })
+          data.forEach((item) => {
+            if (item.user_id === user.id) {
+              msgTemplate = document.getElementById('myMsg')! as HTMLTemplateElement
+            } else {
+              msgTemplate = document.getElementById('recivedMsg')! as HTMLTemplateElement
+            }
+            const newMsg = msgTemplate.content
+              .querySelector('.message-item')!
+              .cloneNode(true) as HTMLElement
+            const msgText = newMsg.querySelector('.message-item__text')
+            const dateText = newMsg.querySelector('.message-item__data')
+            msgText!.innerHTML = item.content
+            dateText!.innerHTML = getTime(item.time)
+            messages!.append(newMsg)
+          })
         } else {
-          msgTemplate = document.getElementById('recivedMsg')! as HTMLTemplateElement
+          if (data.user_id === user.id) {
+            msgTemplate = document.getElementById('myMsg')! as HTMLTemplateElement
+          } else {
+            msgTemplate = document.getElementById('recivedMsg')! as HTMLTemplateElement
+          }
+          const newMsg = msgTemplate.content
+            .querySelector('.message-item')!
+            .cloneNode(true) as HTMLElement
+          const msgText = newMsg.querySelector('.message-item__text')
+          const dateText = newMsg.querySelector('.message-item__data')
+          msgText!.innerHTML = data.content
+          dateText!.innerHTML = getTime(data.time)
+          messages!.append(newMsg)
         }
-        const newMsg = msgTemplate.content
-          .querySelector('.message-item')!
-          .cloneNode(true) as HTMLElement
-        const msgText = newMsg.querySelector('.message-item__text')
-        msgText!.innerHTML = data.content
-        messages!.append(newMsg)
       })
     }
   }

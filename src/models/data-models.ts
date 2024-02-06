@@ -5,7 +5,7 @@ export interface ISignIn {
   password: string
 }
 
-export interface IUser extends IUserResponse {}
+export interface IUser extends Omit<IUserResponse, 'id'> {}
 
 export interface IChangeProfile {
   first_name: string

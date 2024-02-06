@@ -72,3 +72,11 @@ export interface IGetChatsResponse {
 export interface IChatsWithActive extends IGetChatsResponse {
   isSelected: boolean
 }
+
+export interface IMessageResponse {
+  content: string
+  id: number
+  time: string
+  type: string
+  user_id: number
+}

@@ -73,3 +73,11 @@ export function isObjectsEqual(lhs: PlainObject, rhs: PlainObject) {
 }
 
 export const getFileName = (val: string): string => val.split('\\').at(-1)!
+
+export const getTime = (val: string) => {
+  const hours = String(new Date(Date.parse(val)).getHours())
+  const minutes = String(new Date(Date.parse(val)).getMinutes())
+  const withZeroHours = hours.length === 1 ? `0${hours}` : hours
+  const withZeroMinutes = minutes.length === 1 ? `0${minutes}` : minutes
+  return `${withZeroHours}:${withZeroMinutes}`
+}
