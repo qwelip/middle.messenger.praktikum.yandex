@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "tsc && vite build && node ./src/server.js",
+    "start": "tsc && vite build",
     "preview": "vite preview",
     "eslint": "eslint .",
     "stylelint": "stylelint **/*.css"
