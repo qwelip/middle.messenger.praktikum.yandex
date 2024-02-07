@@ -1,7 +1,6 @@
 import AddUserToChatComponent from '../../../../../../components/add-user-to-chat/add-user-to-chat-component'
+import DeleteUserFromChatComponent from '../../../../../../components/delete-user-from-chat/delete-user-from-chat-component'
 import Block from '../../../../../../core/block'
-import { deleteUserFromChat, getChatUsers } from '../../../../../../services/chat'
-import { store } from '../../../../../../store/store'
 import PopupBtn from './components/popup-btn/popup-btn'
 
 interface IProps {
@@ -15,30 +14,17 @@ export default class PopupDialogHeaderComponent extends Block {
     super('div', {
       ...props,
       addUserToChatPopup: new AddUserToChatComponent(),
+      deleteUserFromChat: new DeleteUserFromChatComponent(),
       addUserBtn: new PopupBtn({
         imgSrc: props.addIcon,
         title: 'Добавить пользователя',
-        onClick: () => this.children.addUserToChatPopup.setProps({ isPopupShow: true }),
+        onClick: () => this.children.addUserToChatPopup.show(),
       }),
       deleteUserBtn: new PopupBtn({
         imgSrc: props.deleteIcon,
         title: 'Удалить пользователя',
         onClick: async () => {
-          const { selectedChat, user } = store.getState()
-          if (selectedChat && user) {
-            const usersChat = await getChatUsers({ id: +selectedChat })
-            const anotherUserId = usersChat!.find((i) => i.id !== user.id)!.id
-            try {
-              await deleteUserFromChat({
-                chatId: +selectedChat,
-                users: [+anotherUserId],
-              })
-              console.log('Пользователь успешно удален')
-            } catch (error) {
-              console.log('Ошибка при удалении пользователя')
-            }
-          }
-          props.onClick()
+          this.children.deleteUserFromChat.show()
         },
       }),
     })
@@ -49,6 +35,7 @@ export default class PopupDialogHeaderComponent extends Block {
       <div data-setevent class='popup-dialog-header popup-dialog-header_hidden'>
         {{#if isSelectedChat}}
           {{{ addUserToChatPopup }}}
+          {{{ deleteUserFromChat }}}
           {{{ addUserBtn }}}
           <div class='popup-dialog-header__divider'></div>
           {{{ deleteUserBtn }}}

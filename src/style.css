@@ -1,8 +1,3 @@
-/* common */
-@import './vendor/normalize.css';
-@import './vendor/fonts/fonts.css';
-@import './common/common-styles.css';
-
 /* pages */
 @import './pages/chat/chat.css';
 @import './pages/profile/profile.css';
@@ -32,6 +27,7 @@
 
 /* common components */
 @import './components/add-chat-popup/add-chat-popup.css';
+@import './components/add-user-to-chat/add-user.css';
 @import './components/user-avatar/user-avatar.css';
 @import './components/button-string/button-string.css';
 @import './components/side-button/side-button.css';
@@ -44,3 +40,8 @@
 @import './components/user-info-change/user-info-change.css';
 @import './components/user-info-change/components/success-msg/success-msg.css';
 @import './components/input-label-error/input-label-error.css';
+
+/* common */
+@import './vendor/normalize.css';
+@import './vendor/fonts/fonts.css';
+@import './common/common-styles.css';
