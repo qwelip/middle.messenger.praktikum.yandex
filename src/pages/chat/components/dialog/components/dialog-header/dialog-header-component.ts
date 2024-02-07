@@ -62,7 +62,14 @@ class DialogHeaderComponent extends Block {
   }
 
   componentDidMount() {
-    const { user, profile, avatar } = store.getState()
+    const { user, profile, avatar, selectedChat } = store.getState()
+
+    if (!selectedChat) {
+      this.children.popupDialog.setProps({ isSelectedChat: false })
+    }
+    if (selectedChat) {
+      this.children.popupDialog.setProps({ isSelectedChat: true })
+    }
 
     const avatarSrc = avatar || user?.avatar
     if (avatarSrc) {

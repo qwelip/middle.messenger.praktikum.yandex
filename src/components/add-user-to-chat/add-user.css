@@ -1,0 +1,19 @@
+.popup-add-user {
+  position: absolute;
+  z-index: 8000;
+  right: 0;
+  top: 0;
+}
+
+.popup-add-user__wrapper {
+  border: solid 1px #eaeaea;
+  border-radius: 10px;
+}
+
+.popup-add-user__close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  z-index: 8100;
+}

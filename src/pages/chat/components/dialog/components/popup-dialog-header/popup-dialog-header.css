@@ -13,6 +13,14 @@
   padding: 15px;
 }
 
+.popup-dialog-header__divider {
+  height: 10px;
+}
+
+.popup-item:first-child {
+  margin-bottom: 10px;
+}
+
 .popup-dialog-header_hidden {
   visibility: hidden;
 }

@@ -26,6 +26,7 @@
 
 .dialog-header__context-btn {
   position: relative;
+  margin-top: 7px;
 }
 
 .dialog-header__btn-img {
