@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-    build: {
-        outDir: "dist",
-    },
-});
+  build: {
+    outDir: 'dist',
+  },
+})

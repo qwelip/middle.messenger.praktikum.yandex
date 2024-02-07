@@ -9,9 +9,16 @@
   border-radius: 10px;
   border: solid 1px #eaeaea;
   width: 225px;
-  height: 90px;
   box-sizing: border-box;
   padding: 15px;
+}
+
+.popup-dialog-header__divider {
+  height: 10px;
+}
+
+.popup-item:first-child {
+  margin-bottom: 10px;
 }
 
 .popup-dialog-header_hidden {

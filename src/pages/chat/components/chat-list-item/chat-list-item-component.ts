@@ -1,20 +1,20 @@
 import Block from '../../../../core/block'
 
-interface IProps {
+type IProps = {
   isSelected: boolean
   name: string
   date: string
   message: string
   unreadMsg?: number
-  onClick: () => void
+  onClick: (e: Event) => void
 }
 
 export default class ChatListItemComponent extends Block {
-  constructor(props: IProps) {
-    super('div', {
+  constructor(tagName: string, props: IProps) {
+    super(tagName, {
       ...props,
       events: {
-        click: () => props.onClick(),
+        click: (e) => props.onClick(e),
       },
     })
   }
@@ -22,9 +22,9 @@ export default class ChatListItemComponent extends Block {
   render() {
     return `
       {{#if isSelected}}
-      <div data-setevent class='chat-list-item chat-list-item_selected' page='page404'>
+      <div data-chatId={{chatid}} data-setevent class='chat-list-item chat-list-item_selected'>
         {{else}}
-      <div data-setevent class='chat-list-item' page='page404'>
+      <div data-chatId={{chatid}} data-setevent class='chat-list-item'>
       {{/if}}
 
         {{#if unreadMsg}}
@@ -32,17 +32,18 @@ export default class ChatListItemComponent extends Block {
             {{unreadMsg}}
           </p>
         {{/if}}
-        <div class='chat-list-item__avatar' page='page404'></div>
-        <div class='chat-list-item__content' page='page404'>
-          <div class='chat-list-item__info' page='page404'>
+        <div data-chatId={{chatid}} class='chat-list-item__avatar'></div>
+        <div data-chatId={{chatid}} class='chat-list-item__content'>
+          <div data-chatId={{chatid}} class='chat-list-item__info'>
             <p
-              class='chat-list-item__name text-style text-style_type_bold' page='page404'
+              data-chatId={{chatid}}
+              class='chat-list-item__name text-style text-style_type_bold'
             >{{name}}</p>
             <p
-              class='chat-list-item__date text-style text-style_color_gray text-style_size_12' page='page404'
+              class='chat-list-item__date text-style text-style_color_gray text-style_size_12'
             >{{date}}</p>
           </div>
-          <p class='chat-list-item__message text-style text-style_color_gray' page='page404'>
+          <p data-chatId={{chatid}} class='chat-list-item__message text-style text-style_color_gray'>
             {{message}}
           </p>
         </div>

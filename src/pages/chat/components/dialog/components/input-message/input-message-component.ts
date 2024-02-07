@@ -19,7 +19,7 @@ export default class InputMessageComponent extends Block {
 
   render() {
     return `
-    <form class='dialog-sender-wrapper__form'>
+    <div class='dialog-sender-wrapper__form'>
       <input
         data-setevent
         name='message'
@@ -33,7 +33,7 @@ export default class InputMessageComponent extends Block {
           Нельзя отправлять пустое сообщение
         </label>
       {{/if}}
-    </form>
+    </div>
     `
   }
 }

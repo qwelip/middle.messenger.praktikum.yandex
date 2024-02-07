@@ -7,7 +7,6 @@ export default class Page500 extends Block {
       button: new ButtonStringComponent({
         caption: 'Назад к чатам',
         isRed: false,
-        page: 'chatPage',
       }),
     })
   }

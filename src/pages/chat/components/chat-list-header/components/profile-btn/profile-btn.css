@@ -1,0 +1,14 @@
+.profile-btn {
+  display: flex;
+  margin-left: auto;
+  padding: 0;
+}
+
+.profile-btn__text {
+  padding-right: 8px;
+  margin-left: auto;
+}
+
+.profile-btn__img {
+  align-self: center;
+}

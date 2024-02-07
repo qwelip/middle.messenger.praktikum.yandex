@@ -1,3 +1,8 @@
 .user-info-change__list {
   margin-bottom: 60px;
 }
+
+.user-info-change__error {
+  text-align: center;
+  margin-top: 10px;
+}

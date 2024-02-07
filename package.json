@@ -8,15 +8,18 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "tsc && vite build",
+    "start": "tsc && vite build && node ./src/server.js",
     "preview": "vite preview",
-    "lint": "eslint . && stylelint **/*.css"
+    "eslint": "eslint .",
+    "stylelint": "stylelint **/*.css"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
+    "express": "^4.18.2",
     "handlebars": "^4.7.8",
     "stylelint": "^16.1.0",
     "stylelint-config-standard": "^36.0.0",

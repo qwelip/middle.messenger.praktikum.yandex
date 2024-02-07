@@ -1,8 +1,3 @@
-/* common */
-@import './vendor/normalize.css';
-@import './vendor/fonts/fonts.css';
-@import './common/common-styles.css';
-
 /* pages */
 @import './pages/chat/chat.css';
 @import './pages/profile/profile.css';
@@ -17,6 +12,7 @@
 @import './pages/chat/components/chat-list/chat-list.css';
 @import './pages/chat/components/dialog/dialog.css';
 @import './pages/chat/components/chat-list-header/chat-list-header.css';
+@import './pages/chat/components/chat-list-header/components/profile-btn/profile-btn.css';
 @import './pages/chat/components/chat-list-item/chat-list-item.css';
 @import './pages/chat/components/dialog/components/dialog-content/dialog-content.css';
 @import './pages/chat/components/dialog/components/dialog-header/dialog-header.css';
@@ -30,14 +26,22 @@
 @import './pages/chat/components/dialog/components/input-message/input-message.css';
 
 /* common components */
+@import './components/add-chat-popup/add-chat-popup.css';
+@import './components/add-user-to-chat/add-user.css';
 @import './components/user-avatar/user-avatar.css';
 @import './components/button-string/button-string.css';
 @import './components/side-button/side-button.css';
-@import './components/user-info/user-info.css';
 @import './components/button/button.css';
 @import './components/popup/popup.css';
+@import './components/popup/components/add-photo-btn/add-photo-btn.css';
 @import './components/input/input.css';
 @import './components/input-no-border/input-no-border.css';
 @import './components/form/form.css';
 @import './components/user-info-change/user-info-change.css';
+@import './components/user-info-change/components/success-msg/success-msg.css';
 @import './components/input-label-error/input-label-error.css';
+
+/* common */
+@import './vendor/normalize.css';
+@import './vendor/fonts/fonts.css';
+@import './common/common-styles.css';

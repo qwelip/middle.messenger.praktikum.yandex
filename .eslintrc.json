@@ -12,13 +12,25 @@
     "quotes": ["error", "single"],
     "no-multi-spaces": "error",
     "no-multiple-empty-lines": "error",
-    "linebreak-style": ["error", "windows"],
     "class-methods-use-this": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "linebreak-style": "off",
+    "lines-between-class-members": "off",
+    "no-restricted-syntax": "off",
+    "no-continue": "off",
+    "operator-linebreak": "off",
+    "comma-dangle": "off",
+    "object-curly-newline": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-param-reassign": "off",
+    "max-classes-per-file": "off",
+    "consistent-return": "off",
+    "indent": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

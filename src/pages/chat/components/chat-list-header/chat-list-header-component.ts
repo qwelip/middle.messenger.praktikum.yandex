@@ -1,5 +1,9 @@
-import Block from '../../../../core/block'
+import AddChatPopupComponent from '../../../../components/add-chat-popup/add-chat-popup-component'
+import ButtonStringComponent from '../../../../components/button-string/button-string-component'
+import Block, { IOldNewProps } from '../../../../core/block'
+import { router } from '../../../../core/router'
 import InputSearchComponent from '../dialog/components/input-search/input-search-component'
+import ProfileBtnComponent from './components/profile-btn/profile-btn-component'
 
 interface IProps {
   arrowIcon: string
@@ -11,25 +15,47 @@ export default class ChatListHeaderComponent extends Block {
     super('div', {
       ...props,
       inputSearch: new InputSearchComponent(),
+      addChat: new ButtonStringComponent({
+        caption: 'Создать диалог',
+        isRed: false,
+        onClick: () => {
+          this.setProps({ isPopupShow: true })
+        },
+      }),
+      profileBtn: new ProfileBtnComponent({
+        arrowIcon: props.arrowIcon,
+        onClick: () => router.go('/profile'),
+      }),
+      popup: new AddChatPopupComponent({
+        close: () => {
+          this.setProps({ isPopupShow: false })
+        },
+      }),
     })
+  }
+
+  componentDidUpdate({ newProps }: IOldNewProps) {
+    const { isPopupShow } = newProps
+    if (isPopupShow) {
+      const popup = this.children.popup as Block
+      popup.show()
+    }
+    if (!isPopupShow) {
+      const popup = this.children.popup as Block
+      popup.hide()
+    }
+    return true
   }
 
   render() {
     return `
       <div class='chat-list-header'>
-        <a class='chat-list-header__profile-btn btn-styles'>
-          <p
-            page='profilePage'
-            class='chat-list-header__text text-style text-style_color_gray'
-          >Профиль</p>
-          <img
-            src={{arrowIcon}}
-            alt='Профиль'
-            class='chat-list-header__img'
-            page='profilePage'
-          />
-        </a>
-        <form>
+        {{{ popup }}}
+        <div class='chat-list-header__buttons'>
+          {{{ addChat }}}
+          {{{ profileBtn }}}
+        </div>
+        <form clas='chat-list-header__form'>
           {{{ inputSearch }}}
         </form>
           <img

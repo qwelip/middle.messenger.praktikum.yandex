@@ -1,10 +1,15 @@
-import { loginValidate, passwordValidate } from '../../common/validate'
+import { loginValidate, passwordValidate } from '../../utils/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
+import { router } from '../../core/router'
+import { login } from '../../services/auth'
+import { getChats } from '../../services/chat'
+import { IStore, store } from '../../store/store'
+import connect from '../../utils/connect'
 
-export default class LoginPage extends Block {
+class LoginPage extends Block {
   constructor() {
     super('main', {
       input_login: new InputComponent({
@@ -20,14 +25,13 @@ export default class LoginPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Авторизоваться',
-        page: 'chatPage',
-        onClick: () => {
+        onClick: async () => {
           const loginComp = this.children.input_login
           const passwordComp = this.children.input_password
-          const login = (loginComp.props.inputValue as string) || ''
+          const loginInput = (loginComp.props.inputValue as string) || ''
           const password = (passwordComp.props.inputValue as string) || ''
 
-          if (loginValidate(login)) {
+          if (loginValidate(loginInput)) {
             loginComp.setProps({ isError: false })
           } else {
             loginComp.setProps({ isError: true })
@@ -40,15 +44,44 @@ export default class LoginPage extends Block {
             passwordComp.setProps({ isError: true })
             return
           }
-          console.log({ login, password })
+          try {
+            await login({ login: loginInput, password })
+            this.setProps({ errorMsg: null })
+            this.children.input_login.setProps({ inputValue: '' })
+            this.children.input_password.setProps({ inputValue: '' })
+            const chats = await getChats({
+              offset: 0,
+              limit: 100,
+            })
+            window.store.set('chats', chats)
+            router.go('/messenger')
+          } catch (error) {
+            if (error instanceof Error) {
+              this.setProps({ errorMsg: error.message })
+            }
+          }
         },
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Нет аккаунта?',
-        page: 'signInPage',
         isRed: false,
+        onClick: () => router.go('/sign-up'),
       }),
     })
+  }
+
+  componentDidMount(): void {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
+  }
+
+  beforeMount() {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
   }
 
   render() {
@@ -76,8 +109,21 @@ export default class LoginPage extends Block {
               </div>
             </div>
           </form>
+          {{#if errorMsg}}
+            <p class='login__error text-style text-style_size_12 text-style_color_red'>
+              {{ errorMsg }}
+            </p>
+          {{/if}}
         </div>
       </div>
     </main>`
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    user: state.user,
+  }
+}
+
+export default connect(LoginPage, mapToProps)

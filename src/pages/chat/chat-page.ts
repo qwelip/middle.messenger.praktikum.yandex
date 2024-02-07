@@ -5,8 +5,8 @@ import DialogPage from './components/dialog/dialog-page'
 export default class ChatPage extends Block {
   constructor() {
     super('main', {
-      chatList: new ChatListComponent(),
-      dialog: new DialogPage({
+      chatList: new ChatListComponent('section', {}),
+      dialog: new DialogPage('section', {
         isEmpty: false,
       }),
     })

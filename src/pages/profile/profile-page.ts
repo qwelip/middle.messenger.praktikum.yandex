@@ -1,60 +1,55 @@
-import { userInfoMocData } from '../../common/user-info-moc-data'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import PopupComponent from '../../components/popup/popup-component'
 import SideButtonComponent from '../../components/side-button/side-button-component'
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoComponent from '../../components/user-info/user-info-component'
 import Block, { IOldNewProps } from '../../core/block'
+import { router } from '../../core/router'
+import { logout } from '../../services/auth'
 import images from '../../utils/import-img'
 
-interface IProps {
-  isPopupShow: boolean
-}
-
 export default class ProfilePage extends Block {
-  constructor(props: IProps) {
+  constructor() {
     super('main', {
-      ...props,
       sideButton: new SideButtonComponent({
-        page: 'changeUserDataPage',
         goBackIcon: images.goBackIcon,
+        onClick: () => router.back(),
       }),
-      userAvatar: new UserAvatarComponent({
-        name: 'Иван',
-        avatarPlaceholder: images.avatarPlaceholder,
+      userAvatar: new UserAvatarComponent('div', {
+        isName: true,
         onClick: () => {
           this.setProps({ isPopupShow: true })
         },
       }),
       buttonChangeData: new ButtonStringComponent({
         caption: 'Изменить данные',
-        page: 'changeUserDataPage',
         isRed: false,
+        onClick: () => router.go('/settings'),
       }),
       buttonChangePassword: new ButtonStringComponent({
         caption: 'Изменить пароль',
-        page: 'changePasswordPage',
         isRed: false,
+        onClick: () => router.go('/change-password'),
       }),
       buttonExit: new ButtonStringComponent({
         caption: 'Выйти',
-        page: 'loginPage',
         isRed: true,
+        onClick: async () => {
+          document.cookie = 'authCookie; max-age=0'
+          window.store.set('user', null)
+          window.store.set('profile', null)
+          window.store.set('avatar', null)
+          router.go('/')
+          await logout()
+          // eslint-disable-next-line no-restricted-globals
+          location.reload()
+        },
       }),
-      userInfo: new UserInfoComponent({ data: userInfoMocData }),
+      userInfo: new UserInfoComponent('section', {}),
       popup: new PopupComponent({
-        isOpen: props.isPopupShow,
-        caption: 'Загрузите файл',
-        btnCaption: 'Поменять',
-        page: 'profilePage',
-        onClick: () => {
+        close: () => {
           this.setProps({ isPopupShow: false })
         },
-        content: new ButtonStringComponent({
-          caption: 'Выбрать файл на компьютере',
-          isRed: false,
-          page: '',
-        }).element,
       }),
     })
   }
@@ -75,8 +70,8 @@ export default class ProfilePage extends Block {
   render() {
     return `
     <main class='profile horizontal-centered'>
-      {{{ sideButton }}}
       {{{ popup }}}
+      {{{ sideButton }}}
       <div class='profile__wrapper user-entitys-wrapper'>
         {{{ userAvatar }}}
         {{{ userInfo }}}
