@@ -38,3 +38,8 @@
   margin-top: 14px;
   text-align: center;
 }
+
+.sign-in__error {
+  text-align: center;
+  margin-top: 10px;
+}

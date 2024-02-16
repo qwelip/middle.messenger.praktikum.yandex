@@ -17,6 +17,31 @@ app.get('/', (req, res) => {
   )
 })
 
+app.get('/sign-up', (req, res) => {
+  res.send('hello world')
+})
+app.get('/messenger', (req, res) => {
+  res.send('hello world')
+})
+app.get('/profile', (req, res) => {
+  res.send('hello world')
+})
+app.get('/settings', (req, res) => {
+  res.send('hello world')
+})
+app.get('/change-password', (req, res) => {
+  res.send('hello world')
+})
+app.get('/sign-up', (req, res) => {
+  res.send('hello world')
+})
+app.get('/page500', (req, res) => {
+  res.send('hello world')
+})
+app.get('/page404', (req, res) => {
+  res.send('hello world')
+})
+
 app.listen(PORT, () => {
   console.log(`Мой текст в логе после запуска ${PORT}!`)
 })

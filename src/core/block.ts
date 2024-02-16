@@ -3,6 +3,11 @@ import Handlebars from 'handlebars'
 import { nanoid } from 'nanoid'
 import EventBus from './event-bus'
 
+export type RefType = {
+  // eslint-disable-next-line no-use-before-define
+  [key: string]: Element
+}
+
 type HTMLEvents = keyof HTMLElementEventMap
 
 type IEvents = {
@@ -24,17 +29,15 @@ interface IMeta {
 
 export default class Block {
   props: IPropsWithChildren
-
+  private _renderCounter: number
   private _meta: IMeta
-
+  private _rootQuery: string
   private eventBus: () => EventBus
-
   private _element: Element | null = null
-
   // eslint-disable-next-line no-use-before-define
   children: Record<string, Block>
-
-  private _id: string
+  refs = {} as RefType
+  id: string
 
   static EVENTS = {
     INIT: 'init',
@@ -44,12 +47,14 @@ export default class Block {
   }
 
   constructor(tagName: string, propsWithChildren: IPropsWithChildren) {
+    this._renderCounter = 0
+    this._rootQuery = 'app'
     const eventBus = new EventBus()
     this.eventBus = () => eventBus
     this._meta = {
       tagName: tagName || 'div',
     }
-    this._id = nanoid(6)
+    this.id = nanoid(6)
     const { props, children } = this._getChildrenAndProps(propsWithChildren)
     this.children = children
     this.props = this._makePropsProxy(props)
@@ -107,9 +112,6 @@ export default class Block {
 
   _componentDidMount() {
     this.componentDidMount()
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount()
-    })
   }
 
   _beforeMount() {
@@ -160,35 +162,58 @@ export default class Block {
     return true
   }
 
-  _render() {
-    const propsAndStubs = { ...this.props }
-    this._removeEvents()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private compile(template: string, context: any) {
+    const contextAndStubs = { ...context, __refs: this.refs }
 
-    Object.entries(this.children).forEach(([key, value]) => {
-      propsAndStubs[key] = `<div data-id="${value._id}"></div>`
+    Object.entries(this.children).forEach(([key, child]) => {
+      contextAndStubs[key] = `<div data-id="${child.id}"></div>`
     })
 
-    const fragment = this._createDocumentElement('template') as HTMLTemplateElement
-    const block = this.render() as unknown as string
-    fragment.innerHTML = Handlebars.compile(block)(propsAndStubs)
-    const newElemenet = fragment.content.firstElementChild
+    const html = Handlebars.compile(template)(contextAndStubs)
+
+    const temp = document.createElement('template')
+
+    temp.innerHTML = html
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    contextAndStubs.__children?.forEach(({ embed }: any) => {
+      embed(temp.content)
+    })
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+      const stub = temp.content.querySelector(`[data-id="${child.id}"]`)
       stub?.replaceWith(child.getContent()!)
     })
 
+    return temp.content
+  }
+
+  _render() {
+    this._removeEvents()
+    const fragment = this.compile(this.render(), this.props)
+
+    const newElement = fragment.firstElementChild as HTMLElement
+
     if (this._element) {
-      this._element.replaceWith(newElemenet!)
+      this._element.replaceWith(newElement)
     }
-    this._element = newElemenet!
-    this._beforeMount()
+
+    this._element = newElement
+
+    this._addEvents()
+
+    if (this._renderCounter === 0) {
+      this._beforeMount()
+    }
 
     this._addEvents()
     this._componentDidMount()
+    this._renderCounter += 1
   }
 
-  render() {}
+  render() {
+    return ''
+  }
 
   beforeMount() {}
 
@@ -237,5 +262,10 @@ export default class Block {
   hide() {
     const element = this._element as HTMLElement
     element.style.display = 'none'
+  }
+
+  unmount() {
+    const root = document.getElementById(this._rootQuery)!
+    root.firstChild?.remove()
   }
 }

@@ -2,7 +2,6 @@ import Block from '../../core/block'
 
 interface IButtonStringComponent {
   caption: string
-  page: string
   isRed: boolean
   onClick?: () => void
 }
@@ -11,18 +10,20 @@ export default class ButtonStringComponent extends Block {
   constructor(props: IButtonStringComponent) {
     super('a', {
       ...props,
-      events: {},
+      events: {
+        click: () => props.onClick?.(),
+      },
     })
   }
 
   render() {
     return `
       {{#if isRed}}
-        <a class='button-string button-string_color_red' page={{page}}>
+        <a data-setevent class='button-string button-string_color_red'>
           {{caption}}
         </a>
       {{else}}
-        <a class='button-string' page={{page}}>
+        <a data-setevent class='button-string'>
           {{caption}}
         </a>
       {{/if}}

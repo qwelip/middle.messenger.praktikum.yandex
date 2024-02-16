@@ -7,7 +7,6 @@ export default class Page404 extends Block {
       button: new ButtonStringComponent({
         caption: 'Назад к чатам',
         isRed: false,
-        page: 'chatPage',
       }),
     })
   }

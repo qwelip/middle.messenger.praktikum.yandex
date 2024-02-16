@@ -1,14 +1,13 @@
-import {
-  emailValidate,
-  loginValidate,
-  nameValidate,
-  phoneValidate,
-} from '../../common/validate'
+import { emailValidate, loginValidate, nameValidate, phoneValidate } from '../../utils/validate'
 import Block from '../../core/block'
+import { changeProfile } from '../../services/user'
+import { IStore, store } from '../../store/store'
+import connect from '../../utils/connect'
 import { ButtonComponent } from '../button/button-component'
 import InputNoBorderComponent from '../input-no-border/input-no-border-component'
+import SuccessMsgComponent from './components/success-msg/success-msg-component'
 
-export default class UserInfoChangeComponent extends Block {
+class UserInfoChangeComponent extends Block {
   constructor() {
     super('div', {
       input_mail: new InputNoBorderComponent({
@@ -55,16 +54,15 @@ export default class UserInfoChangeComponent extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Сохранить',
-        page: 'chatPage',
-        onClick: () => {
-          const mail = this.children.input_mail.props.inputValue as string
+        onClick: async () => {
+          const email = this.children.input_mail.props.inputValue as string
           const login = this.children.input_login.props.inputValue as string
           const name = this.children.input_name.props.inputValue as string
           const surname = this.children.input_surname.props.inputValue as string
           const nick = this.children.input_nick.props.inputValue as string
           const phone = this.children.input_phone.props.inputValue as string
 
-          if (emailValidate(mail)) {
+          if (emailValidate(email)) {
             this.children.input_mail.setProps({ isError: false })
           } else {
             this.children.input_mail.setProps({ isError: true })
@@ -106,12 +104,52 @@ export default class UserInfoChangeComponent extends Block {
             return
           }
 
-          console.log({
-            mail, login, name, surname, nick, phone,
-          })
+          try {
+            await changeProfile({
+              email,
+              login,
+              phone,
+              first_name: name,
+              second_name: surname,
+              display_name: nick,
+            })
+            this.setProps({ errorMsg: null })
+            this.children.sucMsg.setProps({ sucMsg: 'Данные обновлены' })
+          } catch (error) {
+            if (error instanceof Error) {
+              this.setProps({ errorMsg: error.message })
+            }
+          }
         },
       }),
+      sucMsg: new SuccessMsgComponent({
+        sucMsg: '',
+      }),
     })
+  }
+
+  componentDidMount(): void {
+    if (this.props.errorMsg) {
+      return
+    }
+    const { user, profile } = store.getState()
+    if (profile) {
+      this.children.input_mail.setProps({ inputValue: profile?.email })
+      this.children.input_login.setProps({ inputValue: profile?.login })
+      this.children.input_name.setProps({ inputValue: profile?.first_name })
+      this.children.input_surname.setProps({ inputValue: profile?.second_name })
+      this.children.input_nick.setProps({
+        inputValue: profile?.display_name || profile?.first_name,
+      })
+      this.children.input_phone.setProps({ inputValue: profile?.phone })
+    } else {
+      this.children.input_mail.setProps({ inputValue: user?.email })
+      this.children.input_login.setProps({ inputValue: user?.login })
+      this.children.input_name.setProps({ inputValue: user?.first_name })
+      this.children.input_surname.setProps({ inputValue: user?.second_name })
+      this.children.input_nick.setProps({ inputValue: user?.display_name || user?.first_name })
+      this.children.input_phone.setProps({ inputValue: user?.phone })
+    }
   }
 
   render() {
@@ -146,7 +184,21 @@ export default class UserInfoChangeComponent extends Block {
           </ul>
           {{{ button }}}
         </form>
+        {{#if errorMsg}}
+          <p class='user-info-change__error text-style text-style_size_12 text-style_color_red'>
+            {{ errorMsg }}
+          </p>
+        {{/if}}
+        {{{ sucMsg }}}
     </div>
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    profile: state.profile,
+  }
+}
+
+export default connect(UserInfoChangeComponent, mapToProps)

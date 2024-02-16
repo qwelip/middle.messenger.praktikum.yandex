@@ -1,0 +1,15 @@
+.button-add-chat {
+  margin-top: 20px !important;
+}
+
+.button-add-chat__title {
+  margin-bottom: 20px !important;
+}
+
+.button-add-chat__popup {
+  height: 340px !important;
+}
+
+.button-add-chat__input {
+  width: 100%;
+}

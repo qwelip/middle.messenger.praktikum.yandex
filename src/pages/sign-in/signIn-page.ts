@@ -1,13 +1,22 @@
 import {
-  emailValidate, loginValidate, nameValidate, passwordValidate, phoneValidate,
-} from '../../common/validate'
+  emailValidate,
+  loginValidate,
+  nameValidate,
+  passwordValidate,
+  phoneValidate,
+} from '../../utils/validate'
 import ButtonStringComponent from '../../components/button-string/button-string-component'
 import { ButtonComponent } from '../../components/button/button-component'
 import InputCheckRepetePasswordComp from '../../components/input-check-repete-password/input-check-repete-password'
 import InputComponent from '../../components/input/input-component'
-import Block from '../../core/block'
+import Block, { IOldNewProps } from '../../core/block'
+import { router } from '../../core/router'
+import { IUser } from '../../models/data-models'
+import { createUser } from '../../services/auth'
+import { IStore, store } from '../../store/store'
+import connect from '../../utils/connect'
 
-export default class SignInPage extends Block {
+class SignInPage extends Block {
   constructor() {
     super('main', {
       input_mail: new InputComponent({
@@ -51,8 +60,7 @@ export default class SignInPage extends Block {
       }),
       button: new ButtonComponent({
         caption: 'Зарегистрироваться',
-        page: 'chatPage',
-        onClick: () => {
+        onClick: async () => {
           const emailComp = this.children.input_mail
           const loginComp = this.children.input_login
           const firstNameComp = this.children.input_name
@@ -70,25 +78,33 @@ export default class SignInPage extends Block {
           const passwordRepete = (passwordRepeteComp.props.inputValue as string) || ''
 
           if (
-            loginValidate(login)
-            && emailValidate(email)
-            && nameValidate(firstName)
-            && nameValidate(secondName)
-            && phoneValidate(phone)
-            && passwordValidate(password)
-            && password
-            && passwordRepete
-            && password === passwordRepete
+            loginValidate(login) &&
+            emailValidate(email) &&
+            nameValidate(firstName) &&
+            nameValidate(secondName) &&
+            phoneValidate(phone) &&
+            passwordValidate(password) &&
+            password &&
+            passwordRepete &&
+            password === passwordRepete
           ) {
-            const formData = {
+            const formData: IUser = {
               login,
               email,
-              firstName,
-              secondName,
+              first_name: firstName,
+              second_name: secondName,
               phone,
               password,
             }
-            console.log('formData', formData)
+            try {
+              await createUser(formData)
+              this.setProps({ errorMsg: null })
+              router.go('/messenger')
+            } catch (error) {
+              if (error instanceof Error) {
+                this.setProps({ errorMsg: error.message })
+              }
+            }
             return
           }
 
@@ -123,10 +139,26 @@ export default class SignInPage extends Block {
       }),
       buttonString: new ButtonStringComponent({
         caption: 'Войти',
-        page: 'loginPage',
         isRed: false,
+        onClick: () => {
+          router.go('/')
+        },
       }),
     })
+  }
+
+  componentDidUpdate({ newProps }: IOldNewProps) {
+    if (newProps.user) {
+      router.go('/messenger')
+    }
+    return true
+  }
+
+  beforeMount() {
+    const { user } = store.getState()
+    if (user) {
+      router.go('/messenger')
+    }
   }
 
   render() {
@@ -174,9 +206,22 @@ export default class SignInPage extends Block {
                 </div>
               </div>
             </form>
+            {{#if errorMsg}}
+              <p class='sign-in__error text-style text-style_size_12 text-style_color_red'>
+                {{ errorMsg }}
+              </p>
+            {{/if}}
           </div>
         </div>
       </main>
     `
   }
 }
+
+function mapToProps(state: IStore) {
+  return {
+    user: state.user,
+  }
+}
+
+export default connect(SignInPage, mapToProps)

@@ -16,6 +16,8 @@
   background-color: #efefef;
   margin-right: 10px;
   border-radius: 50%;
+  overflow: hidden;
+  position: relative;
 }
 
 .dialog-header__name {
@@ -24,6 +26,7 @@
 
 .dialog-header__context-btn {
   position: relative;
+  margin-top: 7px;
 }
 
 .dialog-header__btn-img {
