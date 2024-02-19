@@ -1,4 +1,4 @@
-import { router } from '../core/router'
+import { router } from '../main'
 import { getUser } from './auth'
 import { getChats } from './chat'
 

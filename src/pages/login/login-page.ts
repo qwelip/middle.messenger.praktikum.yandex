@@ -3,11 +3,11 @@ import ButtonStringComponent from '../../components/button-string/button-string-
 import { ButtonComponent } from '../../components/button/button-component'
 import InputComponent from '../../components/input/input-component'
 import Block from '../../core/block'
-import { router } from '../../core/router'
 import { login } from '../../services/auth'
 import { getChats } from '../../services/chat'
 import { IStore, store } from '../../store/store'
 import connect from '../../utils/connect'
+import { router } from '../../main'
 
 class LoginPage extends Block {
   constructor() {

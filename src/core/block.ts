@@ -87,8 +87,9 @@ export default class Block {
       if (this._element!.getAttribute('data-setevent') !== null) {
         this._element!.addEventListener(event, handler)
       }
-      this._element?.childNodes.forEach((element) => {
-        if (element instanceof Element && element.getAttribute('data-setevent') !== null) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this._element?.childNodes.forEach((element: any) => {
+        if (element.tagName && element.getAttribute('data-setevent') !== null) {
           element.addEventListener(event, handler)
         }
       })

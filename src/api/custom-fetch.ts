@@ -1,4 +1,4 @@
-enum ReqMethods {
+export enum ReqMethods {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -21,7 +21,7 @@ interface IMethodOptions extends IRequestBase {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<any>
 
-function queryStringify(data: string) {
+export function queryStringify(data: string) {
   const obj = JSON.parse(data)
   if (typeof obj !== 'object') {
     throw new Error('Data must be object')

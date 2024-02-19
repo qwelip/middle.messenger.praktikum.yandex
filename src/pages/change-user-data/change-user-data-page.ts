@@ -2,7 +2,7 @@ import SideButtonComponent from '../../components/side-button/side-button-compon
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoChangeComponent from '../../components/user-info-change/user-info-change-component'
 import Block from '../../core/block'
-import { router } from '../../core/router'
+import { router } from '../../main'
 import images from '../../utils/import-img'
 
 export default class ChangeUserDataPage extends Block {
