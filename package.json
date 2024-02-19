@@ -14,6 +14,11 @@
     "eslint": "eslint .",
     "stylelint": "stylelint **/*.css"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all"
+    }
+  },
   "devDependencies": {
     "@types/chai": "^4.3.11",
     "@types/express": "^4.17.21",
