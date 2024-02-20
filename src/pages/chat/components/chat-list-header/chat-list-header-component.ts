@@ -1,7 +1,7 @@
 import AddChatPopupComponent from '../../../../components/add-chat-popup/add-chat-popup-component'
 import ButtonStringComponent from '../../../../components/button-string/button-string-component'
 import Block, { IOldNewProps } from '../../../../core/block'
-import { router } from '../../../../core/router'
+import { router } from '../../../../main'
 import InputSearchComponent from '../dialog/components/input-search/input-search-component'
 import ProfileBtnComponent from './components/profile-btn/profile-btn-component'
 

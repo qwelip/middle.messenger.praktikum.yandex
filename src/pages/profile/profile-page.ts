@@ -4,7 +4,7 @@ import SideButtonComponent from '../../components/side-button/side-button-compon
 import UserAvatarComponent from '../../components/user-avatar/user-avatar-component'
 import UserInfoComponent from '../../components/user-info/user-info-component'
 import Block, { IOldNewProps } from '../../core/block'
-import { router } from '../../core/router'
+import { router } from '../../main'
 import { logout } from '../../services/auth'
 import images from '../../utils/import-img'
 

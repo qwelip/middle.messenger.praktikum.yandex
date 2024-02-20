@@ -1,15 +1,7 @@
-import ChangePasswordPage from '../pages/change-password/change-password-page'
-import ChangeUserDataPage from '../pages/change-user-data/change-user-data-page'
-import ChatPage from '../pages/chat/chat-page'
-import LoginPage from '../pages/login/login-page'
-import Page404 from '../pages/page-404/page-404-page'
-import Page500 from '../pages/page-500/page-500-page'
-import ProfilePage from '../pages/profile/profile-page'
-import SignInPage from '../pages/sign-in/signIn-page'
 import { store } from '../store/store'
 import { Route } from './route'
 
-export class Router {
+export class RouterClass {
   private _rootQuery: string
   routes: Route[] = []
   history: History | undefined
@@ -76,13 +68,3 @@ export class Router {
     return this.routes.find((route) => route.match(pathname))
   }
 }
-
-export const router = new Router('app')
-router.use('/', LoginPage)
-router.use('/messenger', ChatPage)
-router.use('/profile', ProfilePage)
-router.use('/settings', ChangeUserDataPage)
-router.use('/change-password', ChangePasswordPage)
-router.use('/sign-up', SignInPage)
-router.use('/page500', Page500)
-router.use('/page404', Page404)
